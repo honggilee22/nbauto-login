@@ -197,6 +197,15 @@
         .logout-btn:hover {
             background: #c82333;
         }
+
+        .callback-status {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -207,6 +216,7 @@
 
         <div class="error-message" id="errorMessage"></div>
         <div class="success-message" id="successMessage"></div>
+        <div class="callback-status" id="callbackStatus"></div>
         
         <div class="loading" id="loading">
             <div class="spinner"></div>
@@ -250,6 +260,10 @@
 
         <div class="user-info" id="userInfo">
             <!-- 사용자 정보가 여기에 표시됩니다 -->
+        </div>
+
+        <div class="callback-status" id="callbackStatusDashboard" style="display: block;">
+            <p>📡 프로그램 연결 중...</p>
         </div>
 
         <button class="btn logout-btn" id="logoutBtn">로그아웃</button>
@@ -302,6 +316,8 @@
         const emailForm = document.getElementById('emailForm');
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
+        const callbackStatus = document.getElementById('callbackStatus');
+        const callbackStatusDashboard = document.getElementById('callbackStatusDashboard');
         const loading = document.getElementById('loading');
         const toggleMode = document.getElementById('toggleMode');
         const userInfo = document.getElementById('userInfo');
@@ -312,11 +328,71 @@
         // 세션 지속 시간 (30일)
         const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 밀리초
 
+        // 🚀 Python 프로그램으로 로그인 정보 전송
+        async function sendToLocalApp(userData) {
+            try {
+                showCallbackStatus('프로그램으로 로그인 정보 전송 중...', 'info');
+                
+                const response = await fetch('http://localhost:8080/callback', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: userData.email,
+                        displayName: userData.displayName || userData.email,
+                        provider: userData.provider || 'email',
+                        uid: userData.uid,
+                        photoURL: userData.photoURL || null,
+                        timestamp: new Date().toISOString()
+                    })
+                });
+
+                if (response.ok) {
+                    showCallbackStatus('✅ 로그인 성공! 프로그램이 시작됩니다.', 'success');
+                    
+                    // 3초 후 창 닫기
+                    setTimeout(() => {
+                        window.close();
+                    }, 3000);
+                } else {
+                    throw new Error('서버 응답 오류');
+                }
+            } catch (error) {
+                console.error('Callback error:', error);
+                showCallbackStatus('⚠️ 프로그램 연결에 실패했습니다. 프로그램이 실행 중인지 확인해주세요.', 'error');
+            }
+        }
+
+        // 콜백 상태 메시지 표시
+        function showCallbackStatus(message, type = 'info') {
+            const statusElements = [callbackStatus, callbackStatusDashboard];
+            statusElements.forEach(element => {
+                if (element) {
+                    element.textContent = message;
+                    element.style.display = 'block';
+                    
+                    // 타입별 스타일 적용
+                    if (type === 'success') {
+                        element.style.backgroundColor = '#e8f5e8';
+                        element.style.color = '#2e7d32';
+                    } else if (type === 'error') {
+                        element.style.backgroundColor = '#ffebee';
+                        element.style.color = '#c62828';
+                    } else {
+                        element.style.backgroundColor = '#e3f2fd';
+                        element.style.color = '#1976d2';
+                    }
+                }
+            });
+        }
+
         // 오류 메시지 표시
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
             successMessage.style.display = 'none';
+            hideCallbackStatus();
         }
 
         // 성공 메시지 표시
@@ -330,6 +406,11 @@
         function hideMessages() {
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
+        }
+
+        // 콜백 상태 숨기기
+        function hideCallbackStatus() {
+            callbackStatus.style.display = 'none';
         }
 
         // 로딩 표시
@@ -407,10 +488,22 @@
                 if (isValidSession) {
                     loginForm.style.display = 'none';
                     dashboard.style.display = 'block';
+                    
+                    // 🚀 Python 프로그램으로 로그인 정보 전송
+                    const userData = {
+                        email: user.email,
+                        displayName: user.displayName,
+                        provider: user.providerData[0]?.providerId || 'email',
+                        uid: user.uid,
+                        photoURL: user.photoURL
+                    };
+                    
+                    await sendToLocalApp(userData);
                 }
             } else {
                 loginForm.style.display = 'block';
                 dashboard.style.display = 'none';
+                hideCallbackStatus();
             }
         });
 
