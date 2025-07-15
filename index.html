@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nbauto - 로그인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="email"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+
+        .btn-google {
+            background: #db4437;
+            color: white;
+        }
+
+        .btn-google:hover {
+            background: #c23321;
+        }
+
+        .btn-github {
+            background: #333;
+            color: white;
+        }
+
+        .btn-github:hover {
+            background: #222;
+        }
+
+        .divider {
+            margin: 20px 0;
+            position: relative;
+            text-align: center;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #666;
+        }
+
+        .toggle-mode {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toggle-mode:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .dashboard {
+            display: none;
+        }
+
+        .user-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <!-- 로그인 화면 -->
+    <div class="login-container" id="loginForm">
+        <div class="logo">nbauto</div>
+        <div class="subtitle">시간 제한 관리 시스템</div>
+
+        <div class="error-message" id="errorMessage"></div>
+        <div class="success-message" id="successMessage"></div>
+        
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <p>로그인 중...</p>
+        </div>
+
+        <!-- 이메일/패스워드 로그인 -->
+        <form id="emailForm">
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary" id="emailLoginBtn">로그인</button>
+        </form>
+
+        <div class="divider">
+            <span>또는</span>
+        </div>
+
+        <!-- 소셜 로그인 -->
+        <button class="btn btn-google" id="googleLoginBtn">🔍 Google로 로그인</button>
+        <button class="btn btn-github" id="githubLoginBtn">🐙 GitHub로 로그인</button>
+
+        <div class="divider">
+            <span></span>
+        </div>
+
+        <p>
+            <a href="#" class="toggle-mode" id="toggleMode">계정이 없으신가요? 회원가입</a>
+        </p>
+    </div>
+
+    <!-- 대시보드 화면 -->
+    <div class="login-container dashboard" id="dashboard">
+        <div class="logo">nbauto</div>
+        <div class="subtitle">환영합니다!</div>
+
+        <div class="user-info" id="userInfo">
+            <!-- 사용자 정보가 여기에 표시됩니다 -->
+        </div>
+
+        <button class="btn logout-btn" id="logoutBtn">로그아웃</button>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Firebase 설정
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword,
+            signInWithPopup,
+            GoogleAuthProvider,
+            GithubAuthProvider,
+            onAuthStateChanged,
+            signOut
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            getDoc,
+            serverTimestamp 
+        } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        // Firebase 초기화
+        const firebaseConfig = {
+            apiKey: "AIzaSyDBTfodmr6Um4RtpWiUSvi2m-HoKiOHClI",
+            authDomain: "nbauto-d7528.firebaseapp.com",
+            projectId: "nbauto-d7528",
+            storageBucket: "nbauto-d7528.firebasestorage.app",
+            messagingSenderId: "768145880878",
+            appId: "1:768145880878:web:81a8979e9b64d050196cbf",
+            measurementId: "G-VMB7H5YDTP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // 프로바이더 설정
+        const googleProvider = new GoogleAuthProvider();
+        const githubProvider = new GithubAuthProvider();
+
+        // DOM 요소
+        const loginForm = document.getElementById('loginForm');
+        const dashboard = document.getElementById('dashboard');
+        const emailForm = document.getElementById('emailForm');
+        const errorMessage = document.getElementById('errorMessage');
+        const successMessage = document.getElementById('successMessage');
+        const loading = document.getElementById('loading');
+        const toggleMode = document.getElementById('toggleMode');
+        const userInfo = document.getElementById('userInfo');
+
+        // 현재 모드 (로그인/회원가입)
+        let isLoginMode = true;
+
+        // 세션 지속 시간 (30일)
+        const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 밀리초
+
+        // 오류 메시지 표시
+        function showError(message) {
+            errorMessage.textContent = message;
+            errorMessage.style.display = 'block';
+            successMessage.style.display = 'none';
+        }
+
+        // 성공 메시지 표시
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+        }
+
+        // 메시지 숨기기
+        function hideMessages() {
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
+        }
+
+        // 로딩 표시
+        function showLoading() {
+            loading.style.display = 'block';
+        }
+
+        // 로딩 숨기기
+        function hideLoading() {
+            loading.style.display = 'none';
+        }
+
+        // 사용자 세션 시간 체크
+        async function checkUserSession(user) {
+            try {
+                const idTokenResult = await user.getIdTokenResult();
+                const authTime = new Date(idTokenResult.claims.auth_time * 1000);
+                const now = new Date();
+                
+                // Firestore에서 사용자별 만료일 확인
+                const userDoc = await getDoc(doc(db, 'users', user.uid));
+                let expirationTime;
+                
+                if (userDoc.exists() && userDoc.data().customExpiryDate) {
+                    // 관리자가 설정한 커스텀 만료일이 있는 경우
+                    expirationTime = userDoc.data().customExpiryDate.toDate();
+                } else {
+                    // 기본 30일 세션
+                    expirationTime = new Date(authTime.getTime() + SESSION_DURATION);
+                    
+                    // 사용자 정보를 Firestore에 저장
+                    await setDoc(doc(db, 'users', user.uid), {
+                        email: user.email,
+                        displayName: user.displayName || '',
+                        authTime: authTime,
+                        expiryDate: expirationTime,
+                        lastLogin: serverTimestamp(),
+                        provider: user.providerData[0]?.providerId || 'email'
+                    }, { merge: true });
+                }
+
+                // 세션 만료 체크
+                if (now > expirationTime) {
+                    await signOut(auth);
+                    showError('계정 사용 기간이 만료되었습니다. 관리자에게 문의하세요.');
+                    return false;
+                }
+
+                // 남은 시간 계산
+                const remainingTime = Math.ceil((expirationTime - now) / (1000 * 60 * 60 * 24));
+                
+                // 사용자 정보 표시
+                userInfo.innerHTML = `
+                    <h3>환영합니다, ${user.displayName || user.email}!</h3>
+                    <p><strong>이메일:</strong> ${user.email}</p>
+                    <p><strong>로그인 방법:</strong> ${user.providerData[0]?.providerId || 'email'}</p>
+                    <p><strong>남은 사용 기간:</strong> ${remainingTime}일</p>
+                    <p><strong>만료일:</strong> ${expirationTime.toLocaleDateString('ko-KR')}</p>
+                `;
+
+                return true;
+            } catch (error) {
+                console.error('세션 체크 오류:', error);
+                showError('세션 확인 중 오류가 발생했습니다.');
+                return false;
+            }
+        }
+
+        // 로그인 상태 확인
+        onAuthStateChanged(auth, async (user) => {
+            hideLoading();
+            
+            if (user) {
+                const isValidSession = await checkUserSession(user);
+                if (isValidSession) {
+                    loginForm.style.display = 'none';
+                    dashboard.style.display = 'block';
+                }
+            } else {
+                loginForm.style.display = 'block';
+                dashboard.style.display = 'none';
+            }
+        });
+
+        // 이메일/패스워드 로그인
+        emailForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideMessages();
+            showLoading();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                if (isLoginMode) {
+                    await signInWithEmailAndPassword(auth, email, password);
+                } else {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                    showSuccess('회원가입이 완료되었습니다!');
+                }
+            } catch (error) {
+                hideLoading();
+                let errorMsg = '오류가 발생했습니다.';
+                
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMsg = '존재하지 않는 사용자입니다.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMsg = '잘못된 비밀번호입니다.';
+                        break;
+                    case 'auth/email-already-in-use':
+                        errorMsg = '이미 사용 중인 이메일입니다.';
+                        break;
+                    case 'auth/weak-password':
+                        errorMsg = '비밀번호가 너무 약합니다.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMsg = '잘못된 이메일 형식입니다.';
+                        break;
+                }
+                showError(errorMsg);
+            }
+        });
+
+        // Google 로그인
+        document.getElementById('googleLoginBtn').addEventListener('click', async () => {
+            hideMessages();
+            showLoading();
+            
+            try {
+                await signInWithPopup(auth, googleProvider);
+            } catch (error) {
+                hideLoading();
+                showError('Google 로그인에 실패했습니다.');
+            }
+        });
+
+        // GitHub 로그인
+        document.getElementById('githubLoginBtn').addEventListener('click', async () => {
+            hideMessages();
+            showLoading();
+            
+            try {
+                await signInWithPopup(auth, githubProvider);
+            } catch (error) {
+                hideLoading();
+                showError('GitHub 로그인에 실패했습니다.');
+            }
+        });
+
+        // 로그아웃
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showSuccess('로그아웃되었습니다.');
+            } catch (error) {
+                showError('로그아웃 중 오류가 발생했습니다.');
+            }
+        });
+
+        // 로그인/회원가입 모드 토글
+        toggleMode.addEventListener('click', (e) => {
+            e.preventDefault();
+            hideMessages();
+            
+            isLoginMode = !isLoginMode;
+            
+            if (isLoginMode) {
+                document.getElementById('emailLoginBtn').textContent = '로그인';
+                toggleMode.textContent = '계정이 없으신가요? 회원가입';
+            } else {
+                document.getElementById('emailLoginBtn').textContent = '회원가입';
+                toggleMode.textContent = '이미 계정이 있으신가요? 로그인';
+            }
+        });
+    </script>
+</body>
+</html>
