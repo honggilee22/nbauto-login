@@ -671,12 +671,8 @@
                 
                 showError(errorMsg + ' (에러 코드: ' + error.code + ')');
                 
-                // reCAPTCHA 리셋
-                if (recaptchaVerifier) {
-                    recaptchaVerifier.clear();
-                    recaptchaVerifier = null;
-                    document.getElementById('recaptcha-container').innerHTML = '';
-                }
+                // reCAPTCHA는 clear하지 않고 재사용을 위해 유지
+                console.log('reCAPTCHA 재사용을 위해 유지');
             }
         }
 
@@ -725,12 +721,8 @@
                 
                 showError(errorMsg + ' (에러: ' + error.code + ')');
                 
-                // reCAPTCHA 리셋
-                if (modalRecaptchaVerifier) {
-                    modalRecaptchaVerifier.clear();
-                    modalRecaptchaVerifier = null;
-                    document.getElementById('modal-recaptcha-container').innerHTML = '';
-                }
+                // reCAPTCHA는 clear하지 않고 재사용을 위해 유지
+                console.log('모달 reCAPTCHA 재사용을 위해 유지');
             }
         }
 
@@ -755,12 +747,15 @@
                         return false;
                     }
                     
-                    // 이메일 가입은 이미 전화번호 인증했으므로 바로 문서 생성
+                    // 이메일 가입은 이미 전화번호 인증했으므로 바로 문서 생성 (기본값 포함)
                     await setDoc(doc(db, 'users', user.email), {
                         email: user.email,
                         displayName: user.displayName || '',
                         phoneNumber: user.phoneNumber || '',
                         status: 'pending',
+                        subscriptionPeriod: 1,  // 기본값 1개월
+                        userType: 'free',
+                        subscriptionStatus: 'pending',
                         authTime: authTime,
                         expiryDate: new Date(authTime.getTime() + SESSION_DURATION),
                         lastLogin: serverTimestamp(),
@@ -943,11 +938,14 @@
                 // 이메일 계정 생성
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 
-                // Firestore에 사용자 정보 저장
+                // Firestore에 사용자 정보 저장 (기본값 포함)
                 await setDoc(doc(db, 'users', email), {
                     email: email,
                     phoneNumber: phoneNumber,
                     status: 'pending',
+                    subscriptionPeriod: 1,  // 기본값 1개월
+                    userType: 'free',
+                    subscriptionStatus: 'pending',
                     createdAt: serverTimestamp(),
                     provider: 'email'
                 });
@@ -993,15 +991,30 @@
                 // 전화번호 인증 성공, Firestore에 정보 저장
                 const phoneNumber = '+82' + document.getElementById('modalPhone').value.replace(/-/g, '');
                 
-                await setDoc(doc(db, 'users', currentAuthUser.email), {
-                    email: currentAuthUser.email,
-                    displayName: currentAuthUser.displayName || '',
-                    phoneNumber: phoneNumber,
-                    status: 'pending',
-                    createdAt: serverTimestamp(),
-                    provider: currentAuthUser.providerData[0]?.providerId || 'unknown',
-                    uid: currentAuthUser.uid
-                });
+                // 기존 사용자 데이터 확인
+                const userDoc = await getDoc(doc(db, 'users', currentAuthUser.email));
+                
+                if (userDoc.exists()) {
+                    // 기존 사용자: merge로 전화번호만 업데이트
+                    await setDoc(doc(db, 'users', currentAuthUser.email), {
+                        phoneNumber: phoneNumber,
+                        lastLogin: serverTimestamp()
+                    }, { merge: true });  // 기존 데이터 유지
+                } else {
+                    // 신규 사용자: 전체 데이터 생성
+                    await setDoc(doc(db, 'users', currentAuthUser.email), {
+                        email: currentAuthUser.email,
+                        displayName: currentAuthUser.displayName || '',
+                        phoneNumber: phoneNumber,
+                        status: 'pending',
+                        subscriptionPeriod: 1,  // 기본값 1개월
+                        userType: 'free',
+                        subscriptionStatus: 'pending',
+                        createdAt: serverTimestamp(),
+                        provider: currentAuthUser.providerData[0]?.providerId || 'unknown',
+                        uid: currentAuthUser.uid
+                    });
+                }
                 
                 hideLoading();
                 showSuccess('전화번호 인증이 완료되었습니다! 관리자 승인 후 이용 가능합니다.');
