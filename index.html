@@ -244,6 +244,20 @@
             display: flex;
             justify-content: center;
         }
+
+        .cafe-notice {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .cafe-notice a {
+            color: #1976d2;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -262,18 +276,23 @@
             <p>처리 중...</p>
         </div>
 
-        <!-- 이메일/패스워드 로그인 -->
+        <!-- 아이디/패스워드 로그인 -->
         <form id="emailForm">
             <div class="form-group">
-                <label for="email">이메일</label>
-                <input type="email" id="email" required>
+                <label for="username">아이디</label>
+                <input type="text" id="username" required placeholder="아이디를 입력하세요">
             </div>
             <div class="form-group">
                 <label for="password">비밀번호</label>
                 <input type="password" id="password" required>
             </div>
             
-            <!-- 전화번호 입력 (회원가입시에만 표시) -->
+            <!-- 회원가입시에만 표시되는 추가 필드들 -->
+            <div class="form-group" id="nameGroup" style="display: none;">
+                <label for="displayName">이름</label>
+                <input type="text" id="displayName" placeholder="실명을 입력하세요">
+            </div>
+            
             <div class="form-group" id="phoneGroup" style="display: none;">
                 <label for="phone">전화번호</label>
                 <div class="phone-input-group">
@@ -310,6 +329,12 @@
         <p>
             <a href="#" class="toggle-mode" id="toggleMode">계정이 없으신가요? 회원가입</a>
         </p>
+
+        <!-- 카페 인증 안내 -->
+        <div class="cafe-notice" id="cafeNotice">
+            <strong>✅ 회원가입이 완료되었습니다!</strong><br>
+            승인을 받으려면 <a href="https://cafe.naver.com/nblauto" target="_blank">네이버 카페</a>에서 인증 신청 글을 작성해주세요.
+        </div>
     </div>
 
     <!-- 전화번호 인증 모달 -->
@@ -414,8 +439,10 @@
         const toggleMode = document.getElementById('toggleMode');
         const userInfo = document.getElementById('userInfo');
         const phoneGroup = document.getElementById('phoneGroup');
+        const nameGroup = document.getElementById('nameGroup');
         const verifyGroup = document.getElementById('verifyGroup');
         const verifyBtn = document.getElementById('verifyBtn');
+        const cafeNotice = document.getElementById('cafeNotice');
 
         // 현재 모드 (로그인/회원가입)
         let isLoginMode = true;
@@ -529,6 +556,7 @@
             errorMessage.style.display = 'block';
             successMessage.style.display = 'none';
             warningMessage.style.display = 'none';
+            cafeNotice.style.display = 'none';
             hideCallbackStatus();
         }
 
@@ -555,6 +583,7 @@
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
             warningMessage.style.display = 'none';
+            cafeNotice.style.display = 'none';
         }
 
         // 콜백 상태 숨기기
@@ -865,8 +894,9 @@
             e.preventDefault();
             hideMessages();
 
-            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
+            const email = username.includes('@') ? username : `${username}@nbauto.com`;
 
             try {
                 if (isLoginMode) {
@@ -875,8 +905,15 @@
                 } else {
                     // 회원가입 모드
                     const phone = document.getElementById('phone').value;
+                    const displayName = document.getElementById('displayName').value.trim();
+                    
                     if (!phone) {
                         showError('전화번호를 입력해주세요.');
+                        return;
+                    }
+                    
+                    if (!displayName) {
+                        showError('이름을 입력해주세요.');
                         return;
                     }
                     
@@ -897,13 +934,13 @@
                         errorMsg = '잘못된 비밀번호입니다.';
                         break;
                     case 'auth/email-already-in-use':
-                        errorMsg = '이미 사용 중인 이메일입니다.';
+                        errorMsg = '이미 사용 중인 아이디입니다.';
                         break;
                     case 'auth/weak-password':
                         errorMsg = '비밀번호가 너무 약합니다. (6자 이상)';
                         break;
                     case 'auth/invalid-email':
-                        errorMsg = '잘못된 이메일 형식입니다.';
+                        errorMsg = '잘못된 아이디 형식입니다.';
                         break;
                     default:
                         errorMsg = error.message;
@@ -931,9 +968,11 @@
                 const result = await confirmationResult.confirm(code);
                 
                 // 전화번호 인증 성공, 이제 이메일 계정 생성
-                const email = document.getElementById('email').value;
+                const username = document.getElementById('username').value.trim();
+                const email = username.includes('@') ? username : `${username}@nbauto.com`;
                 const password = document.getElementById('password').value;
                 const phoneNumber = '+82' + document.getElementById('phone').value.replace(/-/g, '');
+                const displayName = document.getElementById('displayName').value.trim();
                 
                 // 이메일 계정 생성
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -941,6 +980,8 @@
                 // Firestore에 사용자 정보 저장 (기본값 포함)
                 await setDoc(doc(db, 'users', email), {
                     email: email,
+                    username: username,
+                    displayName: displayName,
                     phoneNumber: phoneNumber,
                     status: 'pending',
                     subscriptionPeriod: 1,  // 기본값 1개월
@@ -951,17 +992,18 @@
                 });
                 
                 hideLoading();
-                showSuccess('회원가입이 완료되었습니다! 관리자 승인 후 이용 가능합니다.');
+                hideMessages();
+                cafeNotice.style.display = 'block';
                 
                 // 로그아웃 처리
                 await signOut(auth);
                 
-                // 3초 후 로그인 모드로 전환
+                // 5초 후 로그인 모드로 전환
                 setTimeout(() => {
                     isLoginMode = true;
                     toggleFormMode();
                     hideMessages();
-                }, 3000);
+                }, 5000);
                 
             } catch (error) {
                 hideLoading();
@@ -1091,6 +1133,7 @@
                 document.getElementById('emailLoginBtn').textContent = '로그인';
                 toggleMode.textContent = '계정이 없으신가요? 회원가입';
                 phoneGroup.style.display = 'none';
+                nameGroup.style.display = 'none';
                 verifyGroup.style.display = 'none';
                 document.getElementById('recaptcha-container').style.display = 'none';
                 
@@ -1104,6 +1147,7 @@
                 document.getElementById('emailLoginBtn').textContent = '다음 단계 (전화번호 인증)';
                 toggleMode.textContent = '이미 계정이 있으신가요? 로그인';
                 phoneGroup.style.display = 'block';
+                nameGroup.style.display = 'block';
             }
         }
 
