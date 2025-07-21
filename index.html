@@ -54,7 +54,7 @@
             font-weight: 500;
         }
 
-        input[type="email"], input[type="password"] {
+        input[type="email"], input[type="password"], input[type="tel"], input[type="text"], select {
             width: 100%;
             padding: 12px;
             border: 2px solid #e1e5e9;
@@ -63,9 +63,22 @@
             transition: border-color 0.3s;
         }
 
-        input[type="email"]:focus, input[type="password"]:focus {
+        input[type="email"]:focus, input[type="password"]:focus, input[type="tel"]:focus, input[type="text"]:focus, select:focus {
             outline: none;
             border-color: #667eea;
+        }
+
+        .phone-input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .phone-input-group select {
+            width: 100px;
+        }
+
+        .phone-input-group input {
+            flex: 1;
         }
 
         .btn {
@@ -88,6 +101,15 @@
         .btn-primary:hover {
             background: #5a6fd8;
             transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #218838;
         }
 
         .btn-google {
@@ -158,6 +180,15 @@
             display: none;
         }
 
+        .warning-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
         .loading {
             display: none;
             margin: 20px 0;
@@ -206,6 +237,12 @@
             margin-bottom: 20px;
             display: none;
         }
+
+        #recaptcha-container {
+            margin: 10px 0;
+            display: flex;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
@@ -216,11 +253,12 @@
 
         <div class="error-message" id="errorMessage"></div>
         <div class="success-message" id="successMessage"></div>
+        <div class="warning-message" id="warningMessage"></div>
         <div class="callback-status" id="callbackStatus"></div>
         
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <p>로그인 중...</p>
+            <p>처리 중...</p>
         </div>
 
         <!-- 이메일/패스워드 로그인 -->
@@ -233,6 +271,26 @@
                 <label for="password">비밀번호</label>
                 <input type="password" id="password" required>
             </div>
+            
+            <!-- 전화번호 입력 (회원가입시에만 표시) -->
+            <div class="form-group" id="phoneGroup" style="display: none;">
+                <label for="phone">전화번호</label>
+                <div class="phone-input-group">
+                    <input type="text" value="+82" readonly style="width: 60px; background-color: #f5f5f5;">
+                    <input type="tel" id="phone" placeholder="010-1234-5678">
+                </div>
+            </div>
+            
+            <!-- 인증번호 입력 (인증시에만 표시) -->
+            <div class="form-group" id="verifyGroup" style="display: none;">
+                <label for="verifyCode">인증번호</label>
+                <input type="text" id="verifyCode" placeholder="6자리 인증번호">
+                <button type="button" class="btn btn-secondary" id="verifyBtn" style="margin-top: 10px;">인증번호 확인</button>
+            </div>
+            
+            <!-- reCAPTCHA 컨테이너 -->
+            <div id="recaptcha-container"></div>
+            
             <button type="submit" class="btn btn-primary" id="emailLoginBtn">로그인</button>
         </form>
 
@@ -251,6 +309,35 @@
         <p>
             <a href="#" class="toggle-mode" id="toggleMode">계정이 없으신가요? 회원가입</a>
         </p>
+    </div>
+
+    <!-- 전화번호 인증 모달 -->
+    <div class="login-container" id="phoneVerificationModal" style="display: none;">
+        <div class="logo">nbauto</div>
+        <div class="subtitle">전화번호 인증</div>
+        
+        <p style="margin: 20px 0; color: #666;">
+            첫 로그인시 전화번호 인증이 필요합니다.<br>
+            한 번만 인증하시면 됩니다.
+        </p>
+        
+        <div class="form-group">
+            <label for="modalPhone">전화번호</label>
+            <div class="phone-input-group">
+                <input type="text" value="+82" readonly style="width: 60px; background-color: #f5f5f5;">
+                <input type="tel" id="modalPhone" placeholder="010-1234-5678" style="flex: 1;">
+            </div>
+        </div>
+        
+        <div class="form-group" id="modalVerifyGroup" style="display: none;">
+            <label for="modalVerifyCode">인증번호</label>
+            <input type="text" id="modalVerifyCode" placeholder="6자리 인증번호">
+        </div>
+        
+        <div id="modal-recaptcha-container"></div>
+        
+        <button class="btn btn-primary" id="sendVerificationBtn">인증번호 발송</button>
+        <button class="btn btn-secondary" id="confirmVerificationBtn" style="display: none;">인증 완료</button>
     </div>
 
     <!-- 대시보드 화면 -->
@@ -281,7 +368,9 @@
             GoogleAuthProvider,
             GithubAuthProvider,
             onAuthStateChanged,
-            signOut
+            signOut,
+            RecaptchaVerifier,
+            signInWithPhoneNumber
         } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
         import { 
             getFirestore, 
@@ -313,20 +402,45 @@
         // DOM 요소
         const loginForm = document.getElementById('loginForm');
         const dashboard = document.getElementById('dashboard');
+        const phoneVerificationModal = document.getElementById('phoneVerificationModal');
         const emailForm = document.getElementById('emailForm');
         const errorMessage = document.getElementById('errorMessage');
         const successMessage = document.getElementById('successMessage');
+        const warningMessage = document.getElementById('warningMessage');
         const callbackStatus = document.getElementById('callbackStatus');
         const callbackStatusDashboard = document.getElementById('callbackStatusDashboard');
         const loading = document.getElementById('loading');
         const toggleMode = document.getElementById('toggleMode');
         const userInfo = document.getElementById('userInfo');
+        const phoneGroup = document.getElementById('phoneGroup');
+        const verifyGroup = document.getElementById('verifyGroup');
+        const verifyBtn = document.getElementById('verifyBtn');
 
         // 현재 모드 (로그인/회원가입)
         let isLoginMode = true;
+        let recaptchaVerifier = null;
+        let modalRecaptchaVerifier = null;
+        let confirmationResult = null;
+        let modalConfirmationResult = null;
+        let currentAuthUser = null;
 
         // 세션 지속 시간 (30일)
         const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 밀리초
+
+        // 사용자 승인 상태 확인
+        async function checkUserApprovalStatus(email) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', email));
+                if (userDoc.exists()) {
+                    const userData = userDoc.to_dict();
+                    return userData.status === 'approved';
+                }
+                return false;
+            } catch (error) {
+                console.error('승인 상태 확인 오류:', error);
+                return false;
+            }
+        }
 
         // 🚀 Python 프로그램으로 로그인 정보 전송
         async function sendToLocalApp(userData) {
@@ -392,6 +506,7 @@
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
             successMessage.style.display = 'none';
+            warningMessage.style.display = 'none';
             hideCallbackStatus();
         }
 
@@ -400,12 +515,22 @@
             successMessage.textContent = message;
             successMessage.style.display = 'block';
             errorMessage.style.display = 'none';
+            warningMessage.style.display = 'none';
+        }
+
+        // 경고 메시지 표시
+        function showWarning(message) {
+            warningMessage.textContent = message;
+            warningMessage.style.display = 'block';
+            errorMessage.style.display = 'none';
+            successMessage.style.display = 'none';
         }
 
         // 메시지 숨기기
         function hideMessages() {
             errorMessage.style.display = 'none';
             successMessage.style.display = 'none';
+            warningMessage.style.display = 'none';
         }
 
         // 콜백 상태 숨기기
@@ -414,13 +539,54 @@
         }
 
         // 로딩 표시
-        function showLoading() {
+        function showLoading(message = '처리 중...') {
             loading.style.display = 'block';
+            loading.querySelector('p').textContent = message;
         }
 
         // 로딩 숨기기
         function hideLoading() {
             loading.style.display = 'none';
+        }
+
+        // reCAPTCHA 초기화
+        function setupRecaptcha() {
+            if (!recaptchaVerifier) {
+                recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'normal',
+                    'callback': (response) => {
+                        // reCAPTCHA 해결됨
+                    }
+                });
+            }
+        }
+
+        // 전화번호 인증 시작
+        async function startPhoneAuth() {
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phone').value;
+            const fullPhoneNumber = countryCode + phoneNumber.replace(/-/g, '');
+
+            setupRecaptcha();
+            
+            try {
+                showLoading('인증번호 발송 중...');
+                confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, recaptchaVerifier);
+                hideLoading();
+                showSuccess('인증번호가 발송되었습니다. SMS를 확인해주세요.');
+                verifyGroup.style.display = 'block';
+                document.getElementById('recaptcha-container').style.display = 'none';
+            } catch (error) {
+                hideLoading();
+                console.error('전화번호 인증 오류:', error);
+                showError('전화번호 인증에 실패했습니다. 올바른 번호인지 확인해주세요.');
+                // reCAPTCHA 리셋
+                if (recaptchaVerifier) {
+                    recaptchaVerifier.clear();
+                    recaptchaVerifier = null;
+                    document.getElementById('recaptcha-container').innerHTML = '';
+                }
+            }
         }
 
         // 사용자 세션 시간 체크
@@ -430,26 +596,44 @@
                 const authTime = new Date(idTokenResult.claims.auth_time * 1000);
                 const now = new Date();
                 
-                // Firestore에서 사용자별 만료일 확인
-                const userDoc = await getDoc(doc(db, 'users', user.uid));
-                let expirationTime;
+                // Firestore에서 사용자별 만료일 및 승인 상태 확인
+                const userDoc = await getDoc(doc(db, 'users', user.email));
                 
-                if (userDoc.exists() && userDoc.data().customExpiryDate) {
-                    // 관리자가 설정한 커스텀 만료일이 있는 경우
-                    expirationTime = userDoc.data().customExpiryDate.toDate();
-                } else {
-                    // 기본 30일 세션
-                    expirationTime = new Date(authTime.getTime() + SESSION_DURATION);
-                    
-                    // 사용자 정보를 Firestore에 저장
-                    await setDoc(doc(db, 'users', user.uid), {
+                if (!userDoc.exists()) {
+                    // 첫 로그인인 경우 사용자 문서 생성
+                    await setDoc(doc(db, 'users', user.email), {
                         email: user.email,
                         displayName: user.displayName || '',
+                        phoneNumber: user.phoneNumber || '',
+                        status: 'pending',
                         authTime: authTime,
-                        expiryDate: expirationTime,
+                        expiryDate: new Date(authTime.getTime() + SESSION_DURATION),
                         lastLogin: serverTimestamp(),
                         provider: user.providerData[0]?.providerId || 'email'
-                    }, { merge: true });
+                    });
+                    
+                    showWarning('회원가입이 완료되었습니다. 관리자 승인 후 이용 가능합니다.');
+                    await signOut(auth);
+                    return false;
+                }
+                
+                const userData = userDoc.data();
+                
+                // 승인 상태 확인
+                if (userData.status !== 'approved') {
+                    showWarning('계정 승인 대기 중입니다. 관리자 승인 후 이용 가능합니다.');
+                    await signOut(auth);
+                    return false;
+                }
+                
+                // 만료일 확인
+                let expirationTime;
+                if (userData.customExpiryDate) {
+                    expirationTime = userData.customExpiryDate.toDate();
+                } else if (userData.endDate) {
+                    expirationTime = new Date(userData.endDate);
+                } else {
+                    expirationTime = userData.expiryDate?.toDate() || new Date(authTime.getTime() + SESSION_DURATION);
                 }
 
                 // 세션 만료 체크
@@ -466,10 +650,17 @@
                 userInfo.innerHTML = `
                     <h3>환영합니다, ${user.displayName || user.email}!</h3>
                     <p><strong>이메일:</strong> ${user.email}</p>
+                    <p><strong>전화번호:</strong> ${userData.phoneNumber || '미등록'}</p>
                     <p><strong>로그인 방법:</strong> ${user.providerData[0]?.providerId || 'email'}</p>
+                    <p><strong>승인 상태:</strong> ${userData.status === 'approved' ? '✅ 승인됨' : '⏳ 대기중'}</p>
                     <p><strong>남은 사용 기간:</strong> ${remainingTime}일</p>
                     <p><strong>만료일:</strong> ${expirationTime.toLocaleDateString('ko-KR')}</p>
                 `;
+
+                // 최근 로그인 시간 업데이트
+                await setDoc(doc(db, 'users', user.email), {
+                    lastLogin: serverTimestamp()
+                }, { merge: true });
 
                 return true;
             } catch (error) {
@@ -511,17 +702,24 @@
         emailForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             hideMessages();
-            showLoading();
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
             try {
                 if (isLoginMode) {
+                    showLoading('로그인 중...');
                     await signInWithEmailAndPassword(auth, email, password);
                 } else {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    showSuccess('회원가입이 완료되었습니다!');
+                    // 회원가입 모드
+                    const phone = document.getElementById('phone').value;
+                    if (!phone) {
+                        showError('전화번호를 입력해주세요.');
+                        return;
+                    }
+                    
+                    // 전화번호 인증 시작
+                    await startPhoneAuth();
                 }
             } catch (error) {
                 hideLoading();
@@ -538,7 +736,7 @@
                         errorMsg = '이미 사용 중인 이메일입니다.';
                         break;
                     case 'auth/weak-password':
-                        errorMsg = '비밀번호가 너무 약합니다.';
+                        errorMsg = '비밀번호가 너무 약합니다. (6자 이상)';
                         break;
                     case 'auth/invalid-email':
                         errorMsg = '잘못된 이메일 형식입니다.';
@@ -548,13 +746,63 @@
             }
         });
 
+        // 인증번호 확인
+        verifyBtn.addEventListener('click', async () => {
+            const code = document.getElementById('verifyCode').value;
+            
+            if (!confirmationResult) {
+                showError('인증 요청을 먼저 진행해주세요.');
+                return;
+            }
+            
+            try {
+                showLoading('인증번호 확인 중...');
+                const result = await confirmationResult.confirm(code);
+                
+                // 전화번호 인증 성공, 이제 이메일 계정 생성
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const countryCode = document.getElementById('countryCode').value;
+                const phoneNumber = countryCode + document.getElementById('phone').value.replace(/-/g, '');
+                
+                await createUserWithEmailAndPassword(auth, email, password);
+                
+                // Firestore에 사용자 정보 저장
+                await setDoc(doc(db, 'users', email), {
+                    email: email,
+                    phoneNumber: phoneNumber,
+                    status: 'pending',
+                    createdAt: serverTimestamp(),
+                    provider: 'email'
+                });
+                
+                hideLoading();
+                showSuccess('회원가입이 완료되었습니다! 관리자 승인 후 이용 가능합니다.');
+                
+                // 로그아웃 처리
+                await signOut(auth);
+                
+                // 3초 후 로그인 모드로 전환
+                setTimeout(() => {
+                    isLoginMode = true;
+                    toggleFormMode();
+                }, 3000);
+                
+            } catch (error) {
+                hideLoading();
+                console.error('인증 오류:', error);
+                showError('인증번호가 올바르지 않습니다.');
+            }
+        });
+
         // Google 로그인
         document.getElementById('googleLoginBtn').addEventListener('click', async () => {
             hideMessages();
-            showLoading();
+            showLoading('Google 로그인 중...');
             
             try {
-                await signInWithPopup(auth, googleProvider);
+                const result = await signInWithPopup(auth, googleProvider);
+                // 구글 로그인도 승인 체크는 onAuthStateChanged에서 처리됨
             } catch (error) {
                 hideLoading();
                 showError('Google 로그인에 실패했습니다.');
@@ -564,10 +812,11 @@
         // GitHub 로그인
         document.getElementById('githubLoginBtn').addEventListener('click', async () => {
             hideMessages();
-            showLoading();
+            showLoading('GitHub 로그인 중...');
             
             try {
-                await signInWithPopup(auth, githubProvider);
+                const result = await signInWithPopup(auth, githubProvider);
+                // 깃허브 로그인도 승인 체크는 onAuthStateChanged에서 처리됨
             } catch (error) {
                 hideLoading();
                 showError('GitHub 로그인에 실패했습니다.');
@@ -584,20 +833,28 @@
             }
         });
 
-        // 로그인/회원가입 모드 토글
-        toggleMode.addEventListener('click', (e) => {
-            e.preventDefault();
+        // 폼 모드 전환 함수
+        function toggleFormMode() {
             hideMessages();
-            
-            isLoginMode = !isLoginMode;
             
             if (isLoginMode) {
                 document.getElementById('emailLoginBtn').textContent = '로그인';
                 toggleMode.textContent = '계정이 없으신가요? 회원가입';
+                phoneGroup.style.display = 'none';
+                verifyGroup.style.display = 'none';
+                document.getElementById('recaptcha-container').style.display = 'none';
             } else {
-                document.getElementById('emailLoginBtn').textContent = '회원가입';
+                document.getElementById('emailLoginBtn').textContent = '회원가입 시작';
                 toggleMode.textContent = '이미 계정이 있으신가요? 로그인';
+                phoneGroup.style.display = 'block';
             }
+        }
+
+        // 로그인/회원가입 모드 토글
+        toggleMode.addEventListener('click', (e) => {
+            e.preventDefault();
+            isLoginMode = !isLoginMode;
+            toggleFormMode();
         });
     </script>
 </body>
