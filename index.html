@@ -112,24 +112,6 @@
             background: #218838;
         }
 
-        .btn-google {
-            background: #db4437;
-            color: white;
-        }
-
-        .btn-google:hover {
-            background: #c23321;
-        }
-
-        .btn-github {
-            background: #333;
-            color: white;
-        }
-
-        .btn-github:hover {
-            background: #222;
-        }
-
         .divider {
             margin: 20px 0;
             position: relative;
@@ -360,10 +342,6 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
-        // 프로바이더 설정
-        const googleProvider = new GoogleAuthProvider();
-        const githubProvider = new GithubAuthProvider();
 
         // DOM 요소
         const loginForm = document.getElementById('loginForm');
@@ -725,38 +703,6 @@
                         errorMsg = error.message;
                 }
                 showError(errorMsg);
-            }
-        });
-
-        // Google 로그인
-        document.getElementById('googleLoginBtn').addEventListener('click', async () => {
-            hideMessages();
-            showLoading('Google 로그인 중...');
-            
-            try {
-                const result = await signInWithPopup(auth, googleProvider);
-                console.log('Google 로그인 성공:', result.user.email);
-                // 승인 체크는 onAuthStateChanged에서 처리됨
-            } catch (error) {
-                hideLoading();
-                console.error('Google 로그인 오류:', error);
-                showError('Google 로그인에 실패했습니다. (에러: ' + error.code + ')');
-            }
-        });
-
-        // GitHub 로그인
-        document.getElementById('githubLoginBtn').addEventListener('click', async () => {
-            hideMessages();
-            showLoading('GitHub 로그인 중...');
-            
-            try {
-                const result = await signInWithPopup(auth, githubProvider);
-                console.log('GitHub 로그인 성공:', result.user.email);
-                // 승인 체크는 onAuthStateChanged에서 처리됨
-            } catch (error) {
-                hideLoading();
-                console.error('GitHub 로그인 오류:', error);
-                showError('GitHub 로그인에 실패했습니다. (에러: ' + error.code + ')');
             }
         });
 
