@@ -575,46 +575,72 @@
 
         // reCAPTCHA 초기화
         function setupRecaptcha() {
-            if (!recaptchaVerifier) {
-                try {
-                    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                        'size': 'normal',
-                        'callback': (response) => {
-                            console.log('reCAPTCHA 해결됨');
-                        },
-                        'expired-callback': () => {
-                            console.log('reCAPTCHA 만료됨');
+            // 기존 reCAPTCHA가 있으면 제거
+            if (recaptchaVerifier) {
+                recaptchaVerifier.clear();
+                recaptchaVerifier = null;
+                document.getElementById('recaptcha-container').innerHTML = '';
+            }
+            
+            try {
+                // invisible로 변경하여 자동 처리
+                recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        console.log('reCAPTCHA 자동 해결됨');
+                    },
+                    'expired-callback': () => {
+                        console.log('reCAPTCHA 만료됨');
+                        if (recaptchaVerifier) {
+                            recaptchaVerifier.clear();
+                            recaptchaVerifier = null;
                         }
-                    });
-                    recaptchaVerifier.render();
-                } catch (error) {
-                    console.error('reCAPTCHA 초기화 오류:', error);
-                }
+                    }
+                });
+            } catch (error) {
+                console.error('reCAPTCHA 초기화 오류:', error);
             }
         }
 
         // 모달 reCAPTCHA 초기화
         function setupModalRecaptcha() {
-            if (!modalRecaptchaVerifier) {
-                try {
-                    modalRecaptchaVerifier = new RecaptchaVerifier(auth, 'modal-recaptcha-container', {
-                        'size': 'normal',
-                        'callback': (response) => {
-                            console.log('모달 reCAPTCHA 해결됨');
+            // 기존 reCAPTCHA가 있으면 제거
+            if (modalRecaptchaVerifier) {
+                modalRecaptchaVerifier.clear();
+                modalRecaptchaVerifier = null;
+                document.getElementById('modal-recaptcha-container').innerHTML = '';
+            }
+            
+            try {
+                // invisible로 변경하여 자동 처리
+                modalRecaptchaVerifier = new RecaptchaVerifier(auth, 'modal-recaptcha-container', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        console.log('모달 reCAPTCHA 자동 해결됨');
+                    },
+                    'expired-callback': () => {
+                        console.log('모달 reCAPTCHA 만료됨');
+                        if (modalRecaptchaVerifier) {
+                            modalRecaptchaVerifier.clear();
+                            modalRecaptchaVerifier = null;
                         }
-                    });
-                    modalRecaptchaVerifier.render();
-                } catch (error) {
-                    console.error('모달 reCAPTCHA 초기화 오류:', error);
-                }
+                    }
+                });
+            } catch (error) {
+                console.error('모달 reCAPTCHA 초기화 오류:', error);
             }
         }
 
         // 전화번호 인증 시작
         async function startPhoneAuth() {
-            const phoneNumber = '+82' + document.getElementById('phone').value.replace(/-/g, '');
+            const phoneNumber = '+82' + document.getElementById('phone').value.replace(/-/g, '').replace(/\s/g, '');
             
             console.log('전화번호 인증 시작:', phoneNumber);
+            
+            // 테스트 번호인지 확인
+            if (phoneNumber === '+821012345678') {
+                console.log('테스트 전화번호 감지됨');
+            }
             
             if (phoneNumber.length < 10) {
                 showError('올바른 전화번호를 입력해주세요.');
@@ -625,6 +651,12 @@
             
             try {
                 showLoading('인증번호 발송 중...');
+                
+                // recaptchaVerifier가 없으면 생성
+                if (!recaptchaVerifier) {
+                    setupRecaptcha();
+                }
+                
                 confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
                 hideLoading();
                 showSuccess('인증번호가 발송되었습니다. SMS를 확인해주세요.');
@@ -639,6 +671,8 @@
                     errorMsg = '올바른 전화번호 형식이 아닙니다.';
                 } else if (error.code === 'auth/too-many-requests') {
                     errorMsg = '너무 많은 요청이 있었습니다. 잠시 후 다시 시도해주세요.';
+                } else if (error.code === 'auth/captcha-check-failed') {
+                    errorMsg = 'reCAPTCHA 검증에 실패했습니다. 페이지를 새로고침 후 다시 시도해주세요.';
                 }
                 
                 showError(errorMsg + ' (에러 코드: ' + error.code + ')');
@@ -654,9 +688,14 @@
 
         // 모달에서 전화번호 인증 시작
         async function startModalPhoneAuth() {
-            const phoneNumber = '+82' + document.getElementById('modalPhone').value.replace(/-/g, '');
+            const phoneNumber = '+82' + document.getElementById('modalPhone').value.replace(/-/g, '').replace(/\s/g, '');
             
             console.log('모달 전화번호 인증 시작:', phoneNumber);
+            
+            // 테스트 번호인지 확인
+            if (phoneNumber === '+821012345678') {
+                console.log('테스트 전화번호 감지됨');
+            }
             
             if (phoneNumber.length < 10) {
                 showError('올바른 전화번호를 입력해주세요.');
@@ -667,6 +706,12 @@
             
             try {
                 showLoading('인증번호 발송 중...');
+                
+                // recaptchaVerifier가 없으면 생성
+                if (!modalRecaptchaVerifier) {
+                    setupModalRecaptcha();
+                }
+                
                 modalConfirmationResult = await signInWithPhoneNumber(auth, phoneNumber, modalRecaptchaVerifier);
                 hideLoading();
                 showSuccess('인증번호가 발송되었습니다. SMS를 확인해주세요.');
@@ -678,7 +723,13 @@
             } catch (error) {
                 hideLoading();
                 console.error('모달 전화번호 인증 오류:', error);
-                showError('전화번호 인증에 실패했습니다. (에러: ' + error.code + ')');
+                
+                let errorMsg = '전화번호 인증에 실패했습니다.';
+                if (error.code === 'auth/captcha-check-failed') {
+                    errorMsg = 'reCAPTCHA 검증에 실패했습니다. 페이지를 새로고침 후 다시 시도해주세요.';
+                }
+                
+                showError(errorMsg + ' (에러: ' + error.code + ')');
                 
                 // reCAPTCHA 리셋
                 if (modalRecaptchaVerifier) {
