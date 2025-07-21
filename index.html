@@ -575,15 +575,14 @@
 
         // reCAPTCHA 초기화
         function setupRecaptcha() {
-            // 기존 reCAPTCHA가 있으면 제거
+            // 이미 reCAPTCHA가 있으면 재사용 (중복 생성 방지)
             if (recaptchaVerifier) {
-                recaptchaVerifier.clear();
-                recaptchaVerifier = null;
-                document.getElementById('recaptcha-container').innerHTML = '';
+                console.log('기존 reCAPTCHA 재사용');
+                return;
             }
             
             try {
-                // invisible로 변경하여 자동 처리
+                // invisible로 자동 처리
                 recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
                     'size': 'invisible',
                     'callback': (response) => {
@@ -591,12 +590,10 @@
                     },
                     'expired-callback': () => {
                         console.log('reCAPTCHA 만료됨');
-                        if (recaptchaVerifier) {
-                            recaptchaVerifier.clear();
-                            recaptchaVerifier = null;
-                        }
+                        // 만료시에도 clear하지 않고 재생성 대기
                     }
                 });
+                console.log('reCAPTCHA 생성 완료');
             } catch (error) {
                 console.error('reCAPTCHA 초기화 오류:', error);
             }
@@ -604,15 +601,14 @@
 
         // 모달 reCAPTCHA 초기화
         function setupModalRecaptcha() {
-            // 기존 reCAPTCHA가 있으면 제거
+            // 이미 reCAPTCHA가 있으면 재사용 (중복 생성 방지)
             if (modalRecaptchaVerifier) {
-                modalRecaptchaVerifier.clear();
-                modalRecaptchaVerifier = null;
-                document.getElementById('modal-recaptcha-container').innerHTML = '';
+                console.log('기존 모달 reCAPTCHA 재사용');
+                return;
             }
             
             try {
-                // invisible로 변경하여 자동 처리
+                // invisible로 자동 처리
                 modalRecaptchaVerifier = new RecaptchaVerifier(auth, 'modal-recaptcha-container', {
                     'size': 'invisible',
                     'callback': (response) => {
@@ -620,12 +616,10 @@
                     },
                     'expired-callback': () => {
                         console.log('모달 reCAPTCHA 만료됨');
-                        if (modalRecaptchaVerifier) {
-                            modalRecaptchaVerifier.clear();
-                            modalRecaptchaVerifier = null;
-                        }
+                        // 만료시에도 clear하지 않고 재생성 대기
                     }
                 });
+                console.log('모달 reCAPTCHA 생성 완료');
             } catch (error) {
                 console.error('모달 reCAPTCHA 초기화 오류:', error);
             }
