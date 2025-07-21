@@ -150,6 +150,7 @@
             background: white;
             padding: 0 15px;
             color: #666;
+            position: relative;
         }
 
         .toggle-mode {
@@ -238,7 +239,7 @@
             display: none;
         }
 
-        #recaptcha-container {
+        #recaptcha-container, #modal-recaptcha-container {
             margin: 10px 0;
             display: flex;
             justify-content: center;
@@ -427,17 +428,36 @@
         // 세션 지속 시간 (30일)
         const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 밀리초
 
+        // 디버깅 로그
+        console.log('Firebase Auth 초기화 완료');
+
         // 사용자 승인 상태 확인
         async function checkUserApprovalStatus(email) {
             try {
                 const userDoc = await getDoc(doc(db, 'users', email));
                 if (userDoc.exists()) {
-                    const userData = userDoc.to_dict();
+                    const userData = userDoc.data();
+                    console.log('사용자 상태:', userData.status);
                     return userData.status === 'approved';
                 }
                 return false;
             } catch (error) {
                 console.error('승인 상태 확인 오류:', error);
+                return false;
+            }
+        }
+
+        // 전화번호가 있는지 확인
+        async function checkPhoneNumber(email) {
+            try {
+                const userDoc = await getDoc(doc(db, 'users', email));
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    return userData.phoneNumber && userData.phoneNumber.length > 0;
+                }
+                return false;
+            } catch (error) {
+                console.error('전화번호 확인 오류:', error);
                 return false;
             }
         }
@@ -458,7 +478,8 @@
                         provider: userData.provider || 'email',
                         uid: userData.uid,
                         photoURL: userData.photoURL || null,
-                        timestamp: new Date().toISOString()
+                        timestamp: new Date().toISOString(),
+                        success: true
                     })
                 });
 
@@ -503,6 +524,7 @@
 
         // 오류 메시지 표시
         function showError(message) {
+            console.error('오류:', message);
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
             successMessage.style.display = 'none';
@@ -512,6 +534,7 @@
 
         // 성공 메시지 표시
         function showSuccess(message) {
+            console.log('성공:', message);
             successMessage.textContent = message;
             successMessage.style.display = 'block';
             errorMessage.style.display = 'none';
@@ -520,6 +543,7 @@
 
         // 경고 메시지 표시
         function showWarning(message) {
+            console.warn('경고:', message);
             warningMessage.textContent = message;
             warningMessage.style.display = 'block';
             errorMessage.style.display = 'none';
@@ -552,26 +576,56 @@
         // reCAPTCHA 초기화
         function setupRecaptcha() {
             if (!recaptchaVerifier) {
-                recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
-                    'size': 'normal',
-                    'callback': (response) => {
-                        // reCAPTCHA 해결됨
-                    }
-                });
+                try {
+                    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', {
+                        'size': 'normal',
+                        'callback': (response) => {
+                            console.log('reCAPTCHA 해결됨');
+                        },
+                        'expired-callback': () => {
+                            console.log('reCAPTCHA 만료됨');
+                        }
+                    });
+                    recaptchaVerifier.render();
+                } catch (error) {
+                    console.error('reCAPTCHA 초기화 오류:', error);
+                }
+            }
+        }
+
+        // 모달 reCAPTCHA 초기화
+        function setupModalRecaptcha() {
+            if (!modalRecaptchaVerifier) {
+                try {
+                    modalRecaptchaVerifier = new RecaptchaVerifier(auth, 'modal-recaptcha-container', {
+                        'size': 'normal',
+                        'callback': (response) => {
+                            console.log('모달 reCAPTCHA 해결됨');
+                        }
+                    });
+                    modalRecaptchaVerifier.render();
+                } catch (error) {
+                    console.error('모달 reCAPTCHA 초기화 오류:', error);
+                }
             }
         }
 
         // 전화번호 인증 시작
         async function startPhoneAuth() {
-            const countryCode = document.getElementById('countryCode').value;
-            const phoneNumber = document.getElementById('phone').value;
-            const fullPhoneNumber = countryCode + phoneNumber.replace(/-/g, '');
+            const phoneNumber = '+82' + document.getElementById('phone').value.replace(/-/g, '');
+            
+            console.log('전화번호 인증 시작:', phoneNumber);
+            
+            if (phoneNumber.length < 10) {
+                showError('올바른 전화번호를 입력해주세요.');
+                return;
+            }
 
             setupRecaptcha();
             
             try {
                 showLoading('인증번호 발송 중...');
-                confirmationResult = await signInWithPhoneNumber(auth, fullPhoneNumber, recaptchaVerifier);
+                confirmationResult = await signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier);
                 hideLoading();
                 showSuccess('인증번호가 발송되었습니다. SMS를 확인해주세요.');
                 verifyGroup.style.display = 'block';
@@ -579,12 +633,58 @@
             } catch (error) {
                 hideLoading();
                 console.error('전화번호 인증 오류:', error);
-                showError('전화번호 인증에 실패했습니다. 올바른 번호인지 확인해주세요.');
+                
+                let errorMsg = '전화번호 인증에 실패했습니다.';
+                if (error.code === 'auth/invalid-phone-number') {
+                    errorMsg = '올바른 전화번호 형식이 아닙니다.';
+                } else if (error.code === 'auth/too-many-requests') {
+                    errorMsg = '너무 많은 요청이 있었습니다. 잠시 후 다시 시도해주세요.';
+                }
+                
+                showError(errorMsg + ' (에러 코드: ' + error.code + ')');
+                
                 // reCAPTCHA 리셋
                 if (recaptchaVerifier) {
                     recaptchaVerifier.clear();
                     recaptchaVerifier = null;
                     document.getElementById('recaptcha-container').innerHTML = '';
+                }
+            }
+        }
+
+        // 모달에서 전화번호 인증 시작
+        async function startModalPhoneAuth() {
+            const phoneNumber = '+82' + document.getElementById('modalPhone').value.replace(/-/g, '');
+            
+            console.log('모달 전화번호 인증 시작:', phoneNumber);
+            
+            if (phoneNumber.length < 10) {
+                showError('올바른 전화번호를 입력해주세요.');
+                return;
+            }
+
+            setupModalRecaptcha();
+            
+            try {
+                showLoading('인증번호 발송 중...');
+                modalConfirmationResult = await signInWithPhoneNumber(auth, phoneNumber, modalRecaptchaVerifier);
+                hideLoading();
+                showSuccess('인증번호가 발송되었습니다. SMS를 확인해주세요.');
+                
+                document.getElementById('modalVerifyGroup').style.display = 'block';
+                document.getElementById('sendVerificationBtn').style.display = 'none';
+                document.getElementById('confirmVerificationBtn').style.display = 'block';
+                document.getElementById('modal-recaptcha-container').style.display = 'none';
+            } catch (error) {
+                hideLoading();
+                console.error('모달 전화번호 인증 오류:', error);
+                showError('전화번호 인증에 실패했습니다. (에러: ' + error.code + ')');
+                
+                // reCAPTCHA 리셋
+                if (modalRecaptchaVerifier) {
+                    modalRecaptchaVerifier.clear();
+                    modalRecaptchaVerifier = null;
+                    document.getElementById('modal-recaptcha-container').innerHTML = '';
                 }
             }
         }
@@ -600,7 +700,17 @@
                 const userDoc = await getDoc(doc(db, 'users', user.email));
                 
                 if (!userDoc.exists()) {
-                    // 첫 로그인인 경우 사용자 문서 생성
+                    console.log('첫 로그인 사용자:', user.email);
+                    
+                    // 구글/깃허브 로그인의 경우 전화번호 인증 필요
+                    if (user.providerData[0]?.providerId !== 'password') {
+                        currentAuthUser = user;
+                        loginForm.style.display = 'none';
+                        phoneVerificationModal.style.display = 'block';
+                        return false;
+                    }
+                    
+                    // 이메일 가입은 이미 전화번호 인증했으므로 바로 문서 생성
                     await setDoc(doc(db, 'users', user.email), {
                         email: user.email,
                         displayName: user.displayName || '',
@@ -618,6 +728,15 @@
                 }
                 
                 const userData = userDoc.data();
+                
+                // 전화번호가 없는 기존 사용자는 전화번호 인증 요청
+                if (!userData.phoneNumber || userData.phoneNumber === '') {
+                    console.log('전화번호 없는 기존 사용자:', user.email);
+                    currentAuthUser = user;
+                    loginForm.style.display = 'none';
+                    phoneVerificationModal.style.display = 'block';
+                    return false;
+                }
                 
                 // 승인 상태 확인
                 if (userData.status !== 'approved') {
@@ -675,9 +794,11 @@
             hideLoading();
             
             if (user) {
+                console.log('로그인된 사용자:', user.email);
                 const isValidSession = await checkUserSession(user);
                 if (isValidSession) {
                     loginForm.style.display = 'none';
+                    phoneVerificationModal.style.display = 'none';
                     dashboard.style.display = 'block';
                     
                     // 🚀 Python 프로그램으로 로그인 정보 전송
@@ -694,6 +815,7 @@
             } else {
                 loginForm.style.display = 'block';
                 dashboard.style.display = 'none';
+                phoneVerificationModal.style.display = 'none';
                 hideCallbackStatus();
             }
         });
@@ -723,6 +845,8 @@
                 }
             } catch (error) {
                 hideLoading();
+                console.error('로그인/가입 오류:', error);
+                
                 let errorMsg = '오류가 발생했습니다.';
                 
                 switch (error.code) {
@@ -741,6 +865,8 @@
                     case 'auth/invalid-email':
                         errorMsg = '잘못된 이메일 형식입니다.';
                         break;
+                    default:
+                        errorMsg = error.message;
                 }
                 showError(errorMsg);
             }
@@ -755,6 +881,11 @@
                 return;
             }
             
+            if (!code || code.length !== 6) {
+                showError('6자리 인증번호를 입력해주세요.');
+                return;
+            }
+            
             try {
                 showLoading('인증번호 확인 중...');
                 const result = await confirmationResult.confirm(code);
@@ -762,10 +893,10 @@
                 // 전화번호 인증 성공, 이제 이메일 계정 생성
                 const email = document.getElementById('email').value;
                 const password = document.getElementById('password').value;
-                const countryCode = document.getElementById('countryCode').value;
-                const phoneNumber = countryCode + document.getElementById('phone').value.replace(/-/g, '');
+                const phoneNumber = '+82' + document.getElementById('phone').value.replace(/-/g, '');
                 
-                await createUserWithEmailAndPassword(auth, email, password);
+                // 이메일 계정 생성
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 
                 // Firestore에 사용자 정보 저장
                 await setDoc(doc(db, 'users', email), {
@@ -786,13 +917,70 @@
                 setTimeout(() => {
                     isLoginMode = true;
                     toggleFormMode();
+                    hideMessages();
                 }, 3000);
                 
             } catch (error) {
                 hideLoading();
                 console.error('인증 오류:', error);
-                showError('인증번호가 올바르지 않습니다.');
+                showError('인증번호가 올바르지 않거나 계정 생성에 실패했습니다. (에러: ' + error.code + ')');
             }
+        });
+
+        // 모달에서 인증번호 확인
+        document.getElementById('confirmVerificationBtn').addEventListener('click', async () => {
+            const code = document.getElementById('modalVerifyCode').value;
+            
+            if (!modalConfirmationResult) {
+                showError('인증 요청을 먼저 진행해주세요.');
+                return;
+            }
+            
+            if (!code || code.length !== 6) {
+                showError('6자리 인증번호를 입력해주세요.');
+                return;
+            }
+            
+            try {
+                showLoading('인증번호 확인 중...');
+                const result = await modalConfirmationResult.confirm(code);
+                
+                // 전화번호 인증 성공, Firestore에 정보 저장
+                const phoneNumber = '+82' + document.getElementById('modalPhone').value.replace(/-/g, '');
+                
+                await setDoc(doc(db, 'users', currentAuthUser.email), {
+                    email: currentAuthUser.email,
+                    displayName: currentAuthUser.displayName || '',
+                    phoneNumber: phoneNumber,
+                    status: 'pending',
+                    createdAt: serverTimestamp(),
+                    provider: currentAuthUser.providerData[0]?.providerId || 'unknown',
+                    uid: currentAuthUser.uid
+                });
+                
+                hideLoading();
+                showSuccess('전화번호 인증이 완료되었습니다! 관리자 승인 후 이용 가능합니다.');
+                
+                // 로그아웃 처리
+                await signOut(auth);
+                
+                // 3초 후 로그인 화면으로
+                setTimeout(() => {
+                    phoneVerificationModal.style.display = 'none';
+                    loginForm.style.display = 'block';
+                    hideMessages();
+                }, 3000);
+                
+            } catch (error) {
+                hideLoading();
+                console.error('모달 인증 오류:', error);
+                showError('인증번호가 올바르지 않습니다. (에러: ' + error.code + ')');
+            }
+        });
+
+        // 전화번호 인증 버튼 클릭
+        document.getElementById('sendVerificationBtn').addEventListener('click', async () => {
+            await startModalPhoneAuth();
         });
 
         // Google 로그인
@@ -802,10 +990,12 @@
             
             try {
                 const result = await signInWithPopup(auth, googleProvider);
-                // 구글 로그인도 승인 체크는 onAuthStateChanged에서 처리됨
+                console.log('Google 로그인 성공:', result.user.email);
+                // 승인 체크는 onAuthStateChanged에서 처리됨
             } catch (error) {
                 hideLoading();
-                showError('Google 로그인에 실패했습니다.');
+                console.error('Google 로그인 오류:', error);
+                showError('Google 로그인에 실패했습니다. (에러: ' + error.code + ')');
             }
         });
 
@@ -816,10 +1006,12 @@
             
             try {
                 const result = await signInWithPopup(auth, githubProvider);
-                // 깃허브 로그인도 승인 체크는 onAuthStateChanged에서 처리됨
+                console.log('GitHub 로그인 성공:', result.user.email);
+                // 승인 체크는 onAuthStateChanged에서 처리됨
             } catch (error) {
                 hideLoading();
-                showError('GitHub 로그인에 실패했습니다.');
+                console.error('GitHub 로그인 오류:', error);
+                showError('GitHub 로그인에 실패했습니다. (에러: ' + error.code + ')');
             }
         });
 
@@ -843,8 +1035,15 @@
                 phoneGroup.style.display = 'none';
                 verifyGroup.style.display = 'none';
                 document.getElementById('recaptcha-container').style.display = 'none';
+                
+                // reCAPTCHA 리셋
+                if (recaptchaVerifier) {
+                    recaptchaVerifier.clear();
+                    recaptchaVerifier = null;
+                    document.getElementById('recaptcha-container').innerHTML = '';
+                }
             } else {
-                document.getElementById('emailLoginBtn').textContent = '회원가입 시작';
+                document.getElementById('emailLoginBtn').textContent = '다음 단계 (전화번호 인증)';
                 toggleMode.textContent = '이미 계정이 있으신가요? 로그인';
                 phoneGroup.style.display = 'block';
             }
@@ -856,6 +1055,9 @@
             isLoginMode = !isLoginMode;
             toggleFormMode();
         });
+
+        // 초기 설정
+        console.log('페이지 로드 완료');
     </script>
 </body>
 </html>
