@@ -280,8 +280,6 @@
             <button type="submit" class="btn btn-primary" id="emailLoginBtn">로그인</button>
         </form>
 
-
-
         <p>
             <a href="#" class="toggle-mode" id="toggleMode">계정이 없으신가요? 회원가입</a>
         </p>
@@ -510,22 +508,32 @@
                 if (!userDoc.exists()) {
                     console.log('첫 로그인 사용자:', user.email);
                     
-                    // 첫 로그인 시 기본 데이터 생성
+                    // 📌 수정된 부분: 관리 프로그램과 데이터 구조 일치
+                    const currentDate = new Date();
+                    const subscriptionPeriod = 1; // 기본 1개월
+                    const endDate = new Date(currentDate.getTime() + (subscriptionPeriod * 30 * 24 * 60 * 60 * 1000));
+                    
                     await setDoc(doc(db, 'users', user.email), {
                         email: user.email,
                         displayName: user.displayName || '',
                         phoneNumber: '',
                         status: 'pending',
-                        subscriptionPeriod: 1,  // 기본값 1개월
+                        subscriptionPeriod: subscriptionPeriod,
                         userType: 'free',
                         subscriptionStatus: 'pending',
+                        paymentAmount: 0, // 관리 프로그램에서 기대하는 필드
+                        startDate: currentDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
+                        endDate: endDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
                         authTime: authTime,
                         expiryDate: new Date(authTime.getTime() + SESSION_DURATION),
+                        createdAt: serverTimestamp(),
+                        lastUpdated: new Date().toISOString(), // 관리 프로그램에서 최신 데이터 판단용
                         lastLogin: serverTimestamp(),
                         provider: user.providerData[0]?.providerId || 'email',
                         uid: user.uid
                     });
                     
+                    console.log('✅ 새 사용자 데이터 저장 완료:', user.email);
                     showWarning('회원가입이 완료되었습니다. 관리자 승인 후 이용 가능합니다.');
                     await signOut(auth);
                     return false;
@@ -571,9 +579,10 @@
                     <p><strong>만료일:</strong> ${expirationTime.toLocaleDateString('ko-KR')}</p>
                 `;
 
-                // 최근 로그인 시간 업데이트
+                // 📌 수정된 부분: 최근 로그인 시간 업데이트 시 lastUpdated도 함께 업데이트
                 await setDoc(doc(db, 'users', user.email), {
-                    lastLogin: serverTimestamp()
+                    lastLogin: serverTimestamp(),
+                    lastUpdated: new Date().toISOString()
                 }, { merge: true });
 
                 return true;
@@ -646,8 +655,11 @@
                     // 이메일 계정 생성
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     
-                    // Firestore에 사용자 정보 저장
+                    // 📌 수정된 부분: Firestore에 관리 프로그램과 호환되는 데이터 저장
                     const phoneNumber = '+82' + phone.replace(/-/g, '').replace(/\s/g, '');
+                    const currentDate = new Date();
+                    const subscriptionPeriod = 1; // 기본 1개월
+                    const endDate = new Date(currentDate.getTime() + (subscriptionPeriod * 30 * 24 * 60 * 60 * 1000));
                     
                     await setDoc(doc(db, 'users', email), {
                         email: email,
@@ -655,13 +667,19 @@
                         displayName: displayName,
                         phoneNumber: phoneNumber,
                         status: 'pending',
-                        subscriptionPeriod: 1,  // 기본값 1개월
+                        subscriptionPeriod: subscriptionPeriod,
                         userType: 'free',
                         subscriptionStatus: 'pending',
+                        paymentAmount: 0, // 관리 프로그램에서 기대하는 필드
+                        startDate: currentDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
+                        endDate: endDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
                         createdAt: serverTimestamp(),
+                        lastUpdated: new Date().toISOString(), // 관리 프로그램 호환성
                         provider: 'email',
                         uid: userCredential.user.uid
                     });
+                    
+                    console.log('✅ 회원가입 데이터 저장 완료:', email);
                     
                     hideLoading();
                     hideMessages();
