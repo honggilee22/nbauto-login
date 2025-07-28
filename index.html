@@ -234,6 +234,17 @@
             color: #1976d2;
             font-weight: bold;
         }
+
+        /* 디버그 정보 표시용 */
+        .debug-info {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 12px;
+            text-align: left;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -289,6 +300,9 @@
             <strong>✅ 회원가입이 완료되었습니다!</strong><br>
             승인을 받으려면 <a href="https://cafe.naver.com/nblauto" target="_blank">네이버 카페</a>에서 인증 신청 글을 작성해주세요.
         </div>
+
+        <!-- 디버그 정보 (개발용) -->
+        <div class="debug-info" id="debugInfo"></div>
     </div>
 
     <!-- 대시보드 화면 -->
@@ -356,6 +370,7 @@
         const phoneGroup = document.getElementById('phoneGroup');
         const nameGroup = document.getElementById('nameGroup');
         const cafeNotice = document.getElementById('cafeNotice');
+        const debugInfo = document.getElementById('debugInfo');
 
         // 현재 모드 (로그인/회원가입)
         let isLoginMode = true;
@@ -363,13 +378,37 @@
         // 세션 지속 시간 (30일)
         const SESSION_DURATION = 30 * 24 * 60 * 60 * 1000; // 밀리초
 
+        // 디버깅 모드 (필요시 true로 변경)
+        const DEBUG_MODE = false;
+
         // 디버깅 로그
         console.log('Firebase Auth 초기화 완료');
+
+        // 디버그 정보 표시
+        function showDebugInfo(info) {
+            if (DEBUG_MODE) {
+                debugInfo.style.display = 'block';
+                debugInfo.innerHTML = `<strong>디버그:</strong> ${info}`;
+                console.log('DEBUG:', info);
+            }
+        }
+
+        // 문서 ID 생성 함수 (항상 이메일 사용)
+        function getDocumentId(user) {
+            // 항상 이메일을 문서 ID로 사용
+            const docId = user.email.toLowerCase().trim();
+            showDebugInfo(`문서 ID 생성: ${docId} (이메일 사용)`);
+            return docId;
+        }
 
         // 사용자 승인 상태 확인
         async function checkUserApprovalStatus(email) {
             try {
-                const userDoc = await getDoc(doc(db, 'users', email));
+                // 이메일을 문서 ID로 사용
+                const docId = email.toLowerCase().trim();
+                showDebugInfo(`승인 상태 확인 - 문서 ID: ${docId}`);
+                
+                const userDoc = await getDoc(doc(db, 'users', docId));
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
                     console.log('사용자 상태:', userData.status);
@@ -502,18 +541,22 @@
                 const authTime = new Date(idTokenResult.claims.auth_time * 1000);
                 const now = new Date();
                 
+                // 이메일을 문서 ID로 사용
+                const docId = getDocumentId(user);
+                
                 // Firestore에서 사용자별 만료일 및 승인 상태 확인
-                const userDoc = await getDoc(doc(db, 'users', user.email));
+                const userDoc = await getDoc(doc(db, 'users', docId));
                 
                 if (!userDoc.exists()) {
                     console.log('첫 로그인 사용자:', user.email);
+                    showDebugInfo(`첫 로그인 - 새 문서 생성: ${docId}`);
                     
-                    // 📌 수정된 부분: 관리 프로그램과 데이터 구조 일치
+                    // 📌 중요: 이메일을 문서 ID로 사용하여 새 사용자 데이터 저장
                     const currentDate = new Date();
                     const subscriptionPeriod = 1; // 기본 1개월
                     const endDate = new Date(currentDate.getTime() + (subscriptionPeriod * 30 * 24 * 60 * 60 * 1000));
                     
-                    await setDoc(doc(db, 'users', user.email), {
+                    await setDoc(doc(db, 'users', docId), {
                         email: user.email,
                         displayName: user.displayName || '',
                         phoneNumber: '',
@@ -521,25 +564,27 @@
                         subscriptionPeriod: subscriptionPeriod,
                         userType: 'free',
                         subscriptionStatus: 'pending',
-                        paymentAmount: 0, // 관리 프로그램에서 기대하는 필드
-                        startDate: currentDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
-                        endDate: endDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
+                        paymentAmount: 0,
+                        startDate: currentDate.toISOString().split('T')[0],
+                        endDate: endDate.toISOString().split('T')[0],
                         authTime: authTime,
                         expiryDate: new Date(authTime.getTime() + SESSION_DURATION),
                         createdAt: serverTimestamp(),
-                        lastUpdated: new Date().toISOString(), // 관리 프로그램에서 최신 데이터 판단용
+                        lastUpdated: new Date().toISOString(),
                         lastLogin: serverTimestamp(),
                         provider: user.providerData[0]?.providerId || 'email',
-                        uid: user.uid
+                        uid: user.uid,
+                        docId: docId // 문서 ID 명시적 저장
                     });
                     
-                    console.log('✅ 새 사용자 데이터 저장 완료:', user.email);
+                    console.log('✅ 새 사용자 데이터 저장 완료:', docId);
                     showWarning('회원가입이 완료되었습니다. 관리자 승인 후 이용 가능합니다.');
                     await signOut(auth);
                     return false;
                 }
                 
                 const userData = userDoc.data();
+                showDebugInfo(`기존 사용자 - 문서 ID: ${docId}, UID: ${userData.uid}`);
                 
                 // 승인 상태 확인
                 if (userData.status !== 'approved') {
@@ -577,10 +622,11 @@
                     <p><strong>승인 상태:</strong> ${userData.status === 'approved' ? '✅ 승인됨' : '⏳ 대기중'}</p>
                     <p><strong>남은 사용 기간:</strong> ${remainingTime}일</p>
                     <p><strong>만료일:</strong> ${expirationTime.toLocaleDateString('ko-KR')}</p>
+                    ${DEBUG_MODE ? `<p><strong>문서 ID:</strong> ${docId}</p>` : ''}
                 `;
 
-                // 📌 수정된 부분: 최근 로그인 시간 업데이트 시 lastUpdated도 함께 업데이트
-                await setDoc(doc(db, 'users', user.email), {
+                // 📌 중요: 이메일을 문서 ID로 사용하여 업데이트
+                await setDoc(doc(db, 'users', docId), {
                     lastLogin: serverTimestamp(),
                     lastUpdated: new Date().toISOString()
                 }, { merge: true });
@@ -599,6 +645,8 @@
             
             if (user) {
                 console.log('로그인된 사용자:', user.email);
+                showDebugInfo(`Auth 상태 변경 - 이메일: ${user.email}, UID: ${user.uid}`);
+                
                 const isValidSession = await checkUserSession(user);
                 if (isValidSession) {
                     loginForm.style.display = 'none';
@@ -634,6 +682,7 @@
             try {
                 if (isLoginMode) {
                     showLoading('로그인 중...');
+                    showDebugInfo(`로그인 시도: ${email}`);
                     await signInWithEmailAndPassword(auth, email, password);
                 } else {
                     // 회원가입 모드
@@ -651,17 +700,21 @@
                     }
                     
                     showLoading('회원가입 중...');
+                    showDebugInfo(`회원가입 시도: ${email}`);
                     
                     // 이메일 계정 생성
                     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                     
-                    // 📌 수정된 부분: Firestore에 관리 프로그램과 호환되는 데이터 저장
+                    // 📌 중요: 이메일을 문서 ID로 사용하여 데이터 저장
+                    const docId = email.toLowerCase().trim();
                     const phoneNumber = '+82' + phone.replace(/-/g, '').replace(/\s/g, '');
                     const currentDate = new Date();
                     const subscriptionPeriod = 1; // 기본 1개월
                     const endDate = new Date(currentDate.getTime() + (subscriptionPeriod * 30 * 24 * 60 * 60 * 1000));
                     
-                    await setDoc(doc(db, 'users', email), {
+                    showDebugInfo(`회원가입 - 문서 ID: ${docId}, UID: ${userCredential.user.uid}`);
+                    
+                    await setDoc(doc(db, 'users', docId), {
                         email: email,
                         username: username,
                         displayName: displayName,
@@ -670,16 +723,17 @@
                         subscriptionPeriod: subscriptionPeriod,
                         userType: 'free',
                         subscriptionStatus: 'pending',
-                        paymentAmount: 0, // 관리 프로그램에서 기대하는 필드
-                        startDate: currentDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
-                        endDate: endDate.toISOString().split('T')[0], // YYYY-MM-DD 형식
+                        paymentAmount: 0,
+                        startDate: currentDate.toISOString().split('T')[0],
+                        endDate: endDate.toISOString().split('T')[0],
                         createdAt: serverTimestamp(),
-                        lastUpdated: new Date().toISOString(), // 관리 프로그램 호환성
+                        lastUpdated: new Date().toISOString(),
                         provider: 'email',
-                        uid: userCredential.user.uid
+                        uid: userCredential.user.uid,
+                        docId: docId // 문서 ID 명시적 저장
                     });
                     
-                    console.log('✅ 회원가입 데이터 저장 완료:', email);
+                    console.log('✅ 회원가입 데이터 저장 완료:', docId);
                     
                     hideLoading();
                     hideMessages();
@@ -760,6 +814,7 @@
 
         // 초기 설정
         console.log('페이지 로드 완료');
+        showDebugInfo('디버그 모드: ' + (DEBUG_MODE ? '활성' : '비활성'));
     </script>
 </body>
 </html>
