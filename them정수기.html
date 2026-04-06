@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이홍기 팀장</title>
+  <style>
+    :root {
+      --mobile-max: 430px;
+      --line: #e8e8e8;
+      --surface: #ffffff;
+      --page-bg: #f3f3f3;
+      --text: #222222;
+      --primary: #1a7cff;
+    }
+
+    html, body { margin: 0; padding: 0; background: var(--page-bg); }
+
+    body {
+      font-size: 13px;
+      color: var(--text);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      padding-top: 56px;
+      padding-bottom: 92px;
+    }
+
+    * { box-sizing: border-box; max-width: 100%; word-break: break-all; }
+    img { display: block; width: 100%; height: auto; vertical-align: top; }
+    p, h1 { margin: 0; }
+    button { font-family: inherit; }
+
+    /* ── 페이지 래퍼 ── */
+    .page-wrap {
+      width: 100%;
+      max-width: var(--mobile-max);
+      margin: 0 auto;
+      background: var(--surface);
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.02);
+    }
+
+    /* ── 헤더 (1.html과 동일 구조) ── */
+    .top-bar {
+      position: fixed; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--mobile-max);
+      height: 56px; background: var(--surface); border-bottom: 1px solid var(--line);
+      display: flex; align-items: center; padding: 0 14px;
+      z-index: 100; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    }
+    .back-btn {
+      display: flex; align-items: center; gap: 6px;
+      min-width: 64px;
+      font-size: 14px; font-weight: 600; color: #222;
+      text-decoration: none; background: none; border: none; cursor: pointer; padding: 0;
+    }
+    .back-btn svg { width: 18px; height: 18px; stroke: #222; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .top-bar-title { flex: 1; text-align: center; font-size: 15px; font-weight: 700; color: #222; margin-right: 64px; }
+
+    /* ── 하단 고정 바 (1.html과 동일) ── */
+    .bottom-bar {
+      position: fixed; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--mobile-max);
+      background: #fff; border-top: 1px solid var(--line);
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      display: flex; align-items: center; gap: 10px;
+      z-index: 100; box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+    }
+    .consultant-name { font-size: 13px; font-weight: 700; color: #222; flex: 1; min-width: 86px; }
+    .consultant-name span { display: block; font-size: 11px; color: #888; font-weight: 400; }
+    .btn-call {
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      min-height: 42px;
+      padding: 10px 12px; border-radius: 10px; font-size: 13px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      white-space: nowrap; flex: 0 0 auto;
+    }
+    .btn-call.tel { background: var(--primary); color: #fff; }
+    .btn-call.sms { background: #222; color: #fff; }
+    .btn-call svg { width: 15px; height: 15px; fill: #fff; max-width: 15px; }
+
+    /* ── 슬라이더 ── */
+    .slider-wrap {
+      position: relative; width: 100%;
+      aspect-ratio: 1/1; overflow: hidden; background: #f8f8f8;
+    }
+    .slider-track { display: flex; transition: transform 0.32s ease; height: 100%; }
+    .slide-item { min-width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+    .slide-item img { width: 100%; height: 100%; object-fit: contain; }
+
+    .slider-prev, .slider-next {
+      position: absolute; top: 0; width: 38%; height: calc(100% - 40px);
+      z-index: 5; cursor: pointer;
+    }
+    .slider-prev { left: 0; }
+    .slider-next { right: 0; }
+
+    /* 도트 */
+    .slider-dots {
+      position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 5px; z-index: 6;
+    }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.2); cursor: pointer; transition: background 0.2s; }
+    .dot.active { background: #333; }
+
+    /* ── 슬라이더 하단 바 ── */
+    .slider-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 16px; border-bottom: 1px solid #f0f0f0;
+    }
+    .arrow-btn {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid #ddd; background: #fff;
+      display: flex; align-items: center; justify-content: center; cursor: pointer;
+    }
+    .arrow-btn svg { width: 14px; height: 14px; stroke: #555; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; max-width: 14px; }
+    .arrow-btn.disabled { opacity: 0.25; pointer-events: none; }
+    .btn-detail {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      text-decoration: none; border: 1.5px solid var(--text);
+      border-radius: 6px; padding: 7px 20px;
+    }
+
+    /* ── 옵션 ── */
+    .goods-option { padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }
+    .option-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .option-row:last-child { margin-bottom: 0; }
+    .option-title { font-size: 12px; color: #888; min-width: 52px; flex-shrink: 0; }
+    .option-items { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .tag-btn {
+      padding: 5px 12px; border: 1.5px solid #222; border-radius: 4px;
+      font-size: 12px; font-weight: 600; background: #222; color: #fff; cursor: default;
+    }
+    .color-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 2px solid transparent; background: none;
+      cursor: pointer; padding: 0; flex-shrink: 0; transition: border-color 0.15s;
+    }
+    .color-btn.active { border-color: #222; }
+    .color-inner { width: 100%; height: 100%; border-radius: 50%; border: 1.5px solid rgba(0,0,0,0.1); }
+
+    /* ── 상품 정보 ── */
+    .goods-info { padding: 16px 16px 0; }
+    .brand-name { font-size: 12px; color: #888; margin-bottom: 4px; }
+    .goods-name { font-size: 18px; font-weight: 700; margin-bottom: 3px; }
+    /* ── 가격 ── */
+    .price-list { padding: 0 16px 32px; }
+    .price-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0; border-bottom: 1px solid #f5f5f5;
+    }
+    .price-row:last-child { border-bottom: none; }
+    .price-label { font-size: 13px; color: #666; }
+    .price-right { text-align: right; }
+    .price-origin { font-size: 12px; color: #bbb; text-decoration: line-through; margin-bottom: 2px; }
+    .price-sale { font-size: 16px; font-weight: 700; color: var(--text); }
+    .price-sale.red { color: #e44; }
+    .price-sale.blue { color: #1a7; }
+
+    @media (max-width: 430px) {
+      .top-bar, .bottom-bar, .page-wrap { max-width: 100%; }
+    }
+
+    @media (max-width: 380px) {
+      .consultant-name { min-width: 76px; font-size: 12px; }
+      .consultant-name span { font-size: 10px; }
+      .btn-call { min-height: 40px; padding: 9px 10px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 헤더 -->
+<div class="top-bar">
+  <a class="back-btn" href="index.html">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    돌아가기
+  </a>
+  <p class="top-bar-title">제품 상세정보</p>
+</div>
+
+<div class="page-wrap">
+
+  <!-- 슬라이더 -->
+  <div class="slider-wrap">
+    <div class="slider-prev" onclick="slidePrev()"></div>
+    <div class="slider-next" onclick="slideNext()"></div>
+    <div class="slider-track" id="sliderTrack"></div>
+    <div class="slider-dots" id="sliderDots"></div>
+  </div>
+
+  <!-- 화살표 + 자세히보기 -->
+  <div class="slider-bar">
+    <button class="arrow-btn disabled" id="arrowPrev" onclick="slidePrev()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    </button>
+    <a class="btn-detail" href="1.html">자세히보기</a>
+    <button class="arrow-btn" id="arrowNext" onclick="slideNext()">
+      <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"></polyline></svg>
+    </button>
+  </div>
+
+  <!-- 옵션 -->
+  <div class="goods-option">
+    <div class="option-row">
+      <span class="option-title">메인 기능</span>
+      <div class="option-items">
+        <button class="tag-btn">얼음냉온정</button>
+      </div>
+    </div>
+    <div class="option-row">
+      <span class="option-title">색상</span>
+      <div class="option-items">
+        <button class="color-btn active" onclick="selectColor(0,this)" title="클라우드 베이지">
+          <div class="color-inner" style="background:rgb(235,231,227)"></div>
+        </button>
+        <button class="color-btn" onclick="selectColor(1,this)" title="블랙">
+          <div class="color-inner" style="background:rgb(52,54,55)"></div>
+        </button>
+        <button class="color-btn" onclick="selectColor(2,this)" title="토프 브라운">
+          <div class="color-inner" style="background:rgb(184,173,160)"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 상품 정보 -->
+    <div class="goods-info">
+      <p class="goods-name">The M 얼음정수기</p>
+    </div>
+
+  <!-- 가격 -->
+  <div class="price-list">
+    <div class="price-row">
+      <span class="price-label">구매</span>
+      <div class="price-right">
+        <p class="price-origin">3,660,000원</p>
+        <p class="price-sale">2,224,000원</p>
+      </div>
+    </div>
+    <div class="price-row">
+      <span class="price-label">렌탈</span>
+      <div class="price-right">
+        <p class="price-origin">월 45,900원~</p>
+        <p class="price-sale red">월 20,950원~</p>
+      </div>
+    </div>
+    <div class="price-row">
+      <span class="price-label">제휴카드 혜택가</span>
+      <div class="price-right">
+        <p class="price-sale blue">월 7,950원~</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- 하단 고정 바 (1.html과 동일) -->
+<div class="bottom-bar">
+  <div class="consultant-name">
+    이홍기 팀장 <span>지역담당자</span>
+  </div>
+  <a class="btn-call tel" href="tel:010-9943-6683">
+    <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+    상담전화
+  </a>
+  <a class="btn-call sms" href="sms:010-9943-6683">
+    <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+    상담문자
+  </a>
+</div>
+
+<script>
+  const colorImages = {
+    0: [
+      'https://image.chungho.com/goods-install-option/cae57510-16bf-48a4-86ad-ac97a1a49494.png',
+      'https://image.chungho.com/goods-install-option/061dd14b-e9d3-4c08-b217-5b375e30fe0e.png',
+      'https://image.chungho.com/goods-install-option/f2f79412-da7a-41fe-900a-7ed39c563a47.png',
+    ],
+    1: [
+      'https://image.chungho.com/goods-install-option/5761de6f-e907-468f-abfe-c04a7549ff9c.png',
+      'https://image.chungho.com/goods-install-option/647fd4ba-3317-4722-af65-6ce033a122ee.png',
+      'https://image.chungho.com/goods-install-option/f79df678-90a7-4e69-99ab-2dbc53d51075.png',
+    ],
+    2: [
+      'https://image.chungho.com/goods-install-option/113205c8-d4fc-43ca-b926-1f79c51607fc.png',
+      'https://image.chungho.com/goods-install-option/b6d361cf-d7b6-45a8-8b45-863cd68e84cb.png',
+      'https://image.chungho.com/goods-install-option/14214a15-17e3-4349-9f14-8845088dd7bc.png',
+    ]
+  };
+
+  let current = 0, currentColor = 0;
+
+  function buildSlider(c) {
+    const imgs = colorImages[c];
+    document.getElementById('sliderTrack').innerHTML = imgs.map(src =>
+      `<div class="slide-item"><img src="${src}" alt="제품이미지"></div>`).join('');
+    document.getElementById('sliderDots').innerHTML = imgs.map((_,i) =>
+      `<div class="dot${i===0?' active':''}" onclick="goSlide(${i})"></div>`).join('');
+    current = 0;
+    document.getElementById('sliderTrack').style.transform = 'translateX(0)';
+    updateArrows();
+  }
+
+  function goSlide(idx) {
+    current = Math.max(0, Math.min(idx, colorImages[currentColor].length - 1));
+    document.getElementById('sliderTrack').style.transform = `translateX(-${current * 100}%)`;
+    document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i===current));
+    updateArrows();
+  }
+
+  function updateArrows() {
+    document.getElementById('arrowPrev').classList.toggle('disabled', current === 0);
+    document.getElementById('arrowNext').classList.toggle('disabled', current === colorImages[currentColor].length - 1);
+  }
+
+  function slidePrev() { goSlide(current - 1); }
+  function slideNext() { goSlide(current + 1); }
+
+  function selectColor(idx, btn) {
+    currentColor = idx;
+    document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    buildSlider(idx);
+  }
+
+  let startX = 0;
+  const sw = document.querySelector('.slider-wrap');
+  sw.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  sw.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 40) diff > 0 ? slideNext() : slidePrev();
+  });
+
+  buildSlider(0);
+</script>
+</body>
+</html>
