@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>뉴 러블리트리 정수기</title>
+  <style>
+    :root {
+      --mobile-max: 430px;
+      --line: #e8e8e8;
+      --surface: #ffffff;
+      --page-bg: #f3f3f3;
+      --text: #222222;
+      --muted: #666666;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--page-bg);
+    }
+
+    body {
+      font-size: 13px;
+      color: var(--text);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      padding-bottom: 92px;
+    }
+
+    * {
+      box-sizing: border-box;
+      max-width: 100%;
+      word-break: break-all;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: top;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .info__detail {
+      width: 100%;
+      max-width: var(--mobile-max);
+      margin: 0 auto;
+      background: var(--surface);
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02);
+    }
+
+    .info__detail__inner,
+    .info__detail__content {
+      width: 100%;
+    }
+
+    .image-block {
+      text-align: center;
+      line-height: 0;
+    }
+
+    .info__detail__more {
+      display: none;
+    }
+
+    .info__detail__more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid #111111;
+      background: #ffffff;
+      color: #111111;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--mobile-max);
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+    }
+
+    .consultant-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #222;
+      flex: 1;
+      min-width: 86px;
+    }
+
+    .consultant-name span {
+      display: block;
+      font-size: 11px;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .btn-call {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 42px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .btn-call.tel { background: #1a7cff; color: #fff; }
+    .btn-call.sms { background: #222; color: #fff; }
+    .btn-call svg { width: 15px; height: 15px; fill: #fff; }
+
+    @media (max-width: 430px) {
+      .bottom-bar,
+      .info__detail {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .bottom-bar {
+        gap: 8px;
+      }
+
+      .consultant-name {
+        min-width: 76px;
+        font-size: 12px;
+      }
+
+      .consultant-name span {
+        font-size: 10px;
+      }
+
+      .btn-call {
+        min-height: 40px;
+        padding: 9px 10px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="info__detail" data-source-url="https://www.chungho.com/shop/goodsView/8">
+    <div class="info__detail__inner">
+      <div class="info__detail__content">
+        <div>
+          <div class="shadow-dom__wrapper">
+            <div class="image-block"><img src="https://image.chungho.com/editor/56965cfc-3df1-4d07-a069-10fd6c9deee8.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/719e1e40-f78a-451f-8718-cbf3e030dd62.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/6bcabb23-1ad1-4802-8d89-a7148623d508.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/6340dfb6-1531-40f3-9aa6-129392182f22.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/35dd6519-fb6e-466a-9261-8f3c86b38395.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/8533994f-67f8-4427-b270-46dc77b7adf8.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/768a623e-e114-4ef3-8196-72982eb643c1.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/58082fde-d844-452b-bb34-9e3d4a94dc66.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/0179dacf-82aa-4763-b56d-3dca65b06267.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/316fbf79-76bf-4c8a-ae2a-ce69a4495602.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/47d7f5b7-4579-476a-9423-7f81692bb9c1.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/fc1f0e1a-4c4c-4ff1-bc6d-f84333ebfe9b.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/fa0ce8cc-56a8-48ba-99ff-29e9bd08de60.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/057ae873-37c8-4c34-8c66-1361caa8bd4c.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/e24c5a38-7594-45ee-8096-9fd34fcdb2ea.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/cbfdab9b-6783-4407-823f-d5018fea96f3.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/77f2fc91-fb7b-4ffc-9050-5a4de3e46f52.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/70b22fa6-968f-44b8-80d2-7c7227477db8.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/e757b4a1-be43-4f9b-abad-a5957df90a7d.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/dc97421c-07e9-4ff0-8f9e-7764f690bf16.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/146c1d1c-cdc0-419e-915e-ddab77d972e1.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/74d74c09-6363-4bdc-9e3a-eae979317692.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/86ba7931-a5ce-4d84-9fd3-b49128a27ad5.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/2ab76254-659e-4eec-b1c3-3f50b76bf6e1.gif" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/2c609f47-4e5d-428b-afab-17db19400529.jpg" alt="뉴 러블리트리 정수기 상세 이미지"></div>
+          </div>
+        </div>
+        <div class="info__detail__more">
+          <button type="button" class="info__detail__more-btn">제품 정보 펼쳐보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="consultant-name">
+      이홍기 팀장 <span>지역담당자</span>
+    </div>
+    <a class="btn-call tel" href="tel:010-9943-6833">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+      상담전화
+    </a>
+    <a class="btn-call sms" href="sms:010-9943-6833">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+      상담문자
+    </a>
+  </div>
+</body>
+</html>
