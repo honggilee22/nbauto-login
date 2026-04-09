@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>셀프정수기(오트밀)</title>
+  <style>
+    :root {
+      --mobile-max: 430px;
+      --line: #e8e8e8;
+      --surface: #ffffff;
+      --page-bg: #f3f3f3;
+      --text: #222222;
+      --muted: #666666;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--page-bg);
+    }
+
+    body {
+      font-size: 13px;
+      color: var(--text);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      padding-bottom: 92px;
+    }
+
+    * {
+      box-sizing: border-box;
+      max-width: 100%;
+      word-break: break-all;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      vertical-align: top;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    .info__detail {
+      width: 100%;
+      max-width: var(--mobile-max);
+      margin: 0 auto;
+      background: var(--surface);
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.02);
+    }
+
+    .info__detail__inner,
+    .info__detail__content {
+      width: 100%;
+    }
+
+    .image-block {
+      text-align: center;
+      line-height: 0;
+    }
+
+    .info__detail__more {
+      display: none;
+    }
+
+    .info__detail__more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 52px;
+      border: 1px solid #111111;
+      background: #ffffff;
+      color: #111111;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .bottom-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--mobile-max);
+      background: #fff;
+      border-top: 1px solid #e8e8e8;
+      padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 100;
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.08);
+    }
+
+    .consultant-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #222;
+      flex: 1;
+      min-width: 86px;
+    }
+
+    .consultant-name span {
+      display: block;
+      font-size: 11px;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .btn-call {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      min-height: 42px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      flex: 0 0 auto;
+    }
+
+    .btn-call.tel { background: #1a7cff; color: #fff; }
+    .btn-call.sms { background: #222; color: #fff; }
+    .btn-call svg { width: 15px; height: 15px; fill: #fff; }
+
+    @media (max-width: 430px) {
+      .bottom-bar,
+      .info__detail {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .bottom-bar {
+        gap: 8px;
+      }
+
+      .consultant-name {
+        min-width: 76px;
+        font-size: 12px;
+      }
+
+      .consultant-name span {
+        font-size: 10px;
+      }
+
+      .btn-call {
+        min-height: 40px;
+        padding: 9px 10px;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="info__detail" data-source-url="https://www.chungho.com/shop/goodsView/32">
+    <div class="info__detail__inner">
+      <div class="info__detail__content">
+        <div>
+          <div class="shadow-dom__wrapper">
+            <div class="image-block"><img src="https://image.chungho.com/editor/e398e079-ec4e-46b7-a08d-19327b061ad2.jpg" alt="셀프정수기(오트밀) 상세 이미지"></div>
+            <div class="image-block"><img src="https://image.chungho.com/editor/03c64405-494f-4398-bd9e-92cab9c6abe0.jpg" alt="셀프정수기(오트밀) 상세 이미지"></div>
+          </div>
+        </div>
+        <div class="info__detail__more">
+          <button type="button" class="info__detail__more-btn">제품 정보 펼쳐보기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="consultant-name">
+      이홍기 팀장 <span>지역담당자</span>
+    </div>
+    <a class="btn-call tel" href="tel:010-9943-6833">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+      상담전화
+    </a>
+    <a class="btn-call sms" href="sms:010-9943-6833">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+      상담문자
+    </a>
+  </div>
+</body>
+</html>
