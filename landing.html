@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>코웨이 공식 햇살대리점 — 최대 혜택 무료상담</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',sans-serif;background:#f0f0f0;color:#1a1a2e;overflow-x:hidden;padding-bottom:80px}
+.page-wrap{max-width:480px;margin:0 auto;background:#fff;position:relative;box-shadow:0 0 40px rgba(0,0,0,.15)}
+:root{--coway:#00b4d8;--coway-dark:#0090b0;--navy:#001f3a;--gold:#f59e0b;--red:#e53e3e;--green:#22c55e}
+
+/* ── HEADER ── */
+.site-header{
+  position:sticky;top:0;z-index:800;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(10px);
+  border-bottom:1px solid #e5e7eb;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 16px;
+  max-width:480px;margin-left:auto;margin-right:auto;
+  left:0;right:0;
+}
+.logo-txt{font-family:Arial,sans-serif;font-size:26px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
+.logo-badge{background:#f0fbff;border:1px solid #b3e9f7;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--coway)}
+.header-cta{background:var(--coway);color:#fff;border:none;border-radius:50px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+
+/* ── TOP BANNER ── */
+.top-banner{animation:fadeInDown .8s ease both}
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-30px)}to{opacity:1;transform:translateY(0)}}
+.top-banner img{width:100%;display:block}
+.hero-copy{
+  background:linear-gradient(180deg,#ffffff 0%,#f0fbff 100%);
+  padding:24px 18px 22px;
+  text-align:center;
+  border-bottom:1px solid #d9f3fb;
+}
+.hero-copy__title{
+  font-size:25px;
+  line-height:1.4;
+  font-weight:900;
+  color:var(--navy);
+  word-break:keep-all;
+}
+.hero-copy__title strong{color:var(--coway)}
+.hero-copy__sub{
+  margin-top:10px;
+  font-size:15px;
+  line-height:1.6;
+  color:#4b5563;
+  word-break:keep-all;
+}
+.countdown-overlay{
+  background:#fff;padding:20px 16px 24px;text-align:center;
+  border-bottom:3px solid var(--coway);
+}
+.countdown-label{font-size:13px;color:#888;margin-bottom:12px}
+.countdown-label span{color:var(--coway);font-weight:700}
+.countdown-boxes{display:flex;justify-content:center;gap:8px;margin-bottom:16px}
+.cd-box{
+  background:#3a3a3a;color:#fff;border-radius:8px;
+  width:68px;padding:12px 8px 8px;text-align:center;
+}
+.cd-num{font-size:32px;font-weight:900;font-variant-numeric:tabular-nums;display:block;line-height:1}
+.cd-unit{font-size:10px;color:#aaa;margin-top:4px;text-transform:uppercase}
+.cd-sep{font-size:28px;font-weight:900;color:#3a3a3a;align-self:center;margin-bottom:14px}
+.btn-event{
+  display:block;max-width:300px;margin:0 auto;
+  background:var(--red);color:#fff;border:none;border-radius:8px;
+  padding:14px;font-size:16px;font-weight:700;cursor:pointer;
+  font-family:inherit;animation:pulse-btn 2s ease-in-out infinite;
+}
+@keyframes pulse-btn{0%,100%{box-shadow:0 0 0 0 rgba(229,62,62,.5)}50%{box-shadow:0 0 0 10px rgba(229,62,62,0)}}
+
+/* ── STATUS ── */
+.status-wrap{background:#f0fbff;padding:32px 16px}
+.status-card{background:#fff;border-radius:20px;padding:26px 20px;box-shadow:0 6px 28px rgba(0,180,216,.1);max-width:480px;margin:0 auto;text-align:center;border:1.5px solid #b3e9f7}
+.status-card__eye{color:var(--red);font-weight:700;font-size:13px;margin-bottom:6px}
+.status-card__title{font-size:23px;font-weight:900;margin-bottom:12px}
+.status-badge{display:inline-block;background:var(--coway);color:#fff;border-radius:5px;padding:4px 14px;font-size:13px;font-weight:700;margin-bottom:16px}
+.status-num{font-size:74px;font-weight:900;color:var(--coway);line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.status-num-label{font-size:17px;color:#555;margin-bottom:12px}
+.status-sub{font-size:13px;color:#666;margin-bottom:14px}
+.progress-bar{height:10px;border-radius:10px;background:#e0f7fa;overflow:hidden;margin-bottom:16px}
+.progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#67e8f9,#00b4d8,#f59e0b);width:0%;transition:width 1.8s cubic-bezier(.4,0,.2,1)}
+.status-boxes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.sbox{border-radius:12px;padding:14px 10px;text-align:center}
+.sbox.red{background:#fff5f5;border:1px solid #fecaca}
+.sbox.ora{background:#fffbeb;border:1px solid #fde68a}
+.sbox__n{font-size:32px;font-weight:900;color:var(--red)}
+.sbox__l{font-size:12px;color:#666;margin-top:3px}
+.blink-badge{display:inline-flex;align-items:center;gap:5px;background:#fff7ed;border:1px solid #fed7aa;border-radius:20px;padding:5px 10px;font-size:12px;font-weight:700;color:#ea580c;animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.status-note{font-size:11px;color:#bbb;text-align:left;line-height:1.6}
+
+/* ── FORM ── */
+.form-wrap{background:#fff;padding:40px 16px}
+.form-card{background:#fff;border-radius:20px;padding:28px 20px;box-shadow:0 4px 32px rgba(0,0,0,.09);max-width:480px;margin:0 auto;border:1.5px solid #e5e7eb}
+.form-logo-area{text-align:center;margin-bottom:10px}
+.form-coway-txt{font-family:Arial,sans-serif;font-size:28px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
+.form-eye{text-align:center;font-size:12px;color:#888;margin-bottom:3px}
+.form-brand{text-align:center;font-weight:700;font-size:14px;color:#333;margin-bottom:6px}
+.form-title{text-align:center;font-size:22px;font-weight:900;margin-bottom:20px}
+.form-title .bl{color:var(--coway)}
+.form-footer{text-align:center;margin-top:12px;font-size:11px;color:#bbb;line-height:1.6}
+
+/* ── 이미지 버튼 한 줄 ── */
+.img-btn-row{display:flex;gap:10px;padding:16px;background:#fff;max-width:480px;margin:0 auto}
+.img-btn{
+  flex:1;border-radius:14px;overflow:hidden;cursor:pointer;
+  border:2px solid transparent;
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  position:relative;
+}
+.img-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 12px 28px rgba(0,180,216,.25);border-color:var(--coway)}
+.img-btn img{width:100%;display:block;border-radius:12px}
+.img-btn-label{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,rgba(0,0,0,.55));
+  color:#fff;font-size:12px;font-weight:700;
+  padding:14px 8px 8px;text-align:center;border-radius:0 0 12px 12px;
+}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+/* ── 혜택 상세 이미지 (cw-benefit) ── */
+.benefit-img-section{overflow:hidden}
+.benefit-img-section img{width:100%;display:block}
+
+/* ── 비교할수없는 배너 ── */
+.maxbenefit-section{overflow:hidden}
+.maxbenefit-section img{
+  width:100%;display:block;
+  height:320px;
+  object-fit:cover;
+  object-position:left center;
+  animation:none;
+}
+.maxbenefit-section.visible img{animation:slideInLeft .8s ease both}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+
+/* ── BENEFITS CARDS ── */
+.benefits-wrap{background:#f0fbff;padding:48px 16px;text-align:center}
+.kicker{font-size:11px;font-weight:700;color:var(--coway);letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-size:clamp(22px,6vw,36px);font-weight:900;line-height:1.22;margin-bottom:10px;word-break:keep-all}
+.sec-title .mg{color:var(--gold)}
+.sec-title .mb{color:var(--coway)}
+.sec-sub{font-size:14px;color:#666;line-height:1.65;margin-bottom:28px;word-break:keep-all}
+.benefits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:480px;margin:0 auto}
+.bcard{background:#fff;border-radius:16px;padding:20px 14px;text-align:left;border:1.5px solid #e5e7eb;cursor:pointer;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;transform-style:preserve-3d}
+.bcard:hover{transform:translateY(-6px) rotateX(6deg) rotateY(-4deg) scale(1.02);box-shadow:0 20px 40px rgba(0,180,216,.18),8px 8px 0 rgba(0,180,216,.08);border-color:var(--coway)}
+.bcard.img-card{padding:0;overflow:hidden}
+.bcard.img-card img{width:100%;height:100%;object-fit:cover;border-radius:14px}
+.bcard__n{font-size:10px;font-weight:700;color:var(--coway);margin-bottom:5px}
+.bcard__icon{font-size:24px;margin-bottom:6px}
+.bcard__label{font-size:11px;color:#999;margin-bottom:3px}
+.bcard__val{font-size:15px;font-weight:900;line-height:1.35}
+.bcard__val .chip{background:#e0f7fa;color:var(--coway);border-radius:5px;padding:1px 5px;font-size:13px}
+
+/* ── STATS ── */
+.stats-wrap{background:linear-gradient(155deg,#001f3a 0%,#003060 100%);padding:48px 16px;text-align:center;color:#fff}
+.stats-wrap .kicker{color:#67e8f9}
+.stats-wrap .sec-title{color:#fff}
+.stats-wrap .sec-sub{color:rgba(255,255,255,.6)}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:480px;margin:0 auto 28px}
+.stat-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:18px 8px;text-align:center}
+.stat-num{font-size:clamp(16px,4vw,24px);font-weight:900;color:#67e8f9;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.stat-label{font-size:11px;color:rgba(255,255,255,.6)}
+.stats-pill{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:5px 16px;font-size:12px;font-weight:700;color:#67e8f9;margin-bottom:10px}
+.stats-bottom{font-size:19px;font-weight:900;line-height:1.45}
+
+/* ── COMPARE ── */
+.compare-wrap{background:#fff;padding:48px 16px;text-align:center}
+.compare-tbl{width:100%;max-width:480px;margin:0 auto;border-collapse:collapse;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08)}
+.compare-tbl thead tr{background:#1a1a2e;color:#fff}
+.compare-tbl th{padding:13px;font-size:13px;font-weight:700}
+.compare-tbl th.bc{background:var(--coway)}
+.compare-tbl tbody tr:nth-child(even){background:#f0fbff}
+.compare-tbl td{padding:12px;font-size:12px;text-align:center;border-bottom:1px solid #e5e7eb}
+.compare-tbl td:first-child{font-weight:600;color:#333}
+.cg{color:var(--coway);font-weight:700}
+.cb{color:#ef4444}
+.compare-foot{background:#e0f7fa;border-radius:12px;padding:14px;max-width:480px;margin:16px auto 0;font-size:14px;font-weight:700;color:var(--coway);text-align:center;line-height:1.6}
+
+/* ── 후기 섹션 ── */
+.review-wrap{background:#f0fbff;padding:32px 16px;text-align:center}
+.review-grid{display:flex;flex-direction:column;gap:10px;max-width:480px;margin:0 auto}
+.rcard{
+  background:#fff;border-radius:14px;overflow:hidden;
+  border:1.5px solid #b3e9f7;
+  display:flex;flex-direction:row;align-items:stretch;
+  box-shadow:0 3px 14px rgba(0,180,216,.08);
+}
+.rcard-img-slot{
+  width:120px;min-width:120px;
+  background:#e0f7fa;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;color:#aaa;text-align:center;
+  flex-shrink:0;
+}
+.rcard-img-slot img{width:100%;height:100%;object-fit:cover;display:block}
+.rcard-body{padding:14px;text-align:left;flex:1;display:flex;flex-direction:column;justify-content:center}
+.rcard-tag{display:inline-block;background:#e0f7fa;color:var(--coway);font-size:10px;font-weight:700;border-radius:20px;padding:2px 9px;margin-bottom:7px}
+.rcard-quote{font-size:13px;line-height:1.55;color:#1a1a2e;margin-bottom:7px}
+.rcard-quote strong{color:var(--coway);font-size:15px;display:block}
+.rcard-info{font-size:10px;color:#bbb;border-top:1px solid #f0f0f0;padding-top:6px;margin-top:auto}
+
+/* ── FAQ ── */
+.faq-wrap{background:#fff;padding:48px 16px}
+.faq-list{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:10px}
+.faq-item{border:1.5px solid #e5e7eb;border-radius:14px;overflow:hidden}
+.faq-q{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px;cursor:pointer;background:#fff;
+  font-size:14px;font-weight:700;color:#1a1a2e;
+  transition:background .2s;
+  gap:10px;
+}
+.faq-q:hover{background:#f0fbff}
+.faq-q.open{background:#f0fbff;color:var(--coway)}
+.faq-num{font-size:11px;font-weight:900;color:var(--coway);background:#e0f7fa;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.faq-q-txt{flex:1;line-height:1.4}
+.faq-icon{font-size:18px;flex-shrink:0;transition:transform .3s;color:#aaa}
+.faq-icon.open{transform:rotate(180deg);color:var(--coway)}
+.faq-a{
+  display:none;padding:0 16px;background:#f8fdff;
+  font-size:13px;color:#444;line-height:1.7;
+}
+.faq-a.open{display:block;padding:14px 16px 16px}
+.faq-tbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
+.faq-tbl th{background:var(--coway);color:#fff;padding:8px;text-align:center;font-size:11px}
+.faq-tbl th:first-child{background:#1a1a2e}
+.faq-tbl td{padding:8px 6px;border-bottom:1px solid #e5e7eb;vertical-align:top;line-height:1.5}
+.faq-tbl td:first-child{font-weight:700;color:#333;text-align:center;white-space:nowrap}
+.faq-tbl tr:nth-child(even) td{background:#f0fbff}
+
+/* ── 신청 프로세스 ── */
+.process-wrap{background:linear-gradient(155deg,#e8f8fd 0%,#f0fbff 100%);padding:48px 16px;text-align:center;color:#1a1a2e;border-top:3px solid #b3e9f7}
+.process-steps{display:flex;flex-direction:column;gap:0;max-width:400px;margin:0 auto}
+.pstep{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:20px 0;border-bottom:1px solid #d0eef8;
+  text-align:left;
+}
+.pstep:last-child{border-bottom:none}
+.pstep-circle{
+  width:44px;height:44px;border-radius:50%;
+  background:var(--coway);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;flex-shrink:0;
+  box-shadow:0 4px 14px rgba(0,180,216,.4);
+}
+.pstep-content{}
+.pstep-num{font-size:10px;color:var(--coway);font-weight:700;margin-bottom:3px}
+.pstep-title{font-size:16px;font-weight:900;margin-bottom:5px;color:#1a1a2e}
+.pstep-desc{font-size:12px;color:#555;line-height:1.6}
+.pstep-secret{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.4);
+  border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;color:#fbbf24;
+  margin-top:6px;
+}
+
+/* ── FINAL CTA ── */
+.final-wrap{background:linear-gradient(155deg,#001f3a 0%,#003060 60%,#005f9e 100%);padding:52px 16px;text-align:center;color:#fff}
+.final-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,180,216,.2);border:1px solid rgba(0,180,216,.4);border-radius:20px;padding:5px 16px;font-size:12px;font-weight:700;margin-bottom:16px}
+.final-title{font-size:clamp(24px,7vw,44px);font-weight:900;line-height:1.2;margin-bottom:12px;word-break:keep-all}
+.final-title .bl{color:#67e8f9}
+.final-sub{font-size:14px;color:rgba(255,255,255,.75);margin-bottom:20px}
+.final-counter-box{display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:8px 22px;font-size:13px;color:rgba(255,255,255,.85);margin-bottom:20px}
+.final-counter-box strong{color:#fbbf24;font-size:18px;font-variant-numeric:tabular-nums}
+.btn-final{display:block;max-width:400px;margin:0 auto;background:linear-gradient(90deg,var(--coway),#38bdf8);color:#fff;border:none;border-radius:50px;padding:18px;font-size:17px;font-weight:700;cursor:pointer;transition:all .2s;font-family:inherit;box-shadow:0 6px 28px rgba(0,180,216,.45)}
+.btn-final:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,180,216,.6)}
+
+/* ── STICKY BAR ── */
+.sticky-bar{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:1px solid #e5e7eb;z-index:9999;box-shadow:0 -4px 20px rgba(0,0,0,.1)}
+.sticky-top-row{display:flex;align-items:center;justify-content:space-between;padding:7px 16px 0}
+.sticky-logo{font-family:Arial,sans-serif;font-size:20px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
+.sticky-viewer-row{display:flex;align-items:center;gap:5px;font-size:12px;color:#555}
+.gdot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;animation:gpulse 1.6s ease-in-out infinite}
+@keyframes gpulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}50%{box-shadow:0 0 0 7px rgba(34,197,94,0)}}
+.vcnt{color:var(--green);font-weight:700;font-variant-numeric:tabular-nums}
+.sticky-cta-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:calc(100% - 28px);margin:5px 14px 9px;background:var(--coway);color:#fff;border:none;border-radius:50px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;box-shadow:0 4px 14px rgba(0,180,216,.35)}
+.sticky-cta-btn:hover{background:var(--coway-dark)}
+</style>
+</head>
+<body>
+<div class="page-wrap">
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <span class="logo-txt">coway</span>
+  <span class="logo-badge">공식 햇살대리점</span>
+  <button class="header-cta" onclick="scrollToForm()">무료상담</button>
+</header>
+
+<section class="hero-copy">
+  <h1 class="hero-copy__title"><strong>조건부터 혜택, 경품까지</strong><br>비교해보세요.</h1>
+  <p class="hero-copy__sub">후회 없는 선택은 비교에서 시작됩니다.</p>
+</section>
+
+<!-- 1. 상단 배너 이미지 -->
+<div class="top-banner">
+  <img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/top-banner-01.png" alt="코웨이 정수기 월 900원부터 햇살대리점">
+  <img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/top-banner-02.png" alt="코웨이 업계1위 최저가 렌탈료 가격비교">
+</div>
+
+<!-- 2. 신청현황 카드 -->
+<section class="status-wrap">
+  <div class="status-card">
+    <div class="status-card__eye">프로모션 신청현황</div>
+    <h2 class="status-card__title">재고 소진 시 이벤트 종료!</h2>
+    <div class="status-badge">선착순 100명 한정 특별 혜택</div>
+    <div class="status-num" id="applyNum">0</div>
+    <div class="status-num-label">명 신청중</div>
+    <div class="status-sub">선착순 <strong>100명 한정</strong> · 현재까지 <span id="applyNum2">0</span>명 참여</div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="status-boxes">
+      <div class="sbox red"><div class="sbox__n" id="remainNum">5</div><div class="sbox__l">남은 자리</div></div>
+      <div class="sbox ora"><div class="blink-badge">⏰ 마감임박</div><div class="sbox__l" style="margin-top:7px">오늘 자정까지</div></div>
+    </div>
+    <div class="status-note">※전문상담원이 전화드립니다. 꼭 받아주세요!<br>※미성년자 및 신용불량자는 신청이 불가합니다.</div>
+  </div>
+</section>
+
+<!-- 3. 사은품 + 타사보상 버튼 -->
+<div style="background:#fff;padding:16px 16px 0">
+  <div class="img-btn-row" style="padding:0">
+    <div class="img-btn" onclick="scrollToForm()">
+      <img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/benefit-gift.png" alt="1+1+1 최다 사은품">
+      <div class="img-btn-label">🎁 사은품 혜택 신청</div>
+    </div>
+    <div class="img-btn" onclick="scrollToForm()">
+      <img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/benefit-reward.png" alt="타사보상 할인">
+      <div class="img-btn-label">🔄 타사보상 할인 신청</div>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 코웨이 고객이라면 혜택 이미지 -->
+<div class="benefit-img-section reveal">
+  <img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/coway-benefit.jpg" alt="코웨이 고객이라면 딱 맞는 최대 혜택">
+</div>
+
+
+<!-- 6. 비교할 수 없는 최대혜택 배너 -->
+<div class="maxbenefit-section reveal">
+  <img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/max-benefit-banner.png" alt="비교할 수 없는 최대혜택">
+</div>
+
+<!-- 7. 코웨이 통계 -->
+<section class="stats-wrap" id="stats">
+  <div class="kicker">WHY COWAY</div>
+  <h2 class="sec-title">왜 렌탈은<br><span style="color:#67e8f9">코웨이</span>와 함께할까요?</h2>
+  <p class="sec-sub">매일 마시는 물이니까, 더 믿을 수 있는 선택이 필요합니다.</p>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="stat-num" data-target="1200" data-suffix="만대+">0</div><div class="stat-label">누적 설치</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="97" data-suffix=".2%">0</div><div class="stat-label">고객 만족도</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="6000" data-suffix="명+">0</div><div class="stat-label">서비스망</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="1" data-suffix="위">0</div><div class="stat-label">품질 만족지수</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="1" data-suffix="위">0</div><div class="stat-label">업계 점유율</div></div>
+    <div class="stat-card"><div class="stat-num" data-target="20" data-suffix="년+">0</div><div class="stat-label">브랜드 역사</div></div>
+  </div>
+  <div class="stats-pill">믿고 쓰는 1등 브랜드</div>
+  <div class="stats-bottom">당신의 첫 렌탈은<br>코웨이와 함께하세요.</div>
+</section>
+
+<!-- 후기 섹션 -->
+<section class="review-wrap">
+  <div class="kicker">REAL REVIEW</div>
+  <h2 class="sec-title">실제 고객 <span class="mb">후기</span></h2>
+  <div class="review-grid">
+
+    <div class="rcard">
+      <div class="rcard-img-slot"><img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/review-01.png" alt="정수기 설치 후기 1"></div>
+      <div class="rcard-body">
+        <div class="rcard-tag">🎁 경품 혜택 만족</div>
+        <div class="rcard-quote">"정수기 상담받으면서<br><strong>조건이랑 경품까지</strong><br>한 번에 비교할 수 있어서 편했어요."</div>
+        <div class="rcard-info">경기도 ㅇㅇ구 · 정수기 렌탈 설치</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-img-slot"><img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/review-02.png" alt="정수기 설치 후기 2"></div>
+      <div class="rcard-body">
+        <div class="rcard-tag">⚡ 빠른 설치 진행</div>
+        <div class="rcard-quote">"정수기 신청하고 나서<br><strong>상담도 빠르고 설치 일정도</strong><br>생각보다 금방 잡혀서 좋았습니다."</div>
+        <div class="rcard-info">서울 ㅇㅇ구 · 정수기 렌탈 설치</div>
+      </div>
+    </div>
+
+    <div class="rcard">
+      <div class="rcard-img-slot"><img src="https://cdn.jsdelivr.net/gh/honggilee22/nbauto-login@main/images/review-03.png" alt="정수기 설치 후기 3"></div>
+      <div class="rcard-body">
+        <div class="rcard-tag">💰 조건 비교 완료</div>
+        <div class="rcard-quote">"정수기 여러 군데 알아보다가<br><strong>가격 조건이랑 혜택 차이</strong><br>설명 듣고 결정하니까 훨씬 수월했어요."</div>
+        <div class="rcard-info">인천 ㅇㅇ구 · 정수기 렌탈 상담</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-wrap">
+  <div class="kicker">FAQ</div>
+  <h2 class="sec-title" style="margin-bottom:24px">자주 묻는 <span class="mb">질문</span></h2>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-num">01</span>
+        <span class="faq-q-txt">정수기 렌탈 vs 구매 뭐가 좋나요?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-a">
+        정수기 렌탈, 구매 장단점 차이는 다음과 같아요!
+        <table class="faq-tbl">
+          <thead><tr><th></th><th>렌탈</th><th>구매</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>장점</td>
+              <td>ㆍ초기 비용 없이 저렴한 월 요금<br>ㆍ렌탈 기간 중 케어서비스 무상<br>ㆍ렌탈 시 현금 사은품 제공<br>ㆍ약정 종료 후 소유권 이전</td>
+              <td>ㆍ위약금 걱정 없음<br>ㆍ구매 즉시 소유권 이전</td>
+            </tr>
+            <tr>
+              <td>단점</td>
+              <td>약정 내 해지 시 위약금 부담</td>
+              <td>ㆍ초기 비용 부담<br>ㆍ개별 관리 필요<br>ㆍA/S 비용 별도</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-num">02</span>
+        <span class="faq-q-txt">자가관리(셀프관리) vs 방문관리 어떤 차이가 있나요?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-a">
+        누가 관리를 해주는지에 따라 차이가 있어요!
+        <table class="faq-tbl">
+          <thead><tr><th></th><th>자가관리</th><th>방문관리</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>특징</td>
+              <td>4~6개월 주기로 배송된 필터로 스스로 관리</td>
+              <td>6개월 주기로 전문 매니저가 직접 방문해 관리</td>
+            </tr>
+            <tr>
+              <td>장점</td>
+              <td>방문관리보다 15~30% 저렴</td>
+              <td>꼼꼼한 위생 관리<br>복합적 관리 기능</td>
+            </tr>
+            <tr>
+              <td>단점</td>
+              <td>위생 관리 미흡<br>자가관리 제품 수 적음</td>
+              <td>방문 일정 조율 필요</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-num">03</span>
+        <span class="faq-q-txt">정수기 렌탈 요금 어디가 제일 저렴한가요?</span>
+        <span class="faq-icon">▼</span>
+      </div>
+      <div class="faq-a">
+        정수기 렌탈 요금은 어느 대리점에서 진행해도 똑같습니다.<br>
+        본사, 렌탈샵, 코디네이터 등 가입 경로는 많습니다.<br><br>
+        <strong>가입 혜택을 최대로 지원해주는 곳에서 렌탈을 추천드립니다.</strong><br>
+        햇살대리점은 동일 요금에 최대 혜택을 제공합니다!
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 신청 프로세스 -->
+<section class="process-wrap">
+  <div class="kicker">HOW IT WORKS</div>
+  <h2 class="sec-title" style="margin-bottom:8px">상담 신청 후<br><span class="mb">이렇게 진행돼요</span></h2>
+  <p class="sec-sub">폼 작성 후 전화 한 통으로 모든 혜택이 시작됩니다</p>
+  <div class="process-steps">
+    <div class="pstep">
+      <div class="pstep-circle">📋</div>
+      <div class="pstep-content">
+        <div class="pstep-num">STEP 01</div>
+        <div class="pstep-title">무료 상담 신청</div>
+        <div class="pstep-desc">하단 폼에 이름·연락처만 남기시면 됩니다.<br>30초면 완료!</div>
+      </div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-circle">📞</div>
+      <div class="pstep-content">
+        <div class="pstep-num">STEP 02</div>
+        <div class="pstep-title">전담 상담사 연락</div>
+        <div class="pstep-desc">전문 상담사가 직접 연락드려 최적 조건을 안내해드립니다.</div>
+        <div class="pstep-secret">🔒 이때 시크릿 특급 혜택 공개!</div>
+      </div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-circle">🎁</div>
+      <div class="pstep-content">
+        <div class="pstep-num">STEP 03</div>
+        <div class="pstep-title">맞춤 경품 선택</div>
+        <div class="pstep-desc">원하는 사은품이 없으면 직접 맞춰드립니다.<br>리스트에 없는 경품도 협의 가능!</div>
+        <div class="pstep-secret">✨ 비공개 혜택 별도 제공</div>
+      </div>
+    </div>
+    <div class="pstep">
+      <div class="pstep-circle">🚀</div>
+      <div class="pstep-content">
+        <div class="pstep-num">STEP 04</div>
+        <div class="pstep-title">당일 설치 완료</div>
+        <div class="pstep-desc">전국 어디든 본사 직배송·설치.<br>빠르고 안전하게 마무리!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. 카운트다운 + 마감 긴박감 -->
+<section class="final-wrap">
+  <div class="final-badge">🔥 전국 최저가 프로모션</div>
+  <h2 class="final-title">재고 소진 시,<br><span class="bl">이벤트 종료!</span></h2>
+  <p class="final-sub">지금 신청하면 최대 혜택을 모두 받으실 수 있습니다.</p>
+  <div class="countdown-overlay" style="background:rgba(255,255,255,.08);border-radius:16px;margin-bottom:20px">
+    <div class="countdown-label" style="color:rgba(255,255,255,.7)">한정특가 종료까지 <span id="cdLabel" style="color:#67e8f9">남은 시간</span></div>
+    <div class="countdown-boxes">
+      <div class="cd-box"><span class="cd-num" id="cdH">00</span><div class="cd-unit">Hours</div></div>
+      <div class="cd-sep" style="color:#fff">:</div>
+      <div class="cd-box"><span class="cd-num" id="cdM">00</span><div class="cd-unit">Minutes</div></div>
+      <div class="cd-sep" style="color:#fff">:</div>
+      <div class="cd-box"><span class="cd-num" id="cdS">00</span><div class="cd-unit">Seconds</div></div>
+    </div>
+  </div>
+  <div class="final-counter-box">선착순 100명 중 현재 <strong id="finalNum">95</strong>명 참여</div><br>
+  <button class="btn-final" onclick="scrollToForm()">📞 무료 상담 신청하기 →</button>
+</section>
+
+<!-- 10. 실시간 신청 목록 -->
+<section class="status-wrap" style="padding:20px 16px 28px">
+  <div style="max-width:480px;margin:0 auto">
+    <div class="kicker" style="text-align:center;margin-bottom:8px">LIVE 신청 현황</div>
+    <h3 style="text-align:center;font-size:16px;font-weight:900;margin-bottom:12px">실시간 상담 신청자 목록</h3>
+    <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=9&c12=0&c13=0&c14=0&width=800" width="100%" height="300px" frameborder="0" style="border-radius:12px;border:1.5px solid #b3e9f7;display:block"></iframe>
+  </div>
+</section>
+
+<!-- 11. 상담 신청 폼 (최하단) -->
+<section class="form-wrap" id="form">
+  <div class="form-card">
+    <div class="form-logo-area"><span class="form-coway-txt">coway</span></div>
+    <div class="form-eye">전문 상담사가 친절하게 안내해드립니다</div>
+    <div class="form-brand">코웨이 공식 햇살대리점</div>
+    <h2 class="form-title">지금 <span class="bl">무료 상담</span> 신청하기</h2>
+    <iframe src='https://dbsense.kr/js/form/iframe.php?c1=9&width=800&cid=y184wivvq5&sid=y184&form=my2form167&ver=1&c2=0&c3=0&c4=0&btn=&autoHeight=478' width='100%' height='478px' frameborder='0'></iframe>
+    <div class="form-footer">🔒 공식 파트너 · 코웨이 햇살대리점 정식 안내<br>사업자/통신판매 등 상세 정보는 상담 시 안내드립니다.</div>
+  </div>
+</section>
+
+</div><!-- /page-wrap -->
+
+<!-- ── STICKY BAR ── -->
+<div class="sticky-bar">
+  <div class="sticky-top-row">
+    <span class="sticky-logo">coway</span>
+    <div class="sticky-viewer-row">
+      <div class="gdot"></div>
+      <span><span class="vcnt" id="viewerCnt">187</span>명이 보고 있어요</span>
+    </div>
+  </div>
+  <button class="sticky-cta-btn" onclick="scrollToForm()">🎁 무료 상담 신청 · 혜택 받기</button>
+</div>
+
+<script>
+
+/* ── 카운트다운 (오늘 자정까지) ── */
+function updateCountdown(){
+  const now=new Date();
+  const midnight=new Date(now);
+  midnight.setHours(24,0,0,0);
+  const diff=midnight-now;
+  const h=Math.floor(diff/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  document.getElementById('cdH').textContent=String(h).padStart(2,'0');
+  document.getElementById('cdM').textContent=String(m).padStart(2,'0');
+  document.getElementById('cdS').textContent=String(s).padStart(2,'0');
+  document.getElementById('cdLabel').textContent=h+'시간 '+m+'분 '+s+'초';
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+/* ── 신청 카운터 (95명) ── */
+let applyN=95;const MAX=100;
+function setApply(n){
+  applyN=n;
+  document.getElementById('applyNum').textContent=n;
+  document.getElementById('applyNum2').textContent=n;
+  document.getElementById('remainNum').textContent=MAX-n;
+  document.getElementById('finalNum').textContent=n;
+  document.getElementById('progressFill').style.width=(n/MAX*100)+'%';
+}
+let cur=0;
+const t=setInterval(function(){
+  cur+=3;if(cur>=95){cur=95;clearInterval(t);}
+  document.getElementById('applyNum').textContent=cur;
+  document.getElementById('applyNum2').textContent=cur;
+  document.getElementById('remainNum').textContent=MAX-cur;
+  document.getElementById('finalNum').textContent=cur;
+  document.getElementById('progressFill').style.width=(cur/MAX*100)+'%';
+},22);
+function schedNext(){
+  setTimeout(function(){if(applyN<99){setApply(applyN+1);}schedNext();},12000+Math.random()*18000);
+}
+schedNext();
+
+/* ── 스크롤 reveal ── */
+const reveals=document.querySelectorAll('.reveal');
+const revObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');}});
+},{threshold:.1});
+reveals.forEach(function(el){revObs.observe(el);});
+
+/* ── 배너 슬라이드인 ── */
+const mbSection=document.querySelector('.maxbenefit-section');
+new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting){mbSection.classList.add('visible');}
+},{threshold:.1}).observe(mbSection);
+
+/* ── 통계 카운터 ── */
+function animStat(el){
+  const target=parseInt(el.dataset.target);const suffix=el.dataset.suffix||'';
+  const dur=2200;const t0=performance.now();
+  function step(now){
+    const p=Math.min((now-t0)/dur,1);const e=1-Math.pow(1-p,4);const v=Math.floor(e*target);
+    el.textContent=(target>=1000?v.toLocaleString():v)+suffix;
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+let statsRan=false;
+new IntersectionObserver(function(entries){
+  if(entries[0].isIntersecting&&!statsRan){statsRan=true;document.querySelectorAll('[data-target]').forEach(animStat);}
+},{threshold:.25}).observe(document.getElementById('stats'));
+
+/* ── 시청자 수 ── */
+let vn=183+Math.floor(Math.random()*10);
+function tickV(){
+  vn=Math.max(170,Math.min(200,vn+Math.floor(Math.random()*7)-3));
+  document.getElementById('viewerCnt').textContent=vn;
+  setTimeout(tickV,1800+Math.random()*2800);
+}
+setTimeout(tickV,2000);
+
+/* ── FAQ 토글 ── */
+function toggleFaq(el){
+  const a=el.nextElementSibling;
+  const icon=el.querySelector('.faq-icon');
+  const isOpen=a.classList.contains('open');
+  document.querySelectorAll('.faq-a.open').forEach(function(x){x.classList.remove('open');});
+  document.querySelectorAll('.faq-q.open').forEach(function(x){x.classList.remove('open');});
+  document.querySelectorAll('.faq-icon.open').forEach(function(x){x.classList.remove('open');});
+  if(!isOpen){a.classList.add('open');el.classList.add('open');icon.classList.add('open');}
+}
+
+/* ── 폼 스크롤 ── */
+function scrollToForm(){document.getElementById('form').scrollIntoView({behavior:'smooth'});}
+</script>
+</body>
+</html>
