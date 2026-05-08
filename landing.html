@@ -4,8 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>코웨이 공식 햇살대리점 — 최대 혜택 무료상담</title>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N2CZW3DG');</script>
+<!-- End Google Tag Manager -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wnsrq9mw29");
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -327,13 +341,17 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 </style>
 </head>
 <body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N2CZW3DG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 <div class="page-wrap">
 
 <!-- ── HEADER ── -->
 <header class="site-header">
   <span class="logo-txt">coway</span>
   <span class="logo-badge">공식 햇살대리점</span>
-  <button class="header-cta" onclick="scrollToForm()">무료상담</button>
+  <button class="header-cta" data-cta="header_free_consult" onclick="handleCtaClick('header_free_consult')">무료상담</button>
 </header>
 
 <!-- 1. 상단 배너 이미지 -->
@@ -363,11 +381,11 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 <!-- 3. 사은품 + 타사보상 버튼 -->
 <div style="background:#fff;padding:24px 30px 0">
   <div class="img-btn-row" style="padding:0">
-    <div class="img-btn" onclick="scrollToForm()">
+    <div class="img-btn" data-cta="gift_apply" onclick="handleCtaClick('gift_apply')">
       <img src="images/benefit-gift.png" alt="1+1+1 최다 사은품">
       <div class="img-btn-label">🎁 사은품 혜택 신청</div>
     </div>
-    <div class="img-btn" onclick="scrollToForm()">
+    <div class="img-btn" data-cta="reward_apply" onclick="handleCtaClick('reward_apply')">
       <img src="images/benefit-reward.png" alt="타사보상 할인">
       <div class="img-btn-label">🔄 타사보상 할인 신청</div>
     </div>
@@ -438,7 +456,7 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
     <p class="gift-guide-sub">상담 조건과 제품에 따라<br>제공 가능한 사은품 구성이<br>달라질 수 있습니다.</p>
     <img class="gift-guide-img" src="images/premium-gifts-guide.png" alt="프리미엄 사은품 목록 안내">
     <div class="gift-guide-note">사은품은 재고 및 진행 조건에 따라<br>변동될 수 있습니다.</div>
-    <button class="gift-guide-btn" onclick="scrollToForm()">사은품 조건 확인하고 상담 신청하기</button>
+    <button class="gift-guide-btn" data-cta="gift_guide_apply" onclick="handleCtaClick('gift_guide_apply')">사은품 조건 확인하고 상담 신청하기</button>
   </div>
 </section>
 
@@ -483,7 +501,7 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
       <span><span class="vcnt" id="viewerCnt">24</span>명이 보고 있어요</span>
     </div>
   </div>
-  <button class="sticky-cta-btn" onclick="scrollToForm()">🎁 무료 상담 신청 · 혜택 받기</button>
+  <button class="sticky-cta-btn" data-cta="sticky_free_consult" onclick="handleCtaClick('sticky_free_consult')">🎁 무료 상담 신청 · 혜택 받기</button>
 </div>
 
 <script>
@@ -586,6 +604,22 @@ function toggleFaq(el){
   document.querySelectorAll('.faq-q.open').forEach(function(x){x.classList.remove('open');});
   document.querySelectorAll('.faq-icon.open').forEach(function(x){x.classList.remove('open');});
   if(!isOpen){a.classList.add('open');el.classList.add('open');icon.classList.add('open');}
+}
+
+/* ── CTA 클릭 추적 ── */
+function trackCtaClick(ctaName){
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push({
+    event:'cta_click',
+    cta_name:ctaName,
+    page_path:location.pathname,
+    page_title:document.title
+  });
+}
+
+function handleCtaClick(ctaName){
+  trackCtaClick(ctaName);
+  scrollToForm();
 }
 
 /* ── 폼 스크롤 ── */
