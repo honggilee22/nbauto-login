@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>코웨이 공식 햇살대리점 — 최대 혜택 무료상담</title>
+<title>코웨이 렌탈 — 최대 혜택 무료상담</title>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -12,6 +12,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-N2CZW3DG');</script>
 <!-- End Google Tag Manager -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
 <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -33,13 +34,14 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
   background:rgba(255,255,255,.97);backdrop-filter:blur(10px);
   border-bottom:1px solid #e5e7eb;
   display:flex;align-items:center;justify-content:space-between;
+  gap:10px;
   padding:14px 30px;
   max-width:480px;margin-left:auto;margin-right:auto;
   left:0;right:0;
 }
 .logo-txt{font-family:Arial,sans-serif;font-size:29px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
-.logo-badge{background:#f0fbff;border:1px solid #b3e9f7;border-radius:20px;padding:5px 13px;font-size:14px;font-weight:700;color:var(--coway)}
-.header-cta{background:var(--coway);color:#fff;border:none;border-radius:50px;padding:12px 20px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.logo-badge{background:#f0fbff;border:1px solid #b3e9f7;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--coway);white-space:nowrap}
+.header-cta{background:var(--coway);color:#fff;border:none;border-radius:50px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;line-height:1.2;white-space:nowrap;flex-shrink:0}
 
 /* ── TOP BANNER ── */
 .top-banner{animation:fadeInDown .8s ease both;padding:0 30px}
@@ -252,9 +254,9 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
   border-radius:18px;padding:28px 24px 30px;box-shadow:0 6px 24px rgba(0,180,216,.08)
 }
 .gift-guide-title{font-size:30px;font-weight:900;line-height:1.45;color:var(--navy);margin-bottom:16px;word-break:keep-all}
-.gift-guide-sub{font-size:17px;line-height:1.8;color:#5b6470;margin-bottom:24px;word-break:keep-all}
+.gift-guide-sub{font-size:14px;line-height:1.7;color:#7b8794;margin-top:16px;word-break:keep-all}
 .gift-guide-img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-.gift-guide-note{margin-top:20px;font-size:15px;line-height:1.8;color:#8b95a1}
+.gift-guide-note{display:none}
 .gift-guide-btn{
   display:block;max-width:320px;margin:18px auto 0;background:linear-gradient(90deg,var(--coway),#38bdf8);
   color:#fff;border:none;border-radius:50px;padding:18px 22px;font-size:18px;font-weight:700;cursor:pointer;
@@ -338,6 +340,66 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 .vcnt{color:var(--green);font-weight:700;font-variant-numeric:tabular-nums}
 .sticky-cta-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:calc(100% - 28px);margin:5px 14px 11px;background:var(--coway);color:#fff;border:none;border-radius:50px;padding:17px;font-size:20px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;box-shadow:0 4px 14px rgba(0,180,216,.35)}
 .sticky-cta-btn:hover{background:var(--coway-dark)}
+
+@media (max-width: 380px){
+  body{font-size:17px}
+  .site-header{padding:12px 16px;gap:8px}
+  .logo-txt{font-size:25px}
+  .logo-badge{padding:4px 10px;font-size:12px}
+  .logo-badge{padding:5px 10px;font-size:11px}
+  .header-cta{padding:8px 11px;font-size:12px;flex-shrink:0}
+
+  .top-banner,
+  .hero-copy,
+  .countdown-overlay,
+  .status-wrap,
+  .form-wrap,
+  .benefits-wrap,
+  .stats-wrap,
+  .compare-wrap,
+  .review-wrap,
+  .gift-guide-wrap,
+  .faq-wrap,
+  .process-wrap,
+  .final-wrap,
+  .benefit-img-section{padding-left:18px;padding-right:18px}
+
+  .img-btn-row{padding-left:18px;padding-right:18px;gap:10px}
+  .status-card{padding:26px 18px}
+  .status-card__title{font-size:24px;line-height:1.4;word-break:keep-all}
+  .status-badge{padding:8px 14px;font-size:15px;line-height:1.55;word-break:keep-all}
+  .status-num{font-size:64px}
+  .status-num-label{font-size:20px}
+  .status-sub{font-size:16px;line-height:1.7;word-break:keep-all}
+  .sbox__n{font-size:30px}
+  .blink-badge{font-size:18px;line-height:1.35}
+
+  .sec-title{font-size:26px;line-height:1.35}
+  .sec-sub{font-size:16px}
+  .gift-guide-title{font-size:26px;line-height:1.4}
+  .gift-guide-sub{font-size:13px}
+
+  .form-card{padding:30px 18px}
+  .form-coway-txt{font-size:29px}
+  .form-brand{font-size:17px}
+  .form-title{font-size:24px;line-height:1.45}
+  .form-footer{font-size:14px}
+  .biz-info{padding:0 14px 18px;font-size:13px}
+
+  .sticky-top-row{padding:7px 12px 0}
+  .sticky-logo{font-size:20px}
+  .sticky-viewer-row{font-size:13px}
+  .sticky-cta-btn{width:calc(100% - 20px);margin:5px 10px 10px;padding:15px 14px;font-size:17px;line-height:1.35}
+}
+
+@media (max-width: 360px){
+  .status-card__title{font-size:22px}
+  .status-badge{font-size:14px}
+  .status-num{font-size:58px}
+  .status-sub{font-size:15px}
+  .sticky-cta-btn{font-size:16px}
+  .form-title{font-size:22px}
+}
 </style>
 </head>
 <body>
@@ -350,14 +412,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ── HEADER ── -->
 <header class="site-header">
   <span class="logo-txt">coway</span>
-  <span class="logo-badge">공식 햇살대리점</span>
-  <button class="header-cta" data-cta="header_free_consult" onclick="handleCtaClick('header_free_consult')">무료상담</button>
+  <span class="logo-badge">공식햇살대리점</span>
+  <button class="header-cta" data-cta="header_gift_check" onclick="handleSectionCtaClick('header_gift_check','gift-guide')">사은품 확인</button>
 </header>
 
 <!-- 1. 상단 배너 이미지 -->
 <div class="top-banner">
-  <img src="images/top-banner-01.png" alt="코웨이 정수기 월 900원부터 햇살대리점">
-  <img src="images/top-banner-02.png" alt="코웨이 업계1위 최저가 렌탈료 가격비교">
+  <img src="images/top-banner-01.webp" alt="코웨이 정수기 월 900원부터 햇살대리점" loading="eager" fetchpriority="high" decoding="async">
+  <img src="images/top-banner-02.webp" alt="코웨이 업계1위 최저가 렌탈료 가격비교" loading="eager" fetchpriority="high" decoding="async">
 </div>
 
 <!-- 2. 신청현황 카드 -->
@@ -382,11 +444,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div style="background:#fff;padding:24px 30px 0">
   <div class="img-btn-row" style="padding:0">
     <div class="img-btn" data-cta="gift_apply" onclick="handleCtaClick('gift_apply')">
-      <img src="images/benefit-gift.png" alt="1+1+1 최다 사은품">
+      <img src="images/benefit-gift.webp" alt="1+1+1 최다 사은품" loading="lazy" decoding="async">
       <div class="img-btn-label">🎁 사은품 혜택 신청</div>
     </div>
     <div class="img-btn" data-cta="reward_apply" onclick="handleCtaClick('reward_apply')">
-      <img src="images/benefit-reward.png" alt="타사보상 할인">
+      <img src="images/benefit-reward.webp" alt="타사보상 할인" loading="lazy" decoding="async">
       <div class="img-btn-label">🔄 타사보상 할인 신청</div>
     </div>
   </div>
@@ -394,7 +456,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- BEST 특가 안내 -->
 <div class="benefit-img-section">
-  <img src="images/best-price-guide.png" alt="코웨이 렌탈 BEST 특가 안내">
+  <img src="images/best-price-guide.webp" alt="코웨이 렌탈 BEST 특가 안내" loading="lazy" decoding="async">
 </div>
 
 <!-- 7. 코웨이 통계 -->
@@ -421,7 +483,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="review-grid">
 
     <div class="rcard">
-      <div class="rcard-img-slot"><img src="images/review-01.png" alt="정수기 설치 후기 1"></div>
+      <div class="rcard-img-slot"><img src="images/review-01.webp" alt="정수기 설치 후기 1" loading="lazy" decoding="async"></div>
       <div class="rcard-body">
         <div class="rcard-tag">🎁 경품 혜택 만족</div>
         <div class="rcard-quote">"정수기 상담받으면서<br><strong>조건이랑 경품까지</strong><br>한 번에 비교할 수 있어서 편했어요."</div>
@@ -430,7 +492,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="rcard">
-      <div class="rcard-img-slot"><img src="images/review-02.png" alt="정수기 설치 후기 2"></div>
+      <div class="rcard-img-slot"><img src="images/review-02.webp" alt="정수기 설치 후기 2" loading="lazy" decoding="async"></div>
       <div class="rcard-body">
         <div class="rcard-tag">⚡ 빠른 설치 진행</div>
         <div class="rcard-quote">"정수기 신청하고 나서<br><strong>상담도 빠르고 설치 일정도</strong><br>생각보다 금방 잡혀서 좋았습니다."</div>
@@ -439,7 +501,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
 
     <div class="rcard">
-      <div class="rcard-img-slot"><img src="images/review-03.png" alt="정수기 설치 후기 3"></div>
+      <div class="rcard-img-slot"><img src="images/review-03.webp" alt="정수기 설치 후기 3" loading="lazy" decoding="async"></div>
       <div class="rcard-body">
         <div class="rcard-tag">💰 조건 비교 완료</div>
         <div class="rcard-quote">"정수기 여러 군데 알아보다가<br><strong>가격 조건이랑 혜택 차이</strong><br>설명 듣고 결정하니까 훨씬 수월했어요."</div>
@@ -450,12 +512,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-<section class="gift-guide-wrap">
+<section class="gift-guide-wrap" id="gift-guide">
   <div class="gift-guide-card">
-    <h2 class="gift-guide-title">상담 시 받을 수 있는<br>프리미엄 사은품도 확인해보세요</h2>
-    <p class="gift-guide-sub">상담 조건과 제품에 따라<br>제공 가능한 사은품 구성이<br>달라질 수 있습니다.</p>
-    <img class="gift-guide-img" src="images/premium-gifts-guide.png" alt="프리미엄 사은품 목록 안내">
-    <div class="gift-guide-note">사은품은 재고 및 진행 조건에 따라<br>변동될 수 있습니다.</div>
+    <h2 class="gift-guide-title">프리미엄 사은품<br>확인하기</h2>
+    <img class="gift-guide-img" src="images/premium-gifts-guide.webp" alt="프리미엄 사은품 목록 안내" loading="lazy" decoding="async">
+    <p class="gift-guide-sub">사은품은 상담 조건, 제품, 재고 상황에 따라 달라질 수 있습니다.</p>
     <button class="gift-guide-btn" data-cta="gift_guide_apply" onclick="handleCtaClick('gift_guide_apply')">사은품 조건 확인하고 상담 신청하기</button>
   </div>
 </section>
@@ -465,7 +526,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div style="max-width:480px;margin:0 auto">
     <div class="kicker" style="text-align:center;margin-bottom:10px">LIVE 신청 현황</div>
     <h3 style="text-align:center;font-size:20px;font-weight:900;margin-bottom:16px">실시간 상담 신청자 목록</h3>
-    <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=9&c12=0&c13=0&c14=0&width=800" width="100%" height="300px" frameborder="0" style="border-radius:12px;border:1.5px solid #b3e9f7;display:block"></iframe>
+    <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=9&c12=0&c13=0&c14=0&width=800" width="100%" height="300px" frameborder="0" loading="lazy" style="border-radius:12px;border:1.5px solid #b3e9f7;display:block"></iframe>
   </div>
 </section>
 
@@ -473,10 +534,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="form-wrap" id="form">
   <div class="form-card">
     <div class="form-logo-area"><span class="form-coway-txt">coway</span></div>
-    <div class="form-eye">전문 상담사가 친절하게<br>안내해드립니다</div>
-    <div class="form-brand">코웨이 공식 햇살대리점</div>
-    <h2 class="form-title">지금 <span class="bl">무료 상담</span> 신청하기</h2>
-    <iframe src='https://dbsense.kr/js/form/iframe.php?c1=9&width=800&cid=y184wivvq5&sid=y184&form=my2form167&ver=1&c2=0&c3=0&c4=0&btn=&autoHeight=560' width='100%' height='560px' frameborder='0'></iframe>
+  <div class="form-eye">렌탈 신청 시 사은품 3종 증정</div>
+  <div class="form-brand">코웨이 렌탈 상담</div>
+  <h2 class="form-title">월 900원부터 시작<br><span class="bl">무료 상담으로 조건 먼저 확인하세요</span></h2>
+    <iframe src='https://dbsense.kr/js/form/iframe.php?c1=9&width=800&cid=y184wivvq5&sid=y184&form=my2form167&ver=1&c2=0&c3=0&c4=0&btn=&autoHeight=560' width='100%' height='560px' frameborder='0' loading='lazy'></iframe>
   </div>
   <div class="biz-info">상호 : 코웨이 햇살 대리점 | 대표자 : 박상준<br>사업자번호 : 679-32-01257<br>통신판매업신고번호 : 제 2024-충북청주-0076 호<br>소재지 : 충청북도 청주시 흥덕구<br>직지대로436번길 76, 126호</div>
 </section>
@@ -620,6 +681,12 @@ function trackCtaClick(ctaName){
 function handleCtaClick(ctaName){
   trackCtaClick(ctaName);
   scrollToForm();
+}
+
+function handleSectionCtaClick(ctaName,sectionId){
+  trackCtaClick(ctaName);
+  const target=document.getElementById(sectionId);
+  if(target){target.scrollIntoView({behavior:'smooth'});}
 }
 
 /* ── 폼 스크롤 ── */
