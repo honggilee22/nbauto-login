@@ -41,7 +41,7 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 }
 .logo-txt{font-family:Arial,sans-serif;font-size:29px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
 .logo-badge{background:#f0fbff;border:1px solid #b3e9f7;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:700;color:var(--coway);white-space:nowrap}
-.header-cta{background:var(--coway);color:#fff;border:none;border-radius:50px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;line-height:1.2;white-space:nowrap;flex-shrink:0}
+.header-cta{background:var(--coway);color:#fff;border:none;border-radius:50px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;line-height:1.2;letter-spacing:-.02em;white-space:nowrap;flex-shrink:0}
 
 /* ── TOP BANNER ── */
 .top-banner{animation:fadeInDown .8s ease both;padding:0 30px}
@@ -147,16 +147,72 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 @keyframes badgeBlink{0%,100%{transform:scale(1);box-shadow:0 10px 24px rgba(249,115,22,.24)}50%{transform:scale(1.04);box-shadow:0 14px 30px rgba(249,115,22,.38)}}
 
 /* ── FORM ── */
-.form-wrap{background:#fff;padding:52px 30px}
-.form-card{background:#fff;border-radius:20px;padding:36px 28px;box-shadow:0 4px 32px rgba(0,0,0,.09);max-width:480px;margin:0 auto;border:1.5px solid #e5e7eb}
-.form-logo-area{text-align:center;margin-bottom:16px}
-.form-coway-txt{font-family:Arial,sans-serif;font-size:33px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
-.form-eye{text-align:center;font-size:16px;color:#888;margin-bottom:10px}
-.form-brand{text-align:center;font-weight:700;font-size:18px;color:#333;margin-bottom:14px}
-.form-title{text-align:center;font-size:28px;font-weight:900;margin-bottom:28px}
+.form-wrap{background:#fff;padding:40px 30px}
+.form-card{background:#fff;border-radius:20px;padding:28px 24px;box-shadow:0 4px 32px rgba(0,0,0,.09);max-width:480px;margin:0 auto;border:1.5px solid #e5e7eb}
+.form-logo-area{text-align:center;margin-bottom:10px}
+.form-coway-txt{font-family:Arial,sans-serif;font-size:30px;font-weight:900;color:#00b4d8;letter-spacing:-.5px}
+.form-eye{display:none}
+.form-brand{display:none}
+.form-title{text-align:center;font-size:30px;font-weight:900;line-height:1.32;margin-bottom:12px;word-break:keep-all}
 .form-title .bl{color:var(--coway)}
+.form-assurance{
+  margin:0 0 18px;
+  padding:0;
+  font-size:15px;
+  line-height:1.75;
+  color:#475569;
+  word-break:keep-all;
+  text-align:center;
+}
 .form-footer{text-align:center;margin-top:12px;font-size:15px;color:#8b95a1;line-height:1.8}
 .biz-info{max-width:480px;margin:10px auto 0;padding:0 20px 20px;font-size:14px;line-height:1.8;color:#111827;text-align:center;word-break:keep-all}
+
+.product-modal{
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  padding:20px;z-index:10050;background:rgba(2,6,23,.58)
+}
+.product-modal.open{display:flex}
+.product-modal__panel{
+  width:min(100%,420px);background:#fff;border-radius:26px;padding:22px 20px 20px;
+  box-shadow:0 24px 70px rgba(15,23,42,.28);position:relative;text-align:center
+}
+.product-modal__close{
+  position:absolute;top:12px;right:12px;width:36px;height:36px;border:none;border-radius:50%;
+  background:#eff6ff;color:#334155;font-size:24px;cursor:pointer;line-height:1
+}
+.product-modal__eyebrow{font-size:13px;font-weight:800;color:var(--coway);letter-spacing:.04em}
+.product-modal__title{margin-top:10px;font-size:30px;font-weight:900;line-height:1.28;color:var(--navy);word-break:keep-all}
+.product-modal__hero{
+  margin-top:14px;padding:14px;border-radius:20px;background:linear-gradient(180deg,#f7fbff 0%,#eef8ff 100%);
+  border:1px solid #d8eef7
+}
+.product-modal__thumb{
+  width:132px;height:132px;margin:0 auto 12px;border-radius:28px;
+  background:linear-gradient(180deg,#d6f4ff 0%,#a7e2ff 100%);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:42px;font-weight:900;
+  overflow:hidden
+}
+.product-modal__thumb img{width:100%;height:100%;object-fit:cover;display:block;object-position:center top}
+.product-modal__list{
+  margin-top:14px;padding:16px 16px;border-radius:16px;background:#f8fdff;border:1px solid #d8eef7;
+  text-align:left;font-size:14px;line-height:1.8;color:#475569
+}
+.product-modal__line{display:flex;align-items:flex-start;gap:10px}
+.product-modal__line + .product-modal__line{margin-top:10px}
+.product-modal__icon{font-size:17px;line-height:1.4;flex-shrink:0}
+.product-modal__line strong{color:#0f172a}
+.product-modal__safe{color:#0284c7}
+.product-modal__safe strong{color:#0369a1}
+.product-modal__privacy{color:#0f766e}
+.product-modal__privacy strong{color:#0f766e}
+.product-modal__contact{color:#7c3aed}
+.product-modal__contact strong{color:#6d28d9}
+.product-modal__cta{
+  display:block;width:100%;margin-top:16px;border:none;border-radius:18px;
+  background:linear-gradient(90deg,var(--coway),#38bdf8);color:#fff;padding:18px 18px;
+  font-size:18px;font-weight:800;cursor:pointer;font-family:inherit
+}
+.product-modal__foot{margin-top:10px;font-size:12px;color:#94a3b8}
 
 /* ── 이미지 버튼 한 줄 ── */
 .img-btn-row{display:flex;gap:14px;padding:22px 30px;background:#fff;max-width:480px;margin:0 auto}
@@ -178,8 +234,34 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 .reveal.visible{opacity:1;transform:none}
 
 /* ── 혜택 상세 이미지 (cw-benefit) ── */
-.benefit-img-section{overflow:hidden;padding:0 30px}
-.benefit-img-section img{width:100%;display:block;border-radius:14px}
+.benefit-img-section{overflow:hidden;padding:0 30px 30px}
+.benefit-img-section img{width:100%;display:block;border-radius:14px;height:auto}
+.benefit-img-stage{position:relative}
+.benefit-hotspot{
+  position:absolute;
+  z-index:2;
+  border:none;
+  border-radius:18px;
+  background:transparent;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.benefit-hotspot:focus-visible{
+  outline:3px solid rgba(255,255,255,.95);
+  outline-offset:2px;
+  box-shadow:0 0 0 4px rgba(0,180,216,.45);
+}
+.benefit-hotspot--1{left:5.4%;top:55.9%;width:43.6%;height:18.5%}
+.benefit-hotspot--2{left:50.8%;top:55.9%;width:43.6%;height:18.5%}
+.benefit-hotspot--3{left:5.4%;top:75.2%;width:43.6%;height:18.6%}
+.benefit-hotspot--4{left:50.8%;top:75.2%;width:43.6%;height:18.6%}
+.benefit-hotspot-note{
+  margin-top:12px;
+  text-align:center;
+  font-size:13px;
+  line-height:1.6;
+  color:#64748b;
+}
 
 /* ── BENEFITS CARDS ── */
 .benefits-wrap{background:#f0fbff;padding:60px 30px;text-align:center}
@@ -248,17 +330,14 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 .rcard-info{font-size:14px;color:#9ca3af;border-top:1px solid #f0f0f0;padding-top:8px;margin-top:auto}
 
 /* ── 사은품 안내 ── */
-.gift-guide-wrap{background:#fff;padding:56px 30px 36px;text-align:center}
-.gift-guide-card{
-  max-width:480px;margin:0 auto;background:#f8fdff;border:1.5px solid #b3e9f7;
-  border-radius:18px;padding:28px 24px 30px;box-shadow:0 6px 24px rgba(0,180,216,.08)
-}
+.gift-guide-wrap{background:#fff;padding:56px 30px 36px;text-align:center;scroll-margin-top:84px}
+.gift-guide-wrap > *{max-width:480px;margin-left:auto;margin-right:auto}
 .gift-guide-title{font-size:30px;font-weight:900;line-height:1.45;color:var(--navy);margin-bottom:16px;word-break:keep-all}
 .gift-guide-sub{font-size:14px;line-height:1.7;color:#7b8794;margin-top:16px;word-break:keep-all}
-.gift-guide-img{width:100%;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+.gift-guide-img{width:100%;height:auto;display:block;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
 .gift-guide-note{display:none}
 .gift-guide-btn{
-  display:block;max-width:320px;margin:18px auto 0;background:linear-gradient(90deg,var(--coway),#38bdf8);
+  display:block;max-width:320px;margin:20px auto 0;background:linear-gradient(90deg,var(--coway),#38bdf8);
   color:#fff;border:none;border-radius:50px;padding:18px 22px;font-size:18px;font-weight:700;cursor:pointer;
   font-family:inherit;box-shadow:0 8px 22px rgba(0,180,216,.28)
 }
@@ -338,7 +417,7 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
 .gdot{width:9px;height:9px;border-radius:50%;background:var(--green);flex-shrink:0;animation:gpulse 1.6s ease-in-out infinite}
 @keyframes gpulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.5)}50%{box-shadow:0 0 0 7px rgba(34,197,94,0)}}
 .vcnt{color:var(--green);font-weight:700;font-variant-numeric:tabular-nums}
-.sticky-cta-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:calc(100% - 28px);margin:5px 14px 11px;background:var(--coway);color:#fff;border:none;border-radius:50px;padding:17px;font-size:20px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .2s;box-shadow:0 4px 14px rgba(0,180,216,.35)}
+.sticky-cta-btn{display:flex;align-items:center;justify-content:center;gap:7px;width:calc(100% - 28px);margin:5px 14px 11px;background:var(--coway);color:#fff;border:none;border-radius:50px;padding:17px;font-size:19px;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:-.02em;transition:background .2s;box-shadow:0 4px 14px rgba(0,180,216,.35)}
 .sticky-cta-btn:hover{background:var(--coway-dark)}
 
 @media (max-width: 380px){
@@ -379,10 +458,17 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
   .gift-guide-title{font-size:26px;line-height:1.4}
   .gift-guide-sub{font-size:13px}
 
-  .form-card{padding:30px 18px}
-  .form-coway-txt{font-size:29px}
-  .form-brand{font-size:17px}
-  .form-title{font-size:24px;line-height:1.45}
+  .form-wrap{padding-top:34px;padding-bottom:34px}
+  .form-card{padding:24px 16px}
+  .form-logo-area{margin-bottom:8px}
+  .form-coway-txt{font-size:27px}
+  .form-title{font-size:26px;line-height:1.34;margin-bottom:12px}
+  .form-assurance{font-size:14px;margin-bottom:16px}
+  .product-modal__panel{padding:20px 16px 18px}
+  .product-modal__title{font-size:26px}
+  .product-modal__thumb{width:120px;height:120px;border-radius:24px}
+  .product-modal__list{font-size:13px}
+  .product-modal__cta{font-size:17px;padding:16px}
   .form-footer{font-size:14px}
   .biz-info{padding:0 14px 18px;font-size:13px}
 
@@ -398,7 +484,9 @@ body{font-family:'Noto Sans KR',sans-serif;font-size:18px;line-height:1.9;backgr
   .status-num{font-size:58px}
   .status-sub{font-size:15px}
   .sticky-cta-btn{font-size:16px}
-  .form-title{font-size:22px}
+  .form-card{padding:22px 14px}
+  .form-coway-txt{font-size:25px}
+  .form-title{font-size:20px}
 }
 </style>
 </head>
@@ -413,7 +501,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <header class="site-header">
   <span class="logo-txt">coway</span>
   <span class="logo-badge">공식햇살대리점</span>
-  <button class="header-cta" data-cta="header_gift_check" onclick="handleSectionCtaClick('header_gift_check','gift-guide')">사은품 확인</button>
+  <button class="header-cta" data-cta="header_free_benefit_check" onclick="handleCtaClick('header_free_benefit_check')">내 혜택 무료 확인하기</button>
 </header>
 
 <!-- 1. 상단 배너 이미지 -->
@@ -436,7 +524,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="sbox red"><div class="sbox__n" id="remainNum">100</div><div class="sbox__l">남은 자리</div></div>
       <div class="sbox ora"><div class="blink-badge">혜택 마감임박</div></div>
     </div>
-    <div class="status-note">※<span class="highlight">전문상담원이 전화드립니다.</span> 꼭 받아주세요!<br>※미성년자 및 신용불량자는 신청이 불가합니다.</div>
+    <div class="status-note">※<span class="highlight">담당 코디가 고객님 조건에 맞는 혜택을 안내드립니다.</span><br>※미성년자 및 신용불량자는 신청이 불가합니다.</div>
   </div>
 </section>
 
@@ -456,7 +544,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- BEST 특가 안내 -->
 <div class="benefit-img-section">
-  <img src="images/best-price-guide.webp" alt="코웨이 렌탈 BEST 특가 안내" loading="lazy" decoding="async">
+  <div class="benefit-img-stage">
+    <img src="images/coway-best-top4.webp" alt="코웨이 렌탈 BEST 특가 TOP4 안내" loading="lazy" decoding="async" width="940" height="1672">
+    <button class="benefit-hotspot benefit-hotspot--1" type="button" aria-label="스위치 정수기 상담 신청" onclick="handleProductInterest('product_switch_purifier','스위치 정수기')"></button>
+    <button class="benefit-hotspot benefit-hotspot--2" type="button" aria-label="아이콘 얼음정수기 상담 신청" onclick="handleProductInterest('product_icon_ice','아이콘 얼음정수기')"></button>
+    <button class="benefit-hotspot benefit-hotspot--3" type="button" aria-label="스스로케어 비데 상담 신청" onclick="handleProductInterest('product_bidet','스스로케어 비데')"></button>
+    <button class="benefit-hotspot benefit-hotspot--4" type="button" aria-label="노블 공기청정기2 상담 신청" onclick="handleProductInterest('product_air_purifier','노블 공기청정기2')"></button>
+  </div>
+  <div class="benefit-hotspot-note">렌탈료는 제휴카드, 약정 조건에 따라 달라질 수 있습니다.</div>
 </div>
 
 <!-- 7. 코웨이 통계 -->
@@ -513,12 +608,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <section class="gift-guide-wrap" id="gift-guide">
-  <div class="gift-guide-card">
-    <h2 class="gift-guide-title">프리미엄 사은품<br>확인하기</h2>
-    <img class="gift-guide-img" src="images/premium-gifts-guide.webp" alt="프리미엄 사은품 목록 안내" loading="lazy" decoding="async">
-    <p class="gift-guide-sub">사은품은 상담 조건, 제품, 재고 상황에 따라 달라질 수 있습니다.</p>
-    <button class="gift-guide-btn" data-cta="gift_guide_apply" onclick="handleCtaClick('gift_guide_apply')">사은품 조건 확인하고 상담 신청하기</button>
-  </div>
+  <img class="gift-guide-img" src="images/gift-guide-current-v3.webp" alt="프리미엄 사은품 목록 안내" loading="lazy" decoding="async" width="953" height="1650">
+  <p class="gift-guide-sub">사은품은 상담 조건, 제품, 재고 상황에 따라 달라질 수 있습니다.</p>
+  <button class="gift-guide-btn" data-cta="gift_guide_apply" onclick="handleCtaClick('gift_guide_apply')">받을 수 있는 사은품 확인하기</button>
 </section>
 
 <!-- 10. 실시간 신청 목록 -->
@@ -533,10 +625,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- 11. 상담 신청 폼 (최하단) -->
 <section class="form-wrap" id="form">
   <div class="form-card">
-    <div class="form-logo-area"><span class="form-coway-txt">coway</span></div>
-  <div class="form-eye">렌탈 신청 시 사은품 3종 증정</div>
-  <div class="form-brand">코웨이 렌탈 상담</div>
-  <h2 class="form-title">월 900원부터 시작<br><span class="bl">무료 상담으로 조건 먼저 확인하세요</span></h2>
+  <div class="form-logo-area"><span class="form-coway-txt">coway</span></div>
+  <h2 class="form-title">무료 상담으로<br><span class="bl">조건 먼저 확인하세요</span></h2>
+    <div class="form-assurance">
+      입력하신 정보는 정수기 렌탈 상담에만 사용되며,<br>
+      상담 후 원치 않으시면 진행하지 않으셔도 됩니다.
+    </div>
     <iframe src='https://dbsense.kr/js/form/iframe.php?c1=9&width=800&cid=y184wivvq5&sid=y184&form=my2form167&ver=1&c2=0&c3=0&c4=0&btn=&autoHeight=560' width='100%' height='560px' frameborder='0' loading='lazy'></iframe>
   </div>
   <div class="biz-info">상호 : 코웨이 햇살 대리점 | 대표자 : 박상준<br>사업자번호 : 679-32-01257<br>통신판매업신고번호 : 제 2024-충북청주-0076 호<br>소재지 : 충청북도 청주시 흥덕구<br>직지대로436번길 76, 126호</div>
@@ -553,6 +647,32 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </div><!-- /page-wrap -->
 
+<div class="product-modal" id="productModal" aria-hidden="true">
+  <div class="product-modal__panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
+    <button class="product-modal__close" type="button" aria-label="팝업 닫기" onclick="closeProductModal()">&times;</button>
+    <div class="product-modal__eyebrow">&nbsp;</div>
+    <h3 class="product-modal__title" id="productModalTitle">coway</h3>
+    <div class="product-modal__hero">
+      <div class="product-modal__thumb" id="productModalThumb"><img src="images/coordinator-modal.webp" alt="코웨이 담당 코디" width="383" height="477"></div>
+    </div>
+    <div class="product-modal__list">
+      <div class="product-modal__line product-modal__contact">
+        <span class="product-modal__icon">📞</span>
+        <div><strong>담당 코디가 고객님께 직접 연락드립니다.</strong></div>
+      </div>
+      <div class="product-modal__line product-modal__safe">
+        <span class="product-modal__icon">✅</span>
+        <div><strong>상담 후 원치 않으면</strong> 진행하지 않으셔도 됩니다.</div>
+      </div>
+      <div class="product-modal__line product-modal__privacy">
+        <div><strong>입력하신 정보는</strong> 렌탈 상담 목적 외 사용되지 않습니다.</div>
+      </div>
+    </div>
+    <button class="product-modal__cta" type="button" onclick="confirmProductInterest()">담당 코디와 혜택 확인하기</button>
+    <div class="product-modal__foot">선택 제품은 상담 연결 시 함께 확인됩니다.</div>
+  </div>
+</div>
+
 <!-- ── STICKY BAR ── -->
 <div class="sticky-bar">
   <div class="sticky-top-row">
@@ -562,7 +682,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <span><span class="vcnt" id="viewerCnt">24</span>명이 보고 있어요</span>
     </div>
   </div>
-  <button class="sticky-cta-btn" data-cta="sticky_free_consult" onclick="handleCtaClick('sticky_free_consult')">🎁 무료 상담 신청 · 혜택 받기</button>
+  <button class="sticky-cta-btn" data-cta="sticky_free_consult" onclick="handleCtaClick('sticky_free_consult')">🎁 코디에게 혜택 확인하기</button>
 </div>
 
 <script>
@@ -685,12 +805,79 @@ function handleCtaClick(ctaName){
 
 function handleSectionCtaClick(ctaName,sectionId){
   trackCtaClick(ctaName);
-  const target=document.getElementById(sectionId);
-  if(target){target.scrollIntoView({behavior:'smooth'});}
+  scrollToSection(sectionId);
+}
+
+const PRODUCT_MAP={
+  product_switch_purifier:{label:'스위치 정수기 냉온'},
+  product_icon_ice:{label:'아이콘 얼음정수기'},
+  product_bidet:{label:'베디 비데'},
+  product_air_purifier:{label:'노블 공기청정기'}
+};
+let pendingProductCta='';
+let pendingProductLabel='';
+
+function handleProductInterest(ctaName,label){
+  trackCtaClick(ctaName);
+  pendingProductCta=ctaName;
+  pendingProductLabel=label;
+  openProductModal(ctaName,label);
+}
+
+function openProductModal(ctaName,label){
+  const modal=document.getElementById('productModal');
+  const title=document.getElementById('productModalTitle');
+  const info=PRODUCT_MAP[ctaName]||{label:label};
+  if(title)title.textContent='coway';
+  if(modal){
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden','false');
+  }
+  document.body.style.overflow='hidden';
+}
+
+function closeProductModal(){
+  const modal=document.getElementById('productModal');
+  if(modal){
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden','true');
+  }
+  document.body.style.overflow='';
+}
+
+function confirmProductInterest(){
+  const label=pendingProductLabel||(PRODUCT_MAP[pendingProductCta]&&PRODUCT_MAP[pendingProductCta].label)||'선택 제품';
+  window.dataLayer=window.dataLayer||[];
+  window.dataLayer.push({
+    event:'product_interest',
+    product_label:label,
+    page_path:location.pathname,
+    page_title:document.title
+  });
+  closeProductModal();
+  scrollToForm();
 }
 
 /* ── 폼 스크롤 ── */
 function scrollToForm(){document.getElementById('form').scrollIntoView({behavior:'smooth'});}
+function scrollToSection(sectionId){
+  const target=document.getElementById(sectionId);
+  if(!target)return;
+  const header=document.querySelector('.site-header');
+  const headerOffset=header?header.offsetHeight+12:12;
+  const move=function(){
+    const top=window.scrollY+target.getBoundingClientRect().top-headerOffset;
+    window.scrollTo({top,behavior:'smooth'});
+  };
+  move();
+  setTimeout(move,420);
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeProductModal();}
+});
+document.getElementById('productModal').addEventListener('click',function(e){
+  if(e.target===this){closeProductModal();}
+});
 </script>
 </body>
 </html>
