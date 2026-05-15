@@ -152,51 +152,6 @@ body{
 .live-status__sub strong{
   color:#ef4444;font-size:20px;font-weight:900;font-variant-numeric:tabular-nums;
 }
-.live-status__promise{
-  margin-top:14px;
-  font-size:15px;line-height:1.7;color:#334155;word-break:keep-all;
-  font-family:"SUIT Variable","SUIT",sans-serif;
-}
-.live-status__list{
-  display:grid;grid-template-columns:1fr;gap:8px;
-  margin-top:14px;
-}
-.live-status__item{
-  display:flex;align-items:center;gap:8px;
-  padding:11px 12px;border-radius:14px;
-  background:linear-gradient(180deg,#f8fdff 0%,#eef6ff 100%);
-  border:1px solid #dbeafe;
-  font-size:14px;font-weight:800;color:#0f3f82;
-  font-family:"SUIT Variable","SUIT",sans-serif;
-}
-.live-status__item strong{color:#d92d20}
-.live-status__check{
-  width:20px;height:20px;border-radius:50%;
-  background:linear-gradient(180deg,#22c55e 0%,#16a34a 100%);
-  color:#fff;display:inline-flex;align-items:center;justify-content:center;
-  font-size:12px;flex-shrink:0;
-}
-.live-status__cta{
-  position:relative;z-index:1;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;margin-top:16px;border:none;border-bottom:4px solid #0f4aa3;border-radius:18px;
-  background:linear-gradient(180deg,#27b6ff 0%,#1580f5 100%);color:#fff;padding:16px 16px;
-  font-size:18px;font-weight:900;letter-spacing:-.02em;text-decoration:none;
-  box-shadow:0 16px 32px rgba(21,128,245,.28), inset 0 1px 0 rgba(255,255,255,.28);
-  font-family:"SUIT Variable","SUIT",sans-serif;
-}
-.live-status__cta::after{content:"›";font-size:24px;line-height:1;transform:translateY(-1px)}
-.form-headline{
-  text-align:center;margin-bottom:16px;
-}
-.form-headline__title{
-  font-size:24px;font-weight:900;line-height:1.4;color:var(--primary-dark);
-  font-family:"SUIT Variable","SUIT",sans-serif;word-break:keep-all;
-}
-.form-headline__title strong{color:#d92d20}
-.form-headline__copy{
-  margin-top:8px;font-size:15px;line-height:1.7;color:#475467;word-break:keep-all;
-}
 .live-status__frame{
   background:#fff;border-radius:16px;padding:12px;border:1px solid #d7ebfb;
   box-shadow:0 10px 26px rgba(15,23,42,.06)
@@ -447,19 +402,15 @@ body{
         <div class="live-status__eyebrow"><span class="live-status__dot">🔴</span><span>LIVE</span></div>
         <div class="live-status__cap">선착순 100명 한정</div>
         <div class="live-status__main">
-          <span class="live-status__num" id="liveApplyCount">63</span><span class="live-status__suffix">명</span><span class="live-status__label">혜택확인중</span>
+          <span class="live-status__num" id="liveApplyCount">63</span><span class="live-status__suffix">명</span><span class="live-status__label">상담중</span>
         </div>
-        <div class="live-status__sub">남은 무료 확인 자리 <strong id="liveRemainCount">37</strong>명</div>
-        <div class="live-status__promise">지금 무료 기출문제와 <strong>합격시 수강료 전액환불</strong> 혜택을 확인하고 있습니다.</div>
-        <div class="live-status__list">
-          <div class="live-status__item"><span class="live-status__check">✓</span><span><strong>최신 기출문제</strong> 무료 제공</span></div>
-          <div class="live-status__item"><span class="live-status__check">✓</span><span>합격시 <strong>수강료 전액환불</strong> 여부 확인</span></div>
-          <div class="live-status__item"><span class="live-status__check">✓</span><span><strong>자격요건·진출분야</strong>까지 한 번에 확인</span></div>
-        </div>
-        <a class="live-status__cta" href="#lead-form" onclick="trackCta('live_status_top')">무료 기출문제 받고 합격 가능성 확인하기</a>
+        <div class="live-status__sub">남은 자리 <strong id="liveRemainCount">37</strong>명</div>
       </div>
       <div class="live-status__frame">
         <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=0&c12=0&c13=0&c14=0&width=800" width="100%" height="300px" frameborder="0" loading="lazy" style="border:0;display:block"></iframe>
+      </div>
+      <div class="live-status__frame live-status__tenping">
+        <tenping class="adsbytenping" style="width:100%; margin:0 auto; display:block;" tenping-ad-type="CInmlFSNPJoo9rBMK%2brlTg%3d%3d" tenping-ad-client="3eUGQGEY9C%2f815aidjSSRUbMqVjdPf7z%2fOzZ6BvAI%2fZhef9E%2bjVFrbVXlNTS%2baqr" tenping-ad-campaign="2017041310160001" tenping-ad-distributionAddID="2026051521090003" tenping-ad-contain_image="false" tenping-ad-contain_logo="false" tenping-ad-contain_Plugin="false" tenping-ad-contain_TpCall="false" tenping-ad-theme="white"></tenping>
       </div>
     </div>
   </section>
@@ -467,38 +418,11 @@ body{
   <section class="section soft-bg">
     <div class="sec-head">
       <p class="sec-kicker">신청만 해도</p>
-      <h2 class="sec-title-lg">시작해야 할 이유 4가지</h2>
-      <p class="sec-hook">혜택이 아니라 진로 판단 기준부터 확인해보세요</p>
+      <h2 class="sec-title-lg">혜택 4가지</h2>
+      <p class="sec-hook">상담 신청자에게만 드립니다</p>
     </div>
 
-    <div class="benefit-list reason-list">
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">1</div>
-        <div class="benefit-body">
-          <div class="benefit-label"><strong>국가공인 자격증</strong>으로 진입 가능</div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">2</div>
-        <div class="benefit-body">
-          <div class="benefit-label">40대 이후에도 <strong>새 출발</strong>이 가능합니다</div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">3</div>
-        <div class="benefit-body">
-          <div class="benefit-label"><strong>현장형 일자리</strong>로 연결될 수 있습니다</div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">4</div>
-        <div class="benefit-body">
-          <div class="benefit-label">협회 기준 <strong>취업 연계 정보</strong>까지 확인</div>
-        </div>
-      </article>
-    </div>
-
-    <div class="benefit-list" style="display:none">
+    <div class="benefit-list">
       <article class="benefit-card reveal-up">
         <div class="benefit-num">1</div>
         <div class="benefit-body">
@@ -634,10 +558,6 @@ body{
 
   <!-- ⑦ DB 수집 -->
   <section class="form-wrap" id="lead-form">
-    <div class="form-headline">
-      <div class="form-headline__title">무료 기출문제 받고<br><strong>합격 가능성</strong> 바로 확인하세요</div>
-      <div class="form-headline__copy">자격요건, 진출 가능 분야, 합격시 수강료 전액환불 혜택까지 한 번에 안내해드립니다.</div>
-    </div>
     <div class="live-status__frame live-status__tenping">
       <tenping class="adsbytenping" style="width:100%; margin:0 auto; display:block;" tenping-ad-type="CInmlFSNPJoo9rBMK%2brlTg%3d%3d" tenping-ad-client="3eUGQGEY9C%2f815aidjSSRUbMqVjdPf7z%2fOzZ6BvAI%2fZhef9E%2bjVFrbVXlNTS%2baqr" tenping-ad-campaign="2017041310160001" tenping-ad-distributionAddID="2026051521090003" tenping-ad-contain_image="false" tenping-ad-contain_logo="false" tenping-ad-contain_Plugin="false" tenping-ad-contain_TpCall="false" tenping-ad-theme="white"></tenping>
     </div>
@@ -683,16 +603,6 @@ function tickApply() {
   }
 }
 tickApply();
-
-(function() {
-  var topBtn = document.querySelector('.live-status__cta');
-  if (topBtn) {
-    topBtn.textContent = '무료 기출문제 먼저 받아보기';
-  }
-  var stickyBtn = document.querySelector('.sticky-btn');
-  if (!stickyBtn) return;
-  stickyBtn.childNodes[0].nodeValue = '\n    합격 가능성·취업 연계까지 확인하기\n    ';
-})();
 
 (function() {
   var userInteracted = false;
