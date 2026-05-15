@@ -197,6 +197,71 @@ body{
 .form-headline__copy{
   margin-top:8px;font-size:15px;line-height:1.7;color:#475467;word-break:keep-all;
 }
+.security-box{
+  margin:0 0 16px;
+  padding:18px 16px 14px;
+  font-size:15px;line-height:1.75;color:#475569;word-break:keep-all;text-align:center;
+  border:1px solid #d8eef7;border-radius:18px;
+  background:linear-gradient(180deg,#f8fdff 0%,#eef8ff 100%);
+}
+.security-box__visual{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  margin-bottom:12px;
+}
+.security-box__bars{
+  display:flex;gap:4px;align-items:center;justify-content:center;
+}
+.security-box__bars span{
+  width:22px;height:10px;border-radius:999px;
+  background:#89cff7;
+  box-shadow:0 0 0 1px rgba(56,189,248,.18) inset;
+  animation:securityBarPulse 1.4s ease-in-out infinite;
+}
+.security-box__bars span:nth-child(2){animation-delay:.12s}
+.security-box__bars span:nth-child(3){animation-delay:.24s}
+.security-box__bars span:nth-child(4){animation-delay:.36s}
+.security-box__lock{
+  position:relative;
+  width:30px;height:24px;border:3px solid #38a3ea;border-radius:6px;
+  background:#fff;box-shadow:0 8px 16px rgba(56,163,234,.12);
+}
+.security-box__lock::before{
+  content:'';
+  position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
+  width:16px;height:12px;border:3px solid #38a3ea;border-bottom:none;border-radius:12px 12px 0 0;
+}
+.security-box__lock::after{
+  content:'';
+  position:absolute;left:50%;top:7px;transform:translateX(-50%);
+  width:6px;height:8px;border-radius:4px;
+  background:linear-gradient(180deg,#38a3ea 0%,#1d7fcd 100%);
+}
+.security-box__title{
+  font-size:18px;font-weight:900;color:#334155;letter-spacing:-.02em;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.security-box__title strong{color:#0f4aa3}
+.security-box__desc{
+  margin-top:4px;
+  font-size:14px;line-height:1.7;color:#64748b;
+}
+.security-box__desc strong{color:#0f172a}
+@keyframes securityBarPulse{
+  0%,100%{background:#70bdf1;transform:scaleX(1);opacity:.72}
+  50%{background:#1890f4;transform:scaleX(1.08);opacity:1;box-shadow:0 0 12px rgba(24,144,244,.35)}
+}
+.site-footer{
+  padding:20px 16px 10px;
+  color:#64748b;
+  text-align:center;
+}
+.site-footer__meta{
+  font-size:12px;line-height:1.8;word-break:keep-all;
+}
+.site-footer__copy{
+  margin-top:10px;
+  font-size:11px;color:#94a3b8;
+}
 .live-status__frame{
   background:#fff;border-radius:16px;padding:12px;border:1px solid #d7ebfb;
   box-shadow:0 10px 26px rgba(15,23,42,.06)
@@ -445,9 +510,9 @@ body{
     <div class="live-status__inner">
       <div class="live-status__card" aria-live="polite">
         <div class="live-status__eyebrow"><span class="live-status__dot">🔴</span><span>LIVE</span></div>
-        <div class="live-status__cap">선착순 100명 한정</div>
+        <div class="live-status__cap">선착순 50명 한정</div>
         <div class="live-status__main">
-          <span class="live-status__num" id="liveApplyCount">63</span><span class="live-status__suffix">명</span><span class="live-status__label">혜택확인중</span>
+          <span class="live-status__num" id="liveApplyCount">13</span><span class="live-status__suffix">명</span><span class="live-status__label">혜택확인중</span>
         </div>
         <div class="live-status__sub">남은 무료 확인 자리 <strong id="liveRemainCount">37</strong>명</div>
         <div class="live-status__promise">지금 무료 기출문제와 <strong>합격시 수강료 전액환불</strong> 혜택을 확인하고 있습니다.</div>
@@ -638,10 +703,26 @@ body{
       <div class="form-headline__title">무료 기출문제 받고<br><strong>합격 가능성</strong> 바로 확인하세요</div>
       <div class="form-headline__copy">자격요건, 진출 가능 분야, 합격시 수강료 전액환불 혜택까지 한 번에 안내해드립니다.</div>
     </div>
+    <div class="security-box">
+      <div class="security-box__visual" aria-hidden="true">
+        <div class="security-box__bars"><span></span><span></span><span></span><span></span></div>
+        <div class="security-box__lock"></div>
+        <div class="security-box__bars"><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="security-box__title"><strong>수집된 정보는 안전하게 보안 처리 중</strong></div>
+      <div class="security-box__desc">입력하신 정보는 <strong>상담 목적 외에는 사용되지 않으며</strong> 안전하게 보호됩니다.</div>
+    </div>
     <div class="live-status__frame live-status__tenping">
       <tenping class="adsbytenping" style="width:100%; margin:0 auto; display:block;" tenping-ad-type="CInmlFSNPJoo9rBMK%2brlTg%3d%3d" tenping-ad-client="3eUGQGEY9C%2f815aidjSSRUbMqVjdPf7z%2fOzZ6BvAI%2fZhef9E%2bjVFrbVXlNTS%2baqr" tenping-ad-campaign="2017041310160001" tenping-ad-distributionAddID="2026051521090003" tenping-ad-contain_image="false" tenping-ad-contain_logo="false" tenping-ad-contain_Plugin="false" tenping-ad-contain_TpCall="false" tenping-ad-theme="white"></tenping>
     </div>
   </section>
+
+  <footer class="site-footer">
+    <div class="site-footer__meta">상호: 에듀이지 ㅣ 대표: 장진학 ㅣ 개인정보관리자: 장진학 ㅣ 사업자번호: 597-98-00160</div>
+    <div class="site-footer__meta">주소: 경기 성남시 중원구 성남동 4170 (성남대로1139) 한일타워 1102호</div>
+    <div class="site-footer__meta">통신판매번호: 2016-성남중원-0233호 ㅣ 출판사신고번호: 제305-2012-000038호</div>
+    <div class="site-footer__copy">Copyright © 에듀이지. All rights reserved.</div>
+  </footer>
 
 </main>
 
@@ -665,8 +746,8 @@ function trackCta(ctaName) {
 }
 
 /* ── 실시간 신청자 카운터 ── */
-var applyN = 63;
-var applyMax = 100;
+var applyN = 13;
+var applyMax = 50;
 function setApplyDisplay() {
   var headerEl = document.getElementById('liveCount');
   var liveApplyEl = document.getElementById('liveApplyCount');
