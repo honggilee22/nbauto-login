@@ -156,6 +156,8 @@ body{
   background:#fff;border-radius:16px;padding:12px;border:1px solid #d7ebfb;
   box-shadow:0 10px 26px rgba(15,23,42,.06)
 }
+.live-status__frame iframe{display:block;border-radius:12px}
+.live-status__tenping{margin-top:18px}
 
 /* ── 공통 섹션 헤드 ── */
 .sec-head{text-align:center;margin-bottom:18px}
@@ -330,13 +332,33 @@ body{
   display:flex;align-items:center;justify-content:center;gap:6px;
   width:calc(100% - 20px);margin:10px;
   padding:17px 14px;border-radius:16px;
-  background:#f4b400;
-  color:var(--primary-dark);text-decoration:none;
+  border:none;border-bottom:4px solid #0f4aa3;
+  background:linear-gradient(180deg,#27b6ff 0%,#1580f5 100%);
+  color:#fff;text-decoration:none;
   font-size:17px;font-weight:900;letter-spacing:-.02em;
   font-family:"SUIT Variable","SUIT",sans-serif;
   -webkit-tap-highlight-color:transparent;
+  box-shadow:0 16px 32px rgba(21,128,245,.28), inset 0 1px 0 rgba(255,255,255,.28);
+  transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  position:relative;overflow:hidden;
+  animation:productCtaPulse 1.8s ease-in-out infinite;
 }
-.btn-arr{display:inline-block;font-size:20px;line-height:1;}
+.sticky-btn::before{
+  content:"";position:absolute;top:-45%;bottom:-45%;left:-22%;width:30%;
+  transform:skewX(-22deg);
+  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.96),rgba(255,239,138,.88),rgba(255,255,255,0));
+  animation:shine 2.8s ease-in-out infinite;
+}
+.sticky-btn::after{
+  content:"›";position:relative;z-index:1;font-size:24px;line-height:1;transform:translateY(-1px);
+}
+.sticky-btn:hover{transform:translateY(-1px);filter:saturate(1.06);box-shadow:0 20px 36px rgba(21,128,245,.34), inset 0 1px 0 rgba(255,255,255,.28)}
+.sticky-btn:active{transform:translateY(2px);box-shadow:0 8px 18px rgba(21,128,245,.22), inset 0 1px 0 rgba(255,255,255,.2)}
+.sticky-btn:focus-visible{outline:3px solid rgba(56,189,248,.32);outline-offset:3px}
+.sticky-btn span{position:relative;z-index:1}
+.btn-arr{display:none}
+@keyframes shine{0%{left:-26%;opacity:0}14%{opacity:1}46%{left:108%;opacity:.94}100%{left:108%;opacity:0}}
+@keyframes productCtaPulse{0%,100%{transform:scale(1);box-shadow:0 16px 32px rgba(21,128,245,.28), inset 0 1px 0 rgba(255,255,255,.28)}50%{transform:scale(1.03);box-shadow:0 22px 38px rgba(21,128,245,.36), inset 0 1px 0 rgba(255,255,255,.28)}}
 
 .reveal-up.visible{opacity:1}
 
@@ -359,7 +381,7 @@ body{
     <span class="site-brand">손해평가사 자격증</span>
     <div class="live-badge" aria-label="현재 신청 현황">
       <span class="live-dot"></span>
-      현재 <span id="liveCount">19</span>명 신청중
+      현재 <strong><span id="liveCount">19</span>명 신청중</strong>
     </div>
   </header>
 
@@ -385,7 +407,10 @@ body{
         <div class="live-status__sub">남은 자리 <strong id="liveRemainCount">37</strong>명</div>
       </div>
       <div class="live-status__frame">
-        <tenping class="adsbytenping" style="width:100%; margin:0 auto; display:block;" tenping-ad-type="CInmlFSNPJoo9rBMK%2brlTg%3d%3d" tenping-ad-client="3eUGQGEY9C%2f815aidjSSRUbMqVjdPf7z%2fOzZ6BvAI%2fZhef9E%2bjVFrbVXlNTS%2baqr" tenping-ad-campaign="2017041310160001" tenping-ad-distributionAddID="2026051520170017" tenping-ad-contain_image="true" tenping-ad-contain_logo="false" tenping-ad-contain_Plugin="false" tenping-ad-contain_TpCall="false" tenping-ad-theme="default_button"></tenping>
+        <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=0&c12=0&c13=0&c14=0&width=800" width="100%" height="300px" frameborder="0" loading="lazy" style="border:0;display:block"></iframe>
+      </div>
+      <div class="live-status__frame live-status__tenping">
+        <tenping class="adsbytenping" style="width:100%; margin:0 auto; display:block;" tenping-ad-type="CInmlFSNPJoo9rBMK%2brlTg%3d%3d" tenping-ad-client="3eUGQGEY9C%2f815aidjSSRUbMqVjdPf7z%2fOzZ6BvAI%2fZhef9E%2bjVFrbVXlNTS%2baqr" tenping-ad-campaign="2017041310160001" tenping-ad-distributionAddID="2026051521090003" tenping-ad-contain_image="false" tenping-ad-contain_logo="false" tenping-ad-contain_Plugin="false" tenping-ad-contain_TpCall="false" tenping-ad-theme="white"></tenping>
       </div>
     </div>
   </section>
@@ -471,7 +496,7 @@ body{
     <div class="barrier-block reveal-up">
       <div class="barrier-line1">나이도, 학력도, 경력도</div>
       <div class="barrier-line2">묻지 않습니다</div>
-      <span class="barrier-tag">손해평가사 — 40대의 새 출발점</span>
+      <span class="barrier-tag">손해평가사 — 인생의 새 출발점</span>
     </div>
     <div class="img-box">
       <img src="images/a861de97-b647-41b9-aebb-52bc42c3660e.webp"
@@ -497,7 +522,7 @@ body{
                width="200" height="200">
         </div>
         <div class="review-body">
-          <div class="review-tag">55세 · 퇴직 후 부부 준비</div>
+          <div class="review-tag">59세 · 박*민 · 퇴직 후 부부 준비</div>
           <div class="review-title">"퇴직 후 막막했는데<br><span class="mark">둘이 함께 현장 나갑니다</span>"</div>
           <div class="review-copy">나이 제한 없이 둘 다 자격을 딸 수 있었습니다. <span class="mark">지금은 부부가 함께 현장에 나갑니다.</span></div>
         </div>
@@ -510,8 +535,8 @@ body{
                width="200" height="200">
         </div>
         <div class="review-body">
-          <div class="review-tag">52세 · 이직 준비</div>
-          <div class="review-title">"50대에도<br><span class="mark">현장 일자리로 바로 연결</span>됐습니다"</div>
+          <div class="review-tag">40대 후반 · 김*훈 · 이직 준비</div>
+          <div class="review-title">"40대 후반에도<br><span class="mark">현장 일자리로 바로 연결</span>됐습니다"</div>
           <div class="review-copy">학력·경력 조건이 없다는 말에 시작했습니다. <span class="mark">지금은 농작물 피해 현장을 직접 조사</span>하고 있습니다.</div>
         </div>
       </article>
@@ -523,7 +548,7 @@ body{
                width="200" height="200">
         </div>
         <div class="review-body">
-          <div class="review-tag">46세 · 주부에서 재취업</div>
+          <div class="review-tag">46세 · 이*영 · 주부에서 재취업</div>
           <div class="review-title">"<span class="mark">명찰 달고 현장</span> 나가는 날이<br>올 줄 몰랐습니다"</div>
           <div class="review-copy">응시 조건이 없었고, <span class="mark">취업까지 연계받아</span> 지금은 현장에서 일하고 있습니다.</div>
         </div>
@@ -532,7 +557,11 @@ body{
   </section>
 
   <!-- ⑦ DB 수집 -->
-  <section class="form-wrap" id="lead-form"></section>
+  <section class="form-wrap" id="lead-form">
+    <div class="live-status__frame live-status__tenping">
+      <tenping class="adsbytenping" style="width:100%; margin:0 auto; display:block;" tenping-ad-type="CInmlFSNPJoo9rBMK%2brlTg%3d%3d" tenping-ad-client="3eUGQGEY9C%2f815aidjSSRUbMqVjdPf7z%2fOzZ6BvAI%2fZhef9E%2bjVFrbVXlNTS%2baqr" tenping-ad-campaign="2017041310160001" tenping-ad-distributionAddID="2026051521090003" tenping-ad-contain_image="false" tenping-ad-contain_logo="false" tenping-ad-contain_Plugin="false" tenping-ad-contain_TpCall="false" tenping-ad-theme="white"></tenping>
+    </div>
+  </section>
 
 </main>
 
@@ -575,6 +604,28 @@ function tickApply() {
 }
 tickApply();
 
+(function() {
+  var userInteracted = false;
+  function markInteracted() { userInteracted = true; }
+  window.addEventListener('touchstart', markInteracted, { passive: true, once: true });
+  window.addEventListener('wheel', markInteracted, { passive: true, once: true });
+  window.addEventListener('keydown', markInteracted, { once: true });
+  function keepTop() {
+    if (!userInteracted && window.scrollY > 120) {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      if (document.activeElement && typeof document.activeElement.blur === 'function') {
+        document.activeElement.blur();
+      }
+    }
+  }
+  window.addEventListener('load', function() {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    setTimeout(keepTop, 1200);
+    setTimeout(keepTop, 2600);
+    setTimeout(keepTop, 4200);
+  }, { once: true });
+})();
+
 /* ── 스크롤 reveal 애니메이션 ── */
 (function() {
   var items = document.querySelectorAll('.reveal-up');
@@ -603,10 +654,12 @@ tickApply();
   }
   function scheduleLoad() {
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(loadTenping, { timeout: 2500 });
+      requestIdleCallback(function() {
+        setTimeout(loadTenping, 2200);
+      }, { timeout: 3500 });
       return;
     }
-    setTimeout(loadTenping, 1800);
+    setTimeout(loadTenping, 3200);
   }
   if (document.readyState === 'complete') {
     scheduleLoad();
