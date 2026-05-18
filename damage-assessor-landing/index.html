@@ -287,38 +287,38 @@ body{
 }
 .live-status__cta::after{content:"›";font-size:24px;line-height:1;transform:translateY(-1px)}
 .form-headline{
-  text-align:center;margin-bottom:16px;
+  text-align:center;margin-bottom:10px;
 }
 .form-headline__title{
-  font-size:24px;font-weight:900;line-height:1.4;color:var(--primary-dark);
+  font-size:21px;font-weight:900;line-height:1.3;color:var(--primary-dark);
   font-family:"SUIT Variable","SUIT",sans-serif;word-break:keep-all;
 }
 .form-headline__title strong{color:#d92d20}
 .form-headline__copy{
   display:inline-block;
-  margin-top:18px;padding:10px 20px;border-radius:999px;
+  margin-top:10px;padding:7px 14px;border-radius:999px;
   background:linear-gradient(135deg,var(--primary-dark) 0%,#1d4ed8 100%);
-  color:#fff;font-size:16px;font-weight:800;letter-spacing:-.01em;
-  line-height:1.4;word-break:keep-all;
-  box-shadow:0 10px 22px rgba(37,99,235,.18);
+  color:#fff;font-size:13px;font-weight:800;letter-spacing:-.01em;
+  line-height:1.3;word-break:keep-all;
+  box-shadow:0 8px 18px rgba(37,99,235,.15);
   font-family:"SUIT Variable","SUIT",sans-serif;
 }
 .security-box{
-  margin:0 0 16px;
-  padding:18px 16px 14px;
-  font-size:15px;line-height:1.75;color:#475569;word-break:keep-all;text-align:center;
-  border:1px solid #d8eef7;border-radius:18px;
+  margin:0 0 10px;
+  padding:12px 12px 10px;
+  font-size:13px;line-height:1.6;color:#475569;word-break:keep-all;text-align:center;
+  border:1px solid #d8eef7;border-radius:16px;
   background:linear-gradient(180deg,#f8fdff 0%,#eef8ff 100%);
 }
 .security-box__visual{
   display:flex;align-items:center;justify-content:center;gap:10px;
-  margin-bottom:12px;
+  margin-bottom:8px;
 }
 .security-box__bars{
   display:flex;gap:4px;align-items:center;justify-content:center;
 }
 .security-box__bars span{
-  width:22px;height:10px;border-radius:999px;
+  width:18px;height:8px;border-radius:999px;
   background:#89cff7;
   box-shadow:0 0 0 1px rgba(56,189,248,.18) inset;
   animation:securityBarPulse 1.4s ease-in-out infinite;
@@ -328,28 +328,28 @@ body{
 .security-box__bars span:nth-child(4){animation-delay:.36s}
 .security-box__lock{
   position:relative;
-  width:30px;height:24px;border:3px solid #38a3ea;border-radius:6px;
+  width:24px;height:20px;border:2px solid #38a3ea;border-radius:6px;
   background:#fff;box-shadow:0 8px 16px rgba(56,163,234,.12);
 }
 .security-box__lock::before{
   content:'';
   position:absolute;left:50%;bottom:100%;transform:translateX(-50%);
-  width:16px;height:12px;border:3px solid #38a3ea;border-bottom:none;border-radius:12px 12px 0 0;
+  width:13px;height:10px;border:2px solid #38a3ea;border-bottom:none;border-radius:12px 12px 0 0;
 }
 .security-box__lock::after{
   content:'';
   position:absolute;left:50%;top:7px;transform:translateX(-50%);
-  width:6px;height:8px;border-radius:4px;
+  width:5px;height:6px;border-radius:4px;
   background:linear-gradient(180deg,#38a3ea 0%,#1d7fcd 100%);
 }
 .security-box__title{
-  font-size:18px;font-weight:900;color:#334155;letter-spacing:-.02em;
+  font-size:15px;font-weight:900;color:#334155;letter-spacing:-.02em;
   font-family:"SUIT Variable","SUIT",sans-serif;
 }
 .security-box__title strong{color:#0f4aa3}
 .security-box__desc{
-  margin-top:4px;
-  font-size:14px;line-height:1.7;color:#64748b;
+  margin-top:3px;
+  font-size:12px;line-height:1.5;color:#64748b;
 }
 .security-box__desc strong{color:#0f172a}
 @keyframes securityBarPulse{
@@ -526,7 +526,7 @@ body{
 .review-copy{margin-top:7px;font-size:14px;line-height:1.65;color:#475467;word-break:keep-all}
 
 /* ── 폼 ── */
-.form-wrap{padding:30px 16px;scroll-margin-top:88px;outline:none}
+.form-wrap{padding:20px 16px 24px;scroll-margin-top:72px;outline:none}
 .form-wrap.is-targeted{animation:targetGlow 1.2s ease}
 @keyframes targetGlow{
   0%{box-shadow:0 0 0 0 rgba(37,99,235,0)}
@@ -998,6 +998,7 @@ applyScheduleMs.forEach(function(delay) {
 (function() {
   var target = document.getElementById('lead-form');
   if (!target) return;
+  var frameWrap = target.querySelector('.live-status__tenping');
 
   function focusLeadForm() {
     target.classList.remove('is-targeted');
@@ -1008,7 +1009,10 @@ applyScheduleMs.forEach(function(delay) {
 
   function moveToLeadForm(event) {
     event.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var anchor = frameWrap || target;
+    var anchorTop = anchor.getBoundingClientRect().top + window.pageYOffset;
+    var offset = frameWrap ? 150 : 72;
+    window.scrollTo({ top: Math.max(0, anchorTop - offset), behavior: 'smooth' });
     window.setTimeout(focusLeadForm, 420);
     if (window.history && typeof window.history.replaceState === 'function') {
       window.history.replaceState(null, '', '#lead-form');
