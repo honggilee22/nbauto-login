@@ -626,248 +626,1022 @@ body{
   .urgency-chip{font-size:12px;padding:9px 6px}
 }
 </style>
+<style>
+.page{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+  background:var(--surface);
+  min-height:100vh;
+}
+.chat-header{
+  position:sticky;
+  top:0;
+  z-index:60;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 16px;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #e5e7eb;
+}
+.chat-header__brand{
+  font-size:16px;
+  font-weight:900;
+  color:#0b1f5c;
+  letter-spacing:-.03em;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.chat-header__label{
+  font-size:12px;
+  font-weight:800;
+  color:#fff;
+  background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);
+  border:1px solid rgba(220,38,38,.18);
+  border-radius:999px;
+  padding:7px 12px;
+  box-shadow:0 10px 22px rgba(220,38,38,.16);
+}
+.hero-placeholder{
+  padding:18px 16px 0;
+}
+.hero-placeholder__box{
+  border-radius:28px;
+  overflow:hidden;
+  border:1px solid #dbeafe;
+  box-shadow:0 20px 40px rgba(15,23,42,.08);
+}
+.hero-placeholder__box img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.quick-reasons{
+  padding:18px 16px 10px;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+}
+.quick-reasons__head{
+  text-align:center;
+}
+.quick-reasons__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:32px;
+  padding:0 13px;
+  border-radius:999px;
+  background:#eef4ff;
+  border:1px solid #cfe0ff;
+  color:#0f4aa3;
+  font-size:12px;
+  font-weight:900;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.quick-reasons__title{
+  margin-top:10px;
+  font-size:28px;
+  line-height:1.2;
+  letter-spacing:-.04em;
+  color:#081741;
+  font-weight:900;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.quick-reasons__copy{
+  margin-top:8px;
+  font-size:14px;
+  line-height:1.6;
+  color:#475569;
+  font-weight:800;
+  word-break:keep-all;
+}
+.quick-reasons__list{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  margin-top:16px;
+}
+.quick-reasons__item{
+  display:grid;
+  grid-template-columns:72px 1fr;
+  border-radius:20px;
+  overflow:hidden;
+  border-width:2px;
+}
+.quick-reasons__item:nth-child(odd){
+  background:linear-gradient(180deg,#fff2cb 0%,#ffe08a 100%);
+  border:2px solid #f59e0b;
+}
+.quick-reasons__item:nth-child(even){
+  background:linear-gradient(180deg,#eef5ff 0%,#cfe0ff 100%);
+  border:2px solid #2563eb;
+}
+.quick-reasons__num{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:88px;
+  color:#fff;
+  font-size:28px;
+  font-weight:900;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.quick-reasons__item:nth-child(odd) .quick-reasons__num{
+  background:linear-gradient(180deg,#ff7a00 0%,#ef4444 100%);
+}
+.quick-reasons__item:nth-child(even) .quick-reasons__num{
+  background:linear-gradient(180deg,#2563eb 0%,#1d4ed8 100%);
+}
+.quick-reasons__text{
+  display:flex;
+  align-items:center;
+  padding:18px 16px;
+  background:rgba(255,255,255,.86);
+}
+.quick-reasons__text-inner{
+  display:block;
+}
+.quick-reasons__label{
+  font-size:21px;
+  line-height:1.35;
+  color:#111827;
+  font-weight:900;
+  letter-spacing:-.03em;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.quick-reasons__desc{
+  margin-top:6px;
+  font-size:13px;
+  line-height:1.6;
+  color:#475569;
+  font-weight:800;
+  word-break:keep-all;
+}
+.quick-reasons__label strong{
+  color:#dc2626;
+}
+.quick-reasons__desc small{
+  display:block;
+  margin-top:3px;
+  font-size:11px;
+  color:#64748b;
+  font-weight:700;
+}
+.chat-intro{
+  padding:24px 16px 18px;
+  background:radial-gradient(circle at top right,rgba(37,99,235,.15),transparent 28%),linear-gradient(180deg,#f8fbff 0%,#ffffff 100%);
+}
+.chat-intro__eyebrow{
+  display:inline-flex;
+  align-items:center;
+  min-height:34px;
+  padding:0 14px;
+  border-radius:999px;
+  background:#0f172a;
+  color:#fff;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.chat-intro__title{
+  margin-top:6px;
+  font-size:34px;
+  line-height:1.14;
+  letter-spacing:-.05em;
+  color:#081741;
+  font-weight:900;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.chat-intro__title strong{color:#dc2626}
+.chat-intro__copy{
+  margin-top:12px;
+  font-size:16px;
+  line-height:1.8;
+  color:#334155;
+  word-break:keep-all;
+}
+.cast-intro{
+  padding:0 16px 14px;
+  background:linear-gradient(180deg,#ffffff 0%,#f7fbff 100%);
+}
+.cast-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.cast-card{
+  border-radius:22px;
+  background:#fff;
+  border:1px solid #dbeafe;
+  padding:14px;
+  box-shadow:0 12px 26px rgba(15,23,42,.05);
+  text-align:center;
+}
+.cast-card img{
+  display:block;
+  width:84px;
+  height:84px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:0 auto;
+  border:2px solid #dbeafe;
+}
+.cast-card__role{
+  margin-top:10px;
+  font-size:12px;
+  color:#64748b;
+  font-weight:800;
+}
+.cast-card__name{
+  margin-top:5px;
+  font-size:18px;
+  color:#081741;
+  font-weight:900;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.cast-card__desc{
+  margin-top:8px;
+  font-size:13px;
+  line-height:1.6;
+  color:#475569;
+  word-break:keep-all;
+}
+.chat-wrap{
+  padding:10px 16px 18px;
+  background:linear-gradient(180deg,#f7fbff 0%,#ffffff 100%);
+}
+.chat-date{
+  width:max-content;
+  margin:0 auto 14px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:#e5eef9;
+  color:#64748b;
+  font-size:12px;
+  font-weight:800;
+}
+.chat-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:14px;
+}
+.chat-row--user{
+  justify-content:flex-end;
+}
+.chat-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  flex-shrink:0;
+  overflow:hidden;
+  border:2px solid #dbeafe;
+  background:#fff;
+}
+.chat-avatar img{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.chat-person{
+  margin-bottom:6px;
+  font-size:12px;
+  color:#64748b;
+  font-weight:800;
+}
+.chat-bubble{
+  max-width:78%;
+  padding:14px 16px;
+  border-radius:20px;
+  font-size:16px;
+  line-height:1.7;
+  word-break:keep-all;
+  box-shadow:0 10px 24px rgba(15,23,42,.05);
+}
+.chat-bubble strong{
+  font-weight:900;
+  color:#dc2626;
+}
+.chat-row--user .chat-bubble strong{
+  color:#fff;
+  text-decoration:underline;
+  text-decoration-color:rgba(255,255,255,.55);
+  text-underline-offset:3px;
+}
+.chat-row--guide .chat-bubble{
+  background:#fff;
+  color:#1f2937;
+  border:1px solid #dbeafe;
+  border-top-left-radius:8px;
+}
+.chat-row--user .chat-bubble{
+  background:linear-gradient(180deg,#2563eb 0%,#1d4ed8 100%);
+  color:#fff;
+  border-top-right-radius:8px;
+}
+.chat-meta{
+  margin-top:6px;
+  font-size:11px;
+  color:#94a3b8;
+}
+.chat-card{
+  margin:14px 0 0 48px;
+  border-radius:22px;
+  border:1px solid #dbeafe;
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 14px 28px rgba(15,23,42,.06);
+}
+.chat-attach{
+  margin:10px 0 0 48px;
+  max-width:360px;
+  border-radius:22px;
+  border:1px solid #dbeafe;
+  background:#fff;
+  overflow:hidden;
+  box-shadow:0 14px 28px rgba(15,23,42,.06);
+}
+.chat-attach img{
+  display:block;
+  width:100%;
+  height:auto;
+}
+.chat-slot{
+  min-height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px 18px;
+  text-align:center;
+  background:linear-gradient(180deg,#f8fbff 0%,#eef6ff 100%);
+}
+.chat-slot__title{
+  font-size:18px;
+  line-height:1.5;
+  color:#0f4aa3;
+  font-weight:900;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.chat-slot__desc{
+  margin-top:8px;
+  font-size:13px;
+  line-height:1.6;
+  color:#64748b;
+  word-break:keep-all;
+}
+.chat-card__head{
+  padding:16px 16px 12px;
+  border-bottom:1px solid #eaf2fb;
+  background:#f8fbff;
+}
+.chat-card__eyebrow{
+  font-size:12px;
+  font-weight:900;
+  color:#0f4aa3;
+  letter-spacing:.05em;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.chat-card__title{
+  margin-top:8px;
+  font-size:24px;
+  line-height:1.3;
+  color:#081741;
+  font-weight:900;
+  letter-spacing:-.04em;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.chat-card__body{
+  padding:16px;
+}
+.chat-points{
+  display:grid;
+  gap:10px;
+}
+.chat-point{
+  padding:14px 14px 14px 42px;
+  position:relative;
+  border-radius:18px;
+  background:#f8fbff;
+  border:1px solid #dbeafe;
+  font-size:15px;
+  line-height:1.7;
+  color:#334155;
+}
+.chat-point::before{
+  content:"";
+  position:absolute;
+  left:16px;
+  top:18px;
+  width:14px;
+  height:14px;
+  border-radius:50%;
+  background:#2563eb;
+  box-shadow:0 0 0 4px rgba(37,99,235,.12);
+}
+.chat-divider{
+  width:100%;
+  height:1px;
+  margin:18px 0;
+  background:#e6eef8;
+}
+.form-section{
+  padding:28px 16px 36px;
+}
+.form-card{
+  border-radius:24px;
+  background:#fff;
+  border:1px solid #dbeafe;
+  box-shadow:0 18px 36px rgba(15,23,42,.08);
+  overflow:hidden;
+}
+.form-card__head{
+  padding:22px 18px 16px;
+  background:
+    radial-gradient(circle at top right,rgba(239,68,68,.09),transparent 34%),
+    linear-gradient(180deg,#eff6ff 0%,#ffffff 100%);
+  border-bottom:1px solid #dbeafe;
+}
+.form-card__eyebrow{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+  color:#0f4aa3;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.form-card__title{
+  margin-top:0;
+  font-size:30px;
+  line-height:1.22;
+  color:#081741;
+  font-weight:900;
+  letter-spacing:-.04em;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.form-card__title strong{
+  color:#dc2626;
+}
+.form-card__desc{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-top:12px;
+  min-height:38px;
+  padding:0 14px;
+  border-radius:999px;
+  background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%);
+  color:#fff;
+  font-size:13px;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:-.01em;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.code-guide{
+  margin-top:14px;
+  padding:13px 14px 13px 42px;
+  position:relative;
+  border-radius:16px;
+  background:linear-gradient(180deg,#f8fdff 0%,#eef6ff 100%);
+  border:1px solid #dbeafe;
+  font-size:13px;
+  line-height:1.65;
+  color:#334155;
+  font-weight:800;
+  word-break:keep-all;
+}
+.benefit-note{
+  margin-top:12px;
+  padding:14px 14px 14px 44px;
+  position:relative;
+  border-radius:18px;
+  background:#fff7ed;
+  border:1px solid #fdba74;
+  font-size:14px;
+  line-height:1.7;
+  color:#9a3412;
+  word-break:keep-all;
+}
+.code-guide::before{
+  content:"";
+  position:absolute;
+  left:16px;
+  top:16px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#22c55e 0%,#16a34a 100%);
+}
+.benefit-note::before{
+  content:"";
+  position:absolute;
+  left:16px;
+  top:16px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:linear-gradient(180deg,#f59e0b 0%,#ea580c 100%);
+}
+.benefit-slot{
+  margin-top:14px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid #c7dcff;
+  background:#fff;
+  box-shadow:0 16px 34px rgba(15,23,42,.08);
+}
+.benefit-slot img{
+  display:block;
+  width:100%;
+  max-width:440px;
+  height:auto;
+  margin:0 auto;
+}
+.benefit-slot__box{
+  min-height:180px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px 18px;
+  text-align:center;
+  background:linear-gradient(180deg,#fff7ed 0%,#ffedd5 100%);
+}
+.benefit-slot__title{
+  font-size:18px;
+  line-height:1.5;
+  color:#9a3412;
+  font-weight:900;
+  word-break:keep-all;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+}
+.benefit-slot__desc{
+  margin-top:8px;
+  font-size:13px;
+  line-height:1.6;
+  color:#9a3412;
+  word-break:keep-all;
+}
+.iframe-wrap{
+  padding:14px 12px 12px;
+  background:#fff;
+}
+.iframe-wrap iframe{
+  display:block;
+  width:100%;
+  min-height:720px;
+  border:0;
+  background:#fff;
+  border-radius:18px;
+}
+.footer-call{
+  padding:8px 16px 28px;
+}
+.footer-call__btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:58px;
+  border-radius:18px;
+  text-decoration:none;
+  background:linear-gradient(180deg,#0b1f5c 0%,#123482 100%);
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  font-family:"SUIT Variable","SUIT",sans-serif;
+  box-shadow:0 16px 34px rgba(11,31,92,.24);
+}
+.site-footer{
+  padding:22px 16px 18px;
+  color:#64748b;
+  text-align:center;
+  border-top:1px solid #e5e7eb;
+}
+.site-footer__meta{
+  font-size:12px;
+  line-height:1.8;
+  word-break:keep-all;
+}
+.site-footer__copy{
+  margin-top:10px;
+  font-size:11px;
+  color:#94a3b8;
+}
+@media(max-width:420px){
+  .quick-reasons__title{font-size:24px}
+  .quick-reasons__item{grid-template-columns:64px 1fr}
+  .quick-reasons__num{min-height:80px;font-size:26px}
+  .quick-reasons__text{padding:16px 14px}
+  .quick-reasons__label{font-size:18px}
+  .chat-intro__title{font-size:30px}
+  .chat-card__title{font-size:22px}
+  .form-card__title{font-size:26px}
+  .chat-bubble{max-width:84%}
+  .cast-grid{grid-template-columns:1fr}
+  .chat-attach{max-width:calc(100% - 48px)}
+}
+</style>
 </head>
 <body>
 <main class="page">
-  <h1 class="sr-only">손해평가사 무료 상담 신청 페이지</h1>
+  <h1 class="sr-only">손해평가사 카카오톡 스타일 안내 페이지</h1>
 
-  <!-- 스티키 헤더 -->
-  <header class="site-header">
-    <span class="site-brand">손해평가사 자격증</span>
-    <div class="live-badge" aria-label="현재 신청 현황">
-      <span class="live-dot"></span>
-      현재 <strong><span id="liveCount">19</span>명 신청중</strong>
-    </div>
+  <header class="chat-header">
+    <span class="chat-header__brand">한국국가고시센터</span>
+    <span class="chat-header__label">무료상담 진행중</span>
   </header>
 
-  <!-- ① 히어로 -->
-  <section class="hero">
-    <div class="hero-visual">
-      <img src="images/hero-image-01.webp"
-           alt="손해평가사 무료상담 혜택 안내"
-           loading="eager" fetchpriority="high" decoding="async"
-           width="941" height="1672">
+  <section class="hero-placeholder">
+    <div class="hero-placeholder__box">
+      <img src="images/chat-hero-main.webp"
+           alt="일당 30만~60만 가능 국가자격증 손해평가사 히어로 이미지"
+           loading="eager"
+           fetchpriority="high"
+           decoding="async"
+           width="940"
+           height="1670">
     </div>
   </section>
 
-  <!-- ② 혜택 -->
-  <section class="live-status" id="live-status">
-    <div class="live-status__inner">
-      <div class="live-status__card" aria-live="polite">
-        <div class="live-status__eyebrow"><span class="live-status__dot">🔴</span><span>LIVE</span></div>
-        <div class="live-status__cap">선착순 50명 한정</div>
-        <div class="live-status__main">
-          <span class="live-status__num" id="liveApplyCount">24</span><span class="live-status__suffix">명</span><span class="live-status__label">혜택확인중</span>
+  <section class="quick-reasons">
+    <div class="quick-reasons__head">
+      <div class="quick-reasons__eyebrow">손해평가사 핵심 체크</div>
+      <h2 class="quick-reasons__title">먼저 확인할 5가지</h2>
+    </div>
+    <div class="quick-reasons__list">
+      <article class="quick-reasons__item">
+        <div class="quick-reasons__num">1</div>
+        <div class="quick-reasons__text">
+          <div class="quick-reasons__text-inner">
+            <div class="quick-reasons__label"><strong>1건당 30만원</strong></div>
+            <div class="quick-reasons__desc">건별 활동 구조로 이해하시면 됩니다</div>
+          </div>
         </div>
-        <div class="live-status__sub">남은 무료 확인 자리 <strong id="liveRemainCount">26</strong>명</div>
-        <div class="live-status__promise">지금 무료 기출문제와 합격시 수강료 전액환불 혜택을 확인하고 있습니다.</div>
-        <div class="live-status__visual">
-          <img src="images/live-status-benefits.webp"
-               alt="최신 기출문제 무료 제공, 합격시 수강료 전액환불 여부 확인, 자격요건과 진출분야를 한 번에 확인"
+      </article>
+      <article class="quick-reasons__item">
+        <div class="quick-reasons__num">2</div>
+        <div class="quick-reasons__text">
+          <div class="quick-reasons__text-inner">
+            <div class="quick-reasons__label"><strong>프리랜서 가능</strong></div>
+            <div class="quick-reasons__desc">지역과 일정에 맞춰 활동 가능합니다</div>
+          </div>
+        </div>
+      </article>
+      <article class="quick-reasons__item">
+        <div class="quick-reasons__num">3</div>
+        <div class="quick-reasons__text">
+          <div class="quick-reasons__text-inner">
+            <div class="quick-reasons__label"><strong>평균 연봉 7천만원</strong></div>
+            <div class="quick-reasons__desc">활동에 따라 연봉 1억 이상도 가능합니다</div>
+          </div>
+        </div>
+      </article>
+      <article class="quick-reasons__item">
+        <div class="quick-reasons__num">4</div>
+        <div class="quick-reasons__text">
+          <div class="quick-reasons__text-inner">
+            <div class="quick-reasons__label"><strong>취업률 90% 이상</strong></div>
+            <div class="quick-reasons__desc">자격증 취득시 상담 시 상세 안내</div>
+          </div>
+        </div>
+      </article>
+      <article class="quick-reasons__item">
+        <div class="quick-reasons__num">5</div>
+        <div class="quick-reasons__text">
+          <div class="quick-reasons__text-inner">
+            <div class="quick-reasons__label"><strong>국가공인 자격증</strong></div>
+            <div class="quick-reasons__desc">공식 자격 기준으로 진입 가능합니다</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="chat-intro">
+    <h2 class="chat-intro__title">나도 가능할까?</h2>
+  </section>
+
+  <section class="cast-intro">
+    <div class="cast-grid">
+      <article class="cast-card">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 55세 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+        <div class="cast-card__role">질문하는 사람</div>
+        <div class="cast-card__name">박*기 · 55세</div>
+      </article>
+      <article class="cast-card">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 48세 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+        <div class="cast-card__role">답하는 사람</div>
+        <div class="cast-card__name">손해평가사 김*숙 · 48세</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="chat-wrap">
+    <div class="chat-date">박*기 · 55세 / 손해평가사 김*숙 · 48세</div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">손해평가사라는 게 있던데,<br>저 같은 나이도 할 수 있을까요?</div>
+        <div class="chat-meta">오후 2:11</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-person">손해평가사 김*숙 · 48세</div>
+        <div class="chat-bubble">네. <strong>40~50대가 많이 알아보는 국가 전문 자격증</strong>이에요.</div>
+        <div class="chat-meta">오후 2:12</div>
+      </div>
+    </div>
+
+    <div class="chat-attach">
+      <img src="images/chat-job-overview.webp"
+           alt="손해평가사란 카드 이미지"
+           loading="lazy"
+           decoding="async"
+           width="1280"
+           height="1280">
+    </div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">그럼 무슨 일을 하는 거예요?</div>
+        <div class="chat-meta">오후 2:13</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-bubble">농작물 피해를 <strong>현장에서 확인하고 평가</strong>하는 일이에요.</div>
+        <div class="chat-meta">오후 2:13</div>
+      </div>
+    </div>
+
+    <div class="chat-attach">
+      <img src="images/chat-work-guide.webp"
+           alt="무슨 일을 하나요 카드 이미지"
+           loading="lazy"
+           decoding="async"
+           width="1280"
+           height="1280">
+    </div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">그럼 돈은 어떻게 버는 거예요?</div>
+        <div class="chat-meta">오후 2:14</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-bubble">보통은 <strong>건별 활동 구조</strong>로 이해하시면 돼요.</div>
+        <div class="chat-meta">오후 2:14</div>
+      </div>
+    </div>
+
+    <div class="chat-attach">
+      <img src="images/chat-income-structure.webp"
+           alt="수입 구조 카드 이미지"
+           loading="lazy"
+           decoding="async"
+           width="1280"
+           height="1280">
+    </div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">55세인 저도 늦지 않은 걸까요?</div>
+        <div class="chat-meta">오후 2:15</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-bubble">네. <strong>박*기 님 같은 연령대 문의가 많아요.</strong> 재취업이나 노후 준비 때문에요.</div>
+        <div class="chat-meta">오후 2:15</div>
+      </div>
+    </div>
+
+    <div class="chat-attach">
+      <img src="images/chat-age-fit.webp"
+           alt="40대 50대도 가능한가요 카드 이미지"
+           loading="lazy"
+           decoding="async"
+           width="1280"
+           height="1280">
+    </div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">그럼 따면 어디서 일할 수 있나요?</div>
+        <div class="chat-meta">오후 2:16</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-bubble">진출 가능한 분야가 생각보다 다양해요.</div>
+        <div class="chat-meta">오후 2:16</div>
+      </div>
+    </div>
+
+    <div class="chat-attach">
+      <img src="images/efc0068a-5817-4d37-90b2-f200ee032502.webp"
+           alt="손해평가사 진출 분야 카드 이미지"
+           loading="lazy"
+           decoding="async"
+           width="520"
+           height="924">
+    </div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">그럼 자세한 건 어디에 물어보면 돼요?</div>
+        <div class="chat-meta">오후 2:17</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-bubble">응시 흐름이나 준비 방법은 <strong>국가고시센터에 먼저 문의</strong>해보시면 돼요.</div>
+        <div class="chat-meta">오후 2:17</div>
+      </div>
+    </div>
+
+    <div class="chat-divider"></div>
+
+    <div class="chat-row chat-row--user">
+      <div>
+        <div class="chat-bubble">지금 신청해도 되나요?</div>
+        <div class="chat-meta">오후 2:18</div>
+      </div>
+      <div class="chat-avatar">
+        <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
+             alt="박기 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+    </div>
+
+    <div class="chat-row chat-row--guide">
+      <div class="chat-avatar">
+        <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
+             alt="손해평가사 김숙 프로필 사진"
+             loading="lazy"
+             decoding="async"
+             width="200"
+             height="200">
+      </div>
+      <div>
+        <div class="chat-bubble">네. 아래에서 신청하면 자세한 안내를 받을 수 있어요.</div>
+        <div class="chat-meta">오후 2:18</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-section" id="apply-form">
+    <div class="form-card">
+      <div class="form-card__head">
+        <div class="form-card__title">손해평가사 1:1 <strong>무료상담</strong></div>
+        <div class="form-card__desc">상담 신청 후 대기 순서대로 안내드립니다.</div>
+        <div class="code-guide">
+          문의내용에는 궁금한 점만 짧게 적어주세요.
+        </div>
+        <div class="benefit-slot">
+          <img src="images/consult-benefits.webp"
+               alt="국가고시센터 이용 혜택 안내 이미지"
                loading="lazy"
                decoding="async"
-               width="1200"
-               height="700">
+               width="1280"
+               height="1280">
         </div>
-        <a class="live-status__cta" href="#lead-form" onclick="trackCta('live_status_top')">무료 기출문제 받고 합격 가능성 확인하기</a>
       </div>
-      <div class="live-status__frame">
-        <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=0&c12=0&c13=0&c14=0&width=800" title="실시간 신청 현황" width="100%" height="300px" frameborder="0" loading="lazy" style="border:0;display:block"></iframe>
+      <div class="iframe-wrap">
+        <iframe
+          frameborder="0"
+          width="100%"
+          title="무료 상담 추첨 신청 폼"
+          scrolling="no"
+          src="//recaread.co.kr/ODIwOTg?f=1"
+          style="border:0;display:block;background:#fff">
+        </iframe>
       </div>
-    </div>
-  </section>
-
-  <section class="section soft-bg">
-    <div class="sec-head">
-      <p class="sec-kicker">신청만 해도</p>
-      <h2 class="sec-title-lg">시작해야 할 이유 4가지</h2>
-      <p class="sec-hook">혜택이 아니라 진로 판단 기준부터 확인해보세요</p>
-    </div>
-
-    <div class="benefit-list reason-list">
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">1</div>
-        <div class="benefit-body">
-          <div class="benefit-label"><strong>국가공인 자격증</strong>으로 진입 가능</div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">2</div>
-        <div class="benefit-body">
-          <div class="benefit-label">40대 이후에도 <strong>새 출발</strong>이 가능합니다</div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">3</div>
-        <div class="benefit-body">
-          <div class="benefit-label"><strong>현장형 일자리</strong>로 연결될 수 있습니다</div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">4</div>
-        <div class="benefit-body">
-          <div class="benefit-label">협회 기준 <strong>취업 연계 정보</strong>까지 확인</div>
-        </div>
-      </article>
-    </div>
-
-    <div class="benefit-list" style="display:none">
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">1</div>
-        <div class="benefit-body">
-          <div class="benefit-label">최신 <strong>기출자료 제공</strong></div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">2</div>
-        <div class="benefit-body">
-          <div class="benefit-label">합격시 <strong>수강료 전액 환급</strong></div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">3</div>
-        <div class="benefit-body">
-          <div class="benefit-label">단기 합격 <strong>노하우 제공</strong></div>
-        </div>
-      </article>
-      <article class="benefit-card reveal-up">
-        <div class="benefit-num">4</div>
-        <div class="benefit-body">
-          <div class="benefit-label">협회 주관 <strong>취업 연계</strong></div>
-        </div>
-      </article>
-    </div>
-
-    <!-- 텐핑 광고 -->
-
-  </section>
-
-  <!-- ③ 지금이 기회 -->
-  <section class="section">
-    <div class="sec-head">
-      <p class="sec-kicker">왜 지금인가</p>
-      <h2 class="sec-title-md">지금이 기회</h2>
-      <p class="sec-hook">시장이 커질수록 일자리도 늘어납니다</p>
-    </div>
-    <div class="img-box">
-      <img src="images/6e897d77-f782-433e-b023-9a54baf1fd39.webp"
-           alt="농업재해보험 확대와 손해평가 수요 증가 안내"
-           loading="lazy" decoding="async"
-           width="520" height="924">
-    </div>
-    <div class="body-copy">
-      <p>농업재해보험 가입자가 해마다 늘고 있습니다.<br><span class="mark">가입자가 늘수록, 피해 조사 전문가가 더 필요합니다.</span></p>
-      <p>유행이 아닙니다. <strong>나라가 제도로 만드는 일자리</strong>입니다.</p>
-    </div>
-  </section>
-
-  <!-- ④ 국가 공인 -->
-  <section class="section soft-bg">
-    <div class="sec-head">
-      <p class="sec-kicker">사설이 아닙니다</p>
-      <h2 class="sec-title-md">국가 공인</h2>
-      <p class="sec-hook">나라가 직접 운영하는 공식 자격증</p>
-    </div>
-    <div class="img-box">
-      <img src="images/efc0068a-5817-4d37-90b2-f200ee032502.webp"
-           alt="손해평가사 진출 분야"
-           loading="lazy" decoding="async"
-           width="520" height="924">
-    </div>
-    <div class="body-copy">
-      <p>사설 자격증이 아닙니다.<br><span class="mark">나라가 법으로 정해 관리하는 공식 자격</span>입니다.</p>
-      <p>합격하면 <strong>전국 어디서나 인정</strong>받습니다.</p>
-    </div>
-  </section>
-
-  <!-- ⑤ 진입 장벽 -->
-  <section class="section">
-    <div class="barrier-block reveal-up">
-      <div class="barrier-line1">나이도, 학력도, 경력도</div>
-      <div class="barrier-line2">묻지 않습니다</div>
-      <span class="barrier-tag">손해평가사 — 인생의 새 출발점</span>
-    </div>
-    <div class="img-box">
-      <img src="images/ae6871d4-a696-4ce0-a3cb-676928ad7974.webp"
-           alt="손해평가사 추천이유 1"
-           loading="lazy" decoding="async"
-           width="520" height="924">
-    </div>
-    <div class="img-box">
-      <img src="images/e6eb9a88-2180-4137-8c63-e221ac304edf.webp"
-           alt="손해평가사 추천이유 2"
-           loading="lazy" decoding="async"
-           width="520" height="924">
-    </div>
-  </section>
-
-  <!-- ⑥ 리뷰 -->
-  <section class="section soft-bg">
-    <div class="sec-head">
-      <p class="sec-kicker">직접 겪은 변화</p>
-      <h2 class="sec-title-lg">삶이 바뀐 사람들</h2>
-      <p class="sec-hook">나이 들어 시작해도 됩니다</p>
-    </div>
-    <div class="review-list">
-      <article class="review reveal-up">
-        <div class="review-photo">
-          <img src="images/8da1f706-4765-4d52-83c8-3cdd7b83f8cc.webp"
-               alt="퇴직 후 손해평가사로 활동 중인 부부"
-               loading="lazy" decoding="async"
-               width="200" height="200">
-        </div>
-        <div class="review-body">
-          <div class="review-tag">59세 · 박*민 · 퇴직 후 부부 준비</div>
-          <div class="review-title">"퇴직 후 막막했는데<br><span class="mark">둘이 함께 현장 나갑니다</span>"</div>
-          <div class="review-copy">나이 제한 없이 둘 다 자격을 딸 수 있었습니다. <span class="mark">지금은 부부가 함께 현장에 나갑니다.</span></div>
-        </div>
-      </article>
-      <article class="review reveal-up">
-        <div class="review-photo">
-          <img src="images/00a20138-8f5d-4bde-bc7f-e2f088f64e13.webp"
-               alt="50대 이직 후 손해평가사로 활동 중인 남성"
-               loading="lazy" decoding="async"
-               width="200" height="200">
-        </div>
-        <div class="review-body">
-          <div class="review-tag">40대 후반 · 김*훈 · 이직 준비</div>
-          <div class="review-title">"40대 후반에도<br><span class="mark">현장 일자리로 바로 연결</span>됐습니다"</div>
-          <div class="review-copy">학력·경력 조건이 없다는 말에 시작했습니다. <span class="mark">지금은 농작물 피해 현장을 직접 조사</span>하고 있습니다.</div>
-        </div>
-      </article>
-      <article class="review reveal-up">
-        <div class="review-photo">
-          <img src="images/d7335eeb-6c3d-46e4-8c71-5a20a5a8c7b4.webp"
-               alt="주부에서 손해평가사로 재취업한 여성"
-               loading="lazy" decoding="async"
-               width="200" height="200">
-        </div>
-        <div class="review-body">
-          <div class="review-tag">46세 · 이*영 · 주부에서 재취업</div>
-          <div class="review-title">"<span class="mark">명찰 달고 현장</span> 나가는 날이<br>올 줄 몰랐습니다"</div>
-          <div class="review-copy">응시 조건이 없었고, <span class="mark">취업까지 연계받아</span> 지금은 현장에서 일하고 있습니다.</div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- ⑦ DB 수집 -->
-  <section class="form-wrap" id="lead-form" tabindex="-1">
-    <div class="form-headline">
-      <div class="form-headline__title">무료 기출문제 받고<br><strong>합격 가능성</strong> 확인</div>
-      <div class="form-headline__copy">환급 조건 · 진출 가능 분야 확인</div>
-    </div>
-    <div class="security-box">
-      <div class="security-box__visual" aria-hidden="true">
-        <div class="security-box__bars"><span></span><span></span><span></span><span></span></div>
-        <div class="security-box__lock"></div>
-        <div class="security-box__bars"><span></span><span></span><span></span><span></span></div>
-      </div>
-      <div class="security-box__title"><strong>수집된 정보는 안전하게 보안 처리 중</strong></div>
-      <div class="security-box__desc">입력하신 정보는 <strong>상담 목적 외에는 사용되지 않으며</strong> 안전하게 보호됩니다.</div>
-    </div>
-    <div class="live-status__frame live-status__tenping">
-      <iframe frameborder="0" width="100%" height="680" title="무료 상담 신청 폼" scrolling="no" src="//recaread.co.kr/ODIwOTg?f=1" style="border:0;display:block;background:#fff"></iframe>
     </div>
   </section>
 
@@ -876,172 +1650,8 @@ body{
     <div class="site-footer__meta">주소: 서울특별시 성북구 성북로4길 52 ㅣ 연락처: 0507-1447-8257 ㅣ 정보책임자: 손덕현 ㅣ 이메일: iconart@naver.com</div>
     <div class="site-footer__copy">Copyright © 한국국가고시센터. All rights reserved.</div>
   </footer>
-
 </main>
 
-<!-- 스티키 하단 CTA -->
-<div class="sticky">
-  <a class="sticky-btn" href="#lead-form" onclick="trackCta('sticky_bottom')">
-    기출문제 받아서 난이도 확인하기
-    <span class="btn-arr">→</span>
-  </a>
-</div>
-
-<script>
-/* ── CTA 추적 (GTM dataLayer) ── */
-function trackCta(ctaName) {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'cta_click',
-    cta_name: ctaName,
-    page_title: document.title
-  });
-}
-
-/* ── 실시간 신청자 카운터 ── */
-var applyN = 24;
-var applyMax = 50;
-var applyScheduleMs = [3000, 5000, 8000, 10000, 15000, 22000, 29000, 38000, 47000, 58000, 74000, 98000, 122000, 146000, 170000, 194000, 218000, 242000, 266000, 290000];
-var liveTickerQueue = [
-  '김*식 · 59세 · 신청완료',
-  '박*희 · 47세 · 신청완료',
-  '이*수 · 52세 · 신청완료',
-  '최*호 · 61세 · 신청완료',
-  '정*미 · 44세 · 신청완료',
-  '윤*진 · 56세 · 신청완료',
-  '한*철 · 49세 · 신청완료',
-  '오*영 · 54세 · 신청완료',
-  '신*자 · 58세 · 신청완료',
-  '임*훈 · 46세 · 신청완료',
-  '조*경 · 63세 · 신청완료',
-  '서*택 · 51세 · 신청완료',
-  '강*자 · 57세 · 신청완료',
-  '문*호 · 45세 · 신청완료',
-  '송*희 · 60세 · 신청완료',
-  '배*환 · 53세 · 신청완료',
-  '백*숙 · 48세 · 신청완료',
-  '노*민 · 55세 · 신청완료',
-  '홍*주 · 50세 · 신청완료',
-  '권*석 · 62세 · 신청완료'
-];
-function setApplyDisplay() {
-  var headerEl = document.getElementById('liveCount');
-  var liveApplyEl = document.getElementById('liveApplyCount');
-  var remainEl = document.getElementById('liveRemainCount');
-  if (headerEl) headerEl.textContent = applyN;
-  if (liveApplyEl) liveApplyEl.textContent = applyN;
-  if (remainEl) remainEl.textContent = Math.max(0, applyMax - applyN);
-}
-var liveFloatToastEl = null;
-function ensureLiveFloatToast() {
-  if (liveFloatToastEl) return liveFloatToastEl;
-  liveFloatToastEl = document.createElement('div');
-  liveFloatToastEl.className = 'live-float-toast';
-  liveFloatToastEl.setAttribute('aria-hidden', 'true');
-  document.body.appendChild(liveFloatToastEl);
-  return liveFloatToastEl;
-}
-function showLiveTicker(message) {
-  var floatToast = ensureLiveFloatToast();
-  if (floatToast) {
-    floatToast.replaceChildren(buildLiveToastNode(message, 'live-float-toast__item'));
-  }
-}
-function buildLiveToastNode(message, baseClass) {
-  var parts = message.split(' · ');
-  var root = document.createElement('div');
-  var badge = document.createElement('span');
-  var name = document.createElement('span');
-  var meta = document.createElement('span');
-  var state = document.createElement('span');
-  root.className = baseClass + ' is-enter';
-  badge.className = baseClass + '-badge';
-  name.className = baseClass + '-name';
-  meta.className = baseClass + '-meta';
-  state.className = baseClass + '-state';
-  badge.textContent = 'LIVE';
-  name.textContent = parts[0] || '';
-  meta.textContent = parts[1] || '';
-  state.textContent = parts[2] || '';
-  root.appendChild(badge);
-  root.appendChild(name);
-  root.appendChild(meta);
-  root.appendChild(state);
-  return root;
-}
-function tickApply() {
-  if (applyN >= applyMax) {
-    setApplyDisplay();
-    return;
-  }
-  applyN += 1;
-  setApplyDisplay();
-  showLiveTicker(liveTickerQueue.shift() || '김*식 · 59세 · 신청완료');
-}
-setApplyDisplay();
-ensureLiveFloatToast();
-applyScheduleMs.forEach(function(delay) {
-  setTimeout(tickApply, delay);
-});
-
-(function() {
-  var topBtn = document.querySelector('.live-status__cta');
-  if (topBtn) {
-    topBtn.textContent = '무료 기출문제 먼저 받아보기';
-  }
-  var stickyBtn = document.querySelector('.sticky-btn');
-  if (!stickyBtn) return;
-  stickyBtn.childNodes[0].nodeValue = '\n    합격 가능성·취업 연계까지 확인하기\n    ';
-})();
-
-/* ── CTA 스크롤 보강 ── */
-(function() {
-  var target = document.getElementById('lead-form');
-  if (!target) return;
-  var frameWrap = target.querySelector('.live-status__tenping');
-
-  function focusLeadForm() {
-    target.classList.remove('is-targeted');
-    void target.offsetWidth;
-    target.classList.add('is-targeted');
-    target.focus({ preventScroll: true });
-  }
-
-  function moveToLeadForm(event) {
-    event.preventDefault();
-    var anchor = frameWrap || target;
-    var anchorTop = anchor.getBoundingClientRect().top + window.pageYOffset;
-    var offset = frameWrap ? 150 : 72;
-    window.scrollTo({ top: Math.max(0, anchorTop - offset), behavior: 'smooth' });
-    window.setTimeout(focusLeadForm, 420);
-    if (window.history && typeof window.history.replaceState === 'function') {
-      window.history.replaceState(null, '', '#lead-form');
-    } else {
-      window.location.hash = 'lead-form';
-    }
-  }
-
-  document.querySelectorAll('a[href="#lead-form"]').forEach(function(link) {
-    link.addEventListener('click', moveToLeadForm);
-  });
-})();
-
-/* ── 스크롤 reveal 애니메이션 ── */
-(function() {
-  var items = document.querySelectorAll('.reveal-up');
-  if (!items.length) return;
-  var io = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        io.unobserve(entry.target);
-      }
-    });
-  }, {threshold: .14});
-  items.forEach(function(item) { io.observe(item); });
-})();
-
-</script>
 </body>
 </html>
 
