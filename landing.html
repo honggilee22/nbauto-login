@@ -480,7 +480,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="live-apply-count__benefit-image">
           <img src="images/consult-benefit-zero.webp" alt="코웨이 걱정 ZERO 혜택 안내" loading="lazy" decoding="async">
         </div>
-        <a class="live-apply-cta" href="#form" onclick="handleCtaClick('live_apply_top')">지금 혜택 확인하기</a>
+        <a class="live-apply-cta" href="#form" onclick="return openConsultModal('live_apply_top')">지금 혜택 확인하기</a>
       </div>
       <div class="live-apply-frame">
         <iframe src="https://dbsense.kr/js/form/live_list.html?cid=y184wivvq5&c11=9&c12=0&c13=0&c14=0&width=800" width="100%" height="336" frameborder="0" loading="lazy" scrolling="no" style="border:0;display:block;overflow:hidden"></iframe>
@@ -529,14 +529,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="product-modal" id="productModal" aria-hidden="true">
   <div class="product-modal__panel" role="dialog" aria-modal="true" aria-labelledby="productModalTitle">
     <button class="product-modal__close" type="button" aria-label="팝업 닫기" onclick="closeProductModal()">&times;</button>
-    <h3 class="product-modal__title" id="productModalTitle">선택하신 제품 혜택 안내</h3>
+    <h3 class="product-modal__title" id="productModalTitle">코웨이 상담사가 연락 드립니다</h3>
     <div class="product-modal__visual">
       <img src="images/product-modal-custom.webp" alt="코웨이 상담사가 직접 전화드리는 팝업 안내" width="789" height="738">
     </div>
     <div class="product-modal__actions">
-      <button class="product-modal__cta" type="button" onclick="confirmProductInterest()">코디와 혜택 확인하기</button>
+      <button class="product-modal__cta" type="button" onclick="confirmProductInterest()">코웨이 상담사 연결하기</button>
       <button class="product-modal__subcta" type="button" onclick="openGiftGuideFromModal()">사은품 먼저 보기</button>
-      <div class="product-modal__foot">선택 제품은 상담 연결 시 함께 확인됩니다.</div>
+      <div class="product-modal__foot">상담 신청을 남기시면 코웨이 상담사가 순차적으로 연락드립니다.</div>
     </div>
   </div>
 </div>
@@ -546,7 +546,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="sticky-top-row">
     <span class="sticky-logo">coway</span>
   </div>
-  <button class="sticky-cta-btn" data-cta="sticky_free_consult" onclick="handleCtaClick('sticky_free_consult')"><span>🎁 코디에게 혜택 확인하기</span></button>
+  <button class="sticky-cta-btn" data-cta="sticky_free_consult" onclick="return openConsultModal('sticky_free_consult')"><span>🎁 코웨이 상담사 연락받기</span></button>
 </div>
 
 <div class="floating-live-toast" id="floatingLiveToast" aria-live="polite"></div>
@@ -636,6 +636,14 @@ function handleCtaClick(ctaName){
   scrollToForm();
 }
 
+function openConsultModal(ctaName){
+  trackCtaClick(ctaName);
+  pendingProductCta=ctaName;
+  pendingProductLabel='코웨이 상담';
+  openProductModal('consult_contact','코웨이 상담사가 연락 드립니다');
+  return false;
+}
+
 const PRODUCT_MAP={
   product_switch_purifier:{label:'스위치 정수기 냉온'},
   product_icon_ice:{label:'아이콘 얼음정수기'},
@@ -656,7 +664,11 @@ function openProductModal(ctaName,label){
   const modal=document.getElementById('productModal');
   const title=document.getElementById('productModalTitle');
   const info=PRODUCT_MAP[ctaName]||{label:label};
-  if(title)title.textContent=(info.label||label||'선택 제품')+' 혜택 안내';
+  if(title){
+    title.textContent=ctaName==='consult_contact'
+      ? (label||'코웨이 상담사가 연락 드립니다')
+      : ((info.label||label||'선택 제품')+' 혜택 안내');
+  }
   if(modal){
     modal.classList.add('open');
     modal.setAttribute('aria-hidden','false');
@@ -675,9 +687,12 @@ function closeProductModal(){
 
 function confirmProductInterest(){
   const label=pendingProductLabel||(PRODUCT_MAP[pendingProductCta]&&PRODUCT_MAP[pendingProductCta].label)||'선택 제품';
+  const eventName=pendingProductCta==='consult_contact'||pendingProductLabel==='코웨이 상담'
+    ? 'consult_interest'
+    : 'product_interest';
   window.dataLayer=window.dataLayer||[];
   window.dataLayer.push({
-    event:'product_interest',
+    event:eventName,
     product_label:label,
     page_path:location.pathname,
     page_title:document.title
