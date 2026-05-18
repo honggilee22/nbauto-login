@@ -640,7 +640,7 @@ body{
   z-index:60;
   display:flex;
   align-items:center;
-  justify-content:space-between;
+  justify-content:flex-start;
   padding:14px 16px;
   background:rgba(255,255,255,.94);
   backdrop-filter:blur(12px);
@@ -1158,6 +1158,10 @@ body{
   background:#fff;
   box-shadow:0 16px 34px rgba(15,23,42,.08);
 }
+.benefit-slot a{
+  display:block;
+  text-decoration:none;
+}
 .benefit-slot img{
   display:block;
   width:100%;
@@ -1192,6 +1196,7 @@ body{
 .iframe-wrap{
   padding:14px 12px 12px;
   background:#fff;
+  scroll-margin-top:92px;
 }
 .iframe-wrap iframe{
   display:block;
@@ -1255,7 +1260,6 @@ body{
 
   <header class="chat-header">
     <span class="chat-header__brand">한국국가고시센터</span>
-    <span class="chat-header__label">무료상담 진행중</span>
   </header>
 
   <section class="hero-placeholder">
@@ -1624,15 +1628,17 @@ body{
           문의내용에는 궁금한 점만 짧게 적어주세요.
         </div>
         <div class="benefit-slot">
-          <img src="images/consult-benefits.webp"
-               alt="국가고시센터 이용 혜택 안내 이미지"
-               loading="lazy"
-               decoding="async"
-               width="1280"
-               height="1280">
+          <a href="#consult-form" aria-label="무료상담 신청 폼으로 이동">
+            <img src="images/consult-benefits.webp"
+                 alt="국가고시센터 이용 혜택 안내 이미지"
+                 loading="lazy"
+                 decoding="async"
+                 width="1280"
+                 height="1280">
+          </a>
         </div>
       </div>
-      <div class="iframe-wrap">
+      <div class="iframe-wrap" id="consult-form">
         <iframe
           frameborder="0"
           width="100%"
@@ -1651,6 +1657,13 @@ body{
     <div class="site-footer__copy">Copyright © 한국국가고시센터. All rights reserved.</div>
   </footer>
 </main>
+
+<div class="sticky">
+  <a class="sticky-btn" href="#consult-form">
+    무료상담신청
+    <span class="btn-arr">→</span>
+  </a>
+</div>
 
 </body>
 </html>
