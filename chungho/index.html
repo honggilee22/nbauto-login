@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>침대 7단계 케어 서비스</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #fff; padding-bottom: 80px; }
+    img { display: block; width: 100%; }
+
+    .sticky-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      padding: 12px 20px;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 -2px 12px rgba(0,0,0,0.12);
+    }
+
+    .sticky-btn {
+      display: block;
+      width: 100%;
+      background: #1a3a8f;
+      color: #fff;
+      font-size: 20px;
+      font-weight: 700;
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      text-align: center;
+      padding: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: -0.02em;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 14px rgba(26,58,143,0.4);
+    }
+
+    .sticky-btn:hover {
+      background: #1430a0;
+      box-shadow: 0 6px 20px rgba(26,58,143,0.5);
+    }
+
+    .sticky-btn:active {
+      transform: scale(0.98);
+      box-shadow: 0 2px 8px rgba(26,58,143,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <picture>
+    <source srcset="images/d80c68fe-84be-4371-af2a-25855788587a.webp" type="image/webp" />
+    <img src="images/d80c68fe-84be-4371-af2a-25855788587a.png" alt="" loading="eager" decoding="sync" />
+  </picture>
+
+  <picture>
+    <source srcset="images/ed5815c1-7bb1-420a-ba89-d5d20eb27605.webp" type="image/webp" />
+    <img src="images/ed5815c1-7bb1-420a-ba89-d5d20eb27605.png" alt="" loading="lazy" decoding="async" />
+  </picture>
+
+  <iframe width="100%" height="600" src="https://www.youtube.com/embed/N1KQF8IYi4c" frameborder="0" allowfullscreen loading="lazy"></iframe>
+
+  <div id="form">
+    <iframe src="https://naver.me/FuNxfxER" width="100%" height="800" frameborder="0" scrolling="yes" loading="lazy"></iframe>
+  </div>
+
+  <!-- 하단 고정 바 -->
+  <div class="sticky-bar">
+    <button class="sticky-btn" onclick="document.getElementById('form').scrollIntoView({behavior:'smooth'})">
+      0원 침대케어 신청
+    </button>
+  </div>
+
+</body>
+</html>
