@@ -47,25 +47,48 @@
       transform: scale(0.98);
       box-shadow: 0 2px 8px rgba(26,58,143,0.3);
     }
+
+    .video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
 
-  <picture>
-    <source srcset="images/d80c68fe-84be-4371-af2a-25855788587a.webp" type="image/webp" />
-    <img src="images/d80c68fe-84be-4371-af2a-25855788587a.png" alt="" loading="eager" decoding="sync" />
-  </picture>
+  <img src="images/db5f3dc0-63ba-4b67-8ae2-2211f3b0afb6.webp" alt="" loading="eager" decoding="sync" />
 
-  <picture>
-    <source srcset="images/ed5815c1-7bb1-420a-ba89-d5d20eb27605.webp" type="image/webp" />
-    <img src="images/ed5815c1-7bb1-420a-ba89-d5d20eb27605.png" alt="" loading="lazy" decoding="async" />
-  </picture>
+  <div class="video-wrap">
+    <iframe src="https://www.youtube.com/embed/N1KQF8IYi4c" frameborder="0" allowfullscreen loading="lazy"></iframe>
+  </div>
 
-  <iframe width="100%" height="600" src="https://www.youtube.com/embed/N1KQF8IYi4c" frameborder="0" allowfullscreen loading="lazy"></iframe>
+  <img src="images/a6d4ed9e-2b22-4b55-bb77-897986cce65f.webp" alt="" loading="lazy" decoding="async" />
+  <img src="images/c8643c47-8d95-4fa0-9b30-ee45cac0d352.webp" alt="" loading="lazy" decoding="async" />
+  <img src="images/694838e8-61e6-4edf-b453-5b36c8a9a62c.webp" alt="" loading="lazy" decoding="async" />
+
+  <img src="images/b1b80a7f-68ab-4ba9-b8e1-73f632084166.webp" alt="" loading="lazy" decoding="async" />
 
   <div id="form">
-    <iframe src="https://naver.me/FuNxfxER" width="100%" height="800" frameborder="0" scrolling="yes" loading="lazy"></iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdXmI5Me5qscu-v2guZgYQmu0YmnwlElhkJ6uvbpJ58IMEVQw/viewform?embedded=true" width="100%" height="800" frameborder="0" loading="lazy">로딩중...</iframe>
   </div>
+
+  <footer style="background:#1a1a1a;color:#aaa;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:13px;padding:40px 24px;line-height:2;">
+    <p style="color:#fff;font-weight:700;margin-bottom:12px;">청호나이스 침대케어 서비스</p>
+    <p>담당자 : 이홍기</p>
+    <p>연락처 : 010-9943-6833</p>
+    <p>이메일 : jumsune1@naver.com</p>
+    <p style="margin-top:16px;font-size:12px;color:#777;">본 페이지는 청호나이스 제품 케어 서비스 상담 신청을 위한 이벤트 페이지입니다.</p>
+    <p style="margin-top:8px;font-size:12px;color:#777;"><a href="#" style="color:#aaa;text-decoration:underline;">개인정보처리방침</a></p>
+    <p style="margin-top:16px;font-size:12px;color:#555;">© 2026 이홍기. All Rights Reserved.</p>
+  </footer>
 
   <!-- 하단 고정 바 -->
   <div class="sticky-bar">
