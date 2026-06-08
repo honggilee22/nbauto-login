@@ -77,8 +77,19 @@
   <img src="images/b1b80a7f-68ab-4ba9-b8e1-73f632084166.webp" alt="" loading="lazy" decoding="async" />
 
   <div id="form">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdXmI5Me5qscu-v2guZgYQmu0YmnwlElhkJ6uvbpJ58IMEVQw/viewform?embedded=true" width="100%" height="800" frameborder="0" loading="lazy">로딩중...</iframe>
+    <iframe id="google-form" src="https://docs.google.com/forms/d/e/1FAIpQLSdXmI5Me5qscu-v2guZgYQmu0YmnwlElhkJ6uvbpJ58IMEVQw/viewform?embedded=true" width="100%" height="1200" frameborder="0" scrolling="no" loading="lazy">로딩중...</iframe>
   </div>
+  <script>
+    window.addEventListener('message', function(e) {
+      if (e.origin !== 'https://docs.google.com') return;
+      var iframe = document.getElementById('google-form');
+      if (e.data && e.data.type === 'SET_HEIGHT') {
+        iframe.style.height = e.data.value + 'px';
+      } else if (typeof e.data === 'number') {
+        iframe.style.height = e.data + 'px';
+      }
+    });
+  </script>
 
   <footer style="background:#1a1a1a;color:#aaa;font-family:'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:13px;padding:40px 24px;line-height:2;">
     <p style="color:#fff;font-weight:700;margin-bottom:12px;">청호나이스 침대케어 서비스</p>
